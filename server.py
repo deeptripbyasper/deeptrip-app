@@ -15,6 +15,8 @@ import uuid
 import datetime
 
 PORT = int(os.environ.get("PORT", 8000))
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "deeptrip2026")
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 PUBLIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public")
 DATA_FILE = os.path.join(DATA_DIR, "deeptrip_db.json")
@@ -493,6 +495,22 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
         except Exception:
             return self._send_json(400, {"success": False, "error": "Invalid JSON format"})
 
+        if path == "/api/admin/login":
+            username = payload.get("username", "").strip()
+            password = payload.get("password", "").strip()
+            if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+                token = f"dt_sec_{uuid.uuid4().hex}"
+                return self._send_json(200, {
+                    "success": True,
+                    "token": token,
+                    "username": username,
+                    "message": "Admin authenticated successfully"
+                })
+            return self._send_json(401, {
+                "success": False,
+                "error": "Invalid admin username or password"
+            })
+
         if path == "/api/cars":
             item = payload
             item["id"] = item.get("id") or f"car-{uuid.uuid4().hex[:6]}"
@@ -594,15 +612,11 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
         return self._send_json(404, {"success": False, "error": "Endpoint not found"})
 
     def _serve_static_file(self, req_path):
-        if req_path == "/" or req_path == "":
+        if req_path in ["", "/", "/user", "/user/", "/mobile", "/mobile/", "/planner", "/planner/"]:
             req_path = "/mobile/index.html"
-        elif req_path == "/admin" or req_path == "/admin/":
+        elif req_path in ["/admin", "/admin/"]:
             req_path = "/admin/index.html"
-        elif req_path == "/mobile" or req_path == "/mobile/":
-            req_path = "/mobile/index.html"
-        elif req_path == "/planner" or req_path == "/planner/":
-            req_path = "/planner/index.html"
-        elif req_path == "/design-system" or req_path == "/design-system/":
+        elif req_path in ["/design-system", "/design-system/"]:
             req_path = "/design-system/index.html"
 
         # Sanitize path
