@@ -14,7 +14,7 @@ from urllib.parse import urlparse, parse_qs
 import uuid
 import datetime
 
-PORT = 8000
+PORT = int(os.environ.get("PORT", 8000))
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 PUBLIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public")
 DATA_FILE = os.path.join(DATA_DIR, "deeptrip_db.json")
