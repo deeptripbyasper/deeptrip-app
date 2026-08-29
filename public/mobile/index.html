@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>DeepTrip - India's Ultimate Road Trip Partner</title>
+  <meta name="description" content="Chauffeur-guided road trips across India. AI-powered itineraries, verified stays, tailored culinary packages, and turnkey journey stewardship.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF5A36;
+      --primary-hover: #E44825;
+      --primary-soft: rgba(255, 90, 54, 0.14);
+      --primary-glow: rgba(255, 90, 54, 0.35);
+      
+      --brand-cyan: #00B4D8;
+      --brand-navy: #0C1824;
+      
+      --bg-canvas: #070D14;
+      --bg-card: #101722;
+      --bg-card-elevated: #182232;
+      --bg-input: #0A0F18;
+      
+      --text-main: #FFFFFF;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      
+      --border-subtle: rgba(255, 255, 255, 0.09);
+      --border-active: rgba(255, 90, 54, 0.6);
+      
+      --emerald: #10B981;
+      --emerald-soft: rgba(16, 185, 129, 0.14);
+      --red: #EF4444;
+      --red-soft: rgba(239, 68, 68, 0.14);
+      --amber: #F59E0B;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 4px 20px rgba(255, 90, 54, 0.4);
+      
+      --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Mobile App Frame Container */
+    .mobile-app-wrapper {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background-color: var(--bg-canvas);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border-left: 1px solid var(--border-subtle);
+      border-right: 1px solid var(--border-subtle);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.7);
+    }
+
+    @media (min-width: 640px) {
+      body {
+        padding: 20px 0;
+        background: radial-gradient(circle at top, #141E2C 0%, #06090E 100%);
+      }
+      .mobile-app-wrapper {
+        min-height: calc(100vh - 40px);
+        border-radius: 36px;
+        overflow: hidden;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    /* Top Sticky App Header */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      background: rgba(16, 23, 34, 0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.75rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .brand-logo-img {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+    }
+
+    .brand-text-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-tagline {
+      font-size: 0.68rem;
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .admin-link-pill {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .admin-link-pill:hover {
+      border-color: var(--primary);
+      color: #FFF;
+    }
+
+    .sos-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--emerald-soft);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--emerald);
+    }
+
+    .pulse-indicator {
+      width: 6px;
+      height: 6px;
+      background: var(--emerald);
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* Screen Progress Bar */
+    .screen-progress {
+      display: flex;
+      height: 3px;
+      background: var(--bg-card);
+      width: 100%;
+    }
+
+    .progress-bar-fill {
+      width: 50%;
+      background: linear-gradient(90deg, #FF5A36, #FFA07A);
+      transition: width 0.3s ease;
+    }
+
+    /* Main Scrollable Body */
+    .screen-content {
+      flex: 1;
+      padding: 1.25rem 1.15rem 7rem;
+      overflow-y: auto;
+    }
+
+    /* Screen Views */
+    .screen-view {
+      display: none;
+      animation: slideUpFade 0.25s ease-out forwards;
+    }
+
+    .screen-view.active {
+      display: block;
+    }
+
+    @keyframes slideUpFade {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero Banner Mini */
+    .hero-mobile {
+      background: linear-gradient(180deg, rgba(255, 90, 54, 0.16) 0%, rgba(16, 23, 34, 0.95) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-mobile-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-mobile-title span {
+      color: var(--primary);
+    }
+
+    .hero-mobile-sub {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .section-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+    }
+
+    .section-card-title .badge {
+      font-size: 0.7rem;
+      color: var(--primary);
+      font-weight: 600;
+      background: var(--primary-soft);
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-full);
+    }
+
+    /* Route Input Fields */
+    .route-box {
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.65rem;
+      transition: var(--transition);
+    }
+
+    .route-box:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+
+    .route-icon {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .route-field {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .route-field label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .route-field input {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 0.92rem;
+      font-weight: 600;
+      font-family: inherit;
+      outline: none;
+      width: 100%;
+    }
+
+    .chips-slider {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      margin-top: 0.5rem;
+      scrollbar-width: none;
+    }
+
+    .chips-slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    .route-chip {
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .route-chip:hover, .route-chip:active {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    /* Counters Row */
+    .counters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .counter-tile {
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .counter-tile-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .counter-tile-control {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-step {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .btn-step:active {
+      background: var(--primary);
+      color: #FFF;
+    }
+
+    .counter-tile-val {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* Dynamic Vehicle Cards */
+    .vehicle-cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .vehicle-card {
+      background: var(--bg-input);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      display: flex;
+      gap: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .vehicle-card.selected {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, rgba(255, 90, 54, 0.1) 0%, rgba(16, 23, 34, 1) 100%);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .vehicle-img-thumb {
+      width: 90px;
+      height: 75px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .vehicle-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .vehicle-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
+    }
+
+    .vehicle-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .vehicle-select-radio {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: transparent;
+    }
+
+    .vehicle-card.selected .vehicle-select-radio {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #FFF;
+    }
+
+    .vehicle-specs {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.35rem;
+    }
+
+    .vehicle-price {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* Stays 2x2 Dynamic Grid */
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    .tile-option {
+      background: var(--bg-input);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .tile-option.selected {
+      border-color: var(--primary);
+      background: rgba(255, 90, 54, 0.1);
+    }
+
+    .tile-img {
+      width: 100%;
+      height: 60px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.5rem;
+    }
+
+    .tile-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 0.2rem;
+    }
+
+    .tile-price {
+      font-size: 0.78rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Food Dynamic Cards */
+    .diet-toggle-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    .diet-card {
+      background: var(--bg-input);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 0.65rem;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .diet-card.selected {
+      border-color: var(--primary);
+      background: rgba(255, 90, 54, 0.1);
+    }
+
+    .diet-img-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.35rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .diet-card-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+
+    .diet-card-sub {
+      font-size: 0.72rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Sticky Bottom Mobile Bar */
+    .bottom-cta-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: rgba(16, 23, 34, 0.96);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-subtle);
+      padding: 0.85rem 1.15rem;
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .bottom-summary-text {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .btn-mobile-primary {
+      background: linear-gradient(135deg, #FF5A36 0%, #E44825 100%);
+      color: #FFF;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.95rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-glow);
+      transition: var(--transition);
+    }
+
+    .btn-mobile-primary:active {
+      transform: scale(0.98);
+    }
+
+    /* ======================================================== */
+    /* SCREEN 2: GEMINI AI ITINERARY & BUDGET (MOBILE-FIRST) */
+    /* ======================================================== */
+    .ai-banner-mobile {
+      background: linear-gradient(135deg, rgba(0, 180, 216, 0.15) 0%, rgba(255, 90, 54, 0.15) 100%);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      margin-bottom: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .ai-sparkle-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #00B4D8, #FF5A36);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .ai-banner-text h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+
+    .ai-banner-text p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .day-selector-pills {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      padding-bottom: 0.2rem;
+      scrollbar-width: none;
+    }
+
+    .day-pill-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .day-pill-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #FFF;
+    }
+
+    /* Timeline Mobile */
+    .mobile-timeline {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mobile-timeline::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: var(--border-subtle);
+    }
+
+    .tl-step {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -1.25rem;
+      top: 5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 8px var(--primary-glow);
+    }
+
+    .tl-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+    }
+
+    .tl-time-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.35rem;
+    }
+
+    .tl-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 0.25rem;
+    }
+
+    .tl-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+
+    /* Budget Breakdown Card Mobile */
+    .budget-card-mobile {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .budget-line-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.45rem 0;
+      font-size: 0.82rem;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+    }
+
+    .budget-line-row:last-child {
+      border-bottom: none;
+    }
+
+    .budget-line-name {
+      color: var(--text-secondary);
+    }
+
+    .budget-line-val {
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .total-highlight-mobile {
+      background: linear-gradient(135deg, rgba(255, 90, 54, 0.16) 0%, rgba(16, 23, 34, 1) 100%);
+      border: 1px solid rgba(255, 90, 54, 0.35);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      text-align: center;
+      margin-top: 0.85rem;
+    }
+
+    .total-amount-text {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ======================================================== */
+    /* MODAL: REQUEST A CALLBACK SHEET */
+    /* ======================================================== */
+    .bottom-sheet-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .bottom-sheet-overlay.active {
+      display: flex;
+    }
+
+    .bottom-sheet {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-subtle);
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 480px;
+      padding: 1.5rem 1.25rem 2rem;
+      animation: sheetUp 0.25s ease-out forwards;
+    }
+
+    @keyframes sheetUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: var(--radius-full);
+      margin: 0 auto 1.25rem;
+    }
+
+    .sheet-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .sheet-sub {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+    }
+
+    .sheet-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .sheet-input-group label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .sheet-input {
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 0.9rem;
+      color: #FFF;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .sheet-input:focus {
+      border-color: var(--primary);
+    }
+
+    /* AI Loading Spinner */
+    .ai-loader-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(7, 13, 20, 0.94);
+      backdrop-filter: blur(12px);
+      z-index: 300;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .ai-loader-modal.active {
+      display: flex;
+    }
+
+    .spinner-ring {
+      width: 52px;
+      height: 52px;
+      border: 4px solid var(--bg-card);
+      border-top: 4px solid var(--primary);
+      border-right: 4px solid #00B4D8;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-app-wrapper">
+
+    <!-- Top Sticky Brand Header with Actual Logo -->
+    <header class="app-header">
+      <div class="brand-group" onclick="showScreen('screen-planner')">
+        <img src="/assets/deeptrip_logo.png" alt="DeepTrip Logo" class="brand-logo-img" onerror="this.src='/assets/deeptrip_icon.png'">
+        <div class="brand-text-block">
+          <span class="brand-tagline">Road Mobility</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <a href="/admin" class="admin-link-pill">⚙️ Admin</a>
+        <div class="sos-pill">
+          <span class="pulse-indicator"></span>
+          24/7 SOS
+        </div>
+      </div>
+    </header>
+
+    <!-- Progress Indicator -->
+    <div class="screen-progress">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Scrollable Screen Content -->
+    <div class="screen-content">
+
+      <!-- ======================================================== -->
+      <!-- SCREEN 1: TRIP PLANNER (MOBILE-FIRST) -->
+      <!-- ======================================================== -->
+      <section id="screen-planner" class="screen-view active">
+        
+        <!-- Clean Hero Card -->
+        <div class="hero-mobile">
+          <h1 class="hero-mobile-title">Plan Your <span>Road Trip</span></h1>
+          <p class="hero-mobile-sub">Verified Captains, sanitized vehicles & Google Gemini AI turnkey itinerary.</p>
+        </div>
+
+        <!-- 1. Origin & Destination -->
+        <div class="section-card">
+          <div class="section-card-title">
+            <span>📍 Route Selection</span>
+            <span class="badge">Step 1 of 4</span>
+          </div>
+
+          <div class="route-box">
+            <span class="route-icon">🟢</span>
+            <div class="route-field">
+              <label>From (Departure City)</label>
+              <input type="text" id="mFromCity" value="Delhi (NCR)" placeholder="e.g. Delhi, Mumbai...">
+            </div>
+          </div>
+
+          <div class="route-box">
+            <span class="route-icon">📍</span>
+            <div class="route-field">
+              <label>To (Destination Circuit)</label>
+              <input type="text" id="mToCity" value="Jaipur Heritage Circuit" placeholder="e.g. Jaipur, Goa...">
+            </div>
+          </div>
+
+          <!-- Quick Chips -->
+          <div class="chips-slider">
+            <span class="route-chip" onclick="setQuickRoute('Delhi (NCR)', 'Jaipur Heritage Circuit')">Delhi → Jaipur</span>
+            <span class="route-chip" onclick="setQuickRoute('Mumbai', 'Goa Coastal Highway')">Mumbai → Goa</span>
+            <span class="route-chip" onclick="setQuickRoute('Bengaluru', 'Ooty & Coorg Trail')">Bengaluru → Ooty</span>
+            <span class="route-chip" onclick="setQuickRoute('Kolkata', 'Darjeeling Tea Hills')">Kolkata → Darjeeling</span>
+          </div>
+        </div>
+
+        <!-- 2. Trip Metrics (Days & Members) -->
+        <div class="section-card">
+          <div class="section-card-title">
+            <span>📅 Schedule & Group</span>
+            <span class="badge">Duration</span>
+          </div>
+
+          <div class="counters-grid">
+            <div class="counter-tile">
+              <span class="counter-tile-label">Duration</span>
+              <div class="counter-tile-control">
+                <button class="btn-step" onclick="changeVal('days', -1)">−</button>
+                <span class="counter-tile-val" id="mValDays">3 Days</span>
+                <button class="btn-step" onclick="changeVal('days', 1)">+</button>
+              </div>
+            </div>
+
+            <div class="counter-tile">
+              <span class="counter-tile-label">Travelers</span>
+              <div class="counter-tile-control">
+                <button class="btn-step" onclick="changeVal('members', -1)">−</button>
+                <span class="counter-tile-val" id="mValMembers">4 Members</span>
+                <button class="btn-step" onclick="changeVal('members', 1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Fleet Selection (Dynamically Loaded from DB) -->
+        <div class="section-card">
+          <div class="section-card-title">
+            <span>🚘 Vehicle Fleet</span>
+            <span class="badge">Chauffeur Included</span>
+          </div>
+
+          <div class="vehicle-cards-list" id="dynamicVehicleList">
+            <!-- Loaded dynamically from /api/cars -->
+          </div>
+        </div>
+
+        <!-- 4. Accommodation Preference (Dynamically Loaded from DB) -->
+        <div class="section-card">
+          <div class="section-card-title">
+            <span>🏡 Stay Category</span>
+            <span class="badge">Verified Quality</span>
+          </div>
+
+          <div class="grid-2x2" id="dynamicStaysGrid">
+            <!-- Loaded dynamically from /api/stays -->
+          </div>
+        </div>
+
+        <!-- 5. Food Preference (Dynamically Loaded from DB) -->
+        <div class="section-card">
+          <div class="section-card-title">
+            <span>🍽️ Food Preference</span>
+            <span class="badge">Highway Rest Stops</span>
+          </div>
+
+          <div class="diet-toggle-grid" id="dynamicMealsGrid">
+            <!-- Loaded dynamically from /api/meals -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SCREEN 2: GEMINI AI ITINERARY & BUDGET (MOBILE-FIRST) -->
+      <!-- ======================================================== -->
+      <section id="screen-itinerary" class="screen-view">
+        
+        <!-- Gemini AI Banner -->
+        <div class="ai-banner-mobile">
+          <div class="ai-sparkle-badge">✨</div>
+          <div class="ai-banner-text">
+            <h3 id="aiTripHeader">Delhi to Jaipur Circuit</h3>
+            <p id="aiTripSub">Crafted by Google Gemini AI • 6-Seater Innova Crysta</p>
+          </div>
+        </div>
+
+        <!-- Day Tabs -->
+        <div class="day-selector-pills" id="mDayPills">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Timeline -->
+        <div class="section-card" style="padding: 1.15rem 1rem 0.5rem;">
+          <div class="section-card-title" style="margin-bottom: 1.25rem;">
+            <span>🗓️ Day-by-Day Journey</span>
+            <span class="badge" onclick="showScreen('screen-planner')">Modify ✏️</span>
+          </div>
+
+          <div class="mobile-timeline" id="mTimelineContainer">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Approx Budget Breakdown Card -->
+        <div class="budget-card-mobile">
+          <div class="section-card-title">
+            <span>📊 Approx Budget Breakdown</span>
+            <span class="badge">Zero Hidden Surge</span>
+          </div>
+
+          <div id="mBudgetLines">
+            <!-- Cost items injected via JS -->
+          </div>
+
+          <div class="total-highlight-mobile">
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Estimated Total Trip Budget</div>
+            <div class="total-amount-text" id="mTotalDisplay">₹28,450</div>
+            <div style="font-size: 0.78rem; color: var(--text-secondary);" id="mPerPersonDisplay">Approx ₹7,112 per traveler</div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- Bottom Sticky Mobile Bar -->
+    <div class="bottom-cta-bar" id="bottomCtaBar">
+      <div class="bottom-summary-text" id="ctaSummaryText">
+        <span>6-Seater • Luxury Hotel • Pure Veg</span>
+        <span style="color: var(--primary); font-weight: 700;">3 Days</span>
+      </div>
+      <button class="btn-mobile-primary" id="btnPrimaryCta" onclick="triggerPrimaryAction()">
+        <span>Generate AI Itinerary with Gemini ✨</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- BOTTOM SHEET: REQUEST A CALLBACK -->
+  <!-- ======================================================== -->
+  <div class="bottom-sheet-overlay" id="callbackSheet">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+
+      <!-- Form View -->
+      <div id="sheetFormView">
+        <h3 class="sheet-title">📞 Request a Callback</h3>
+        <p class="sheet-sub">Speak with a DeepTrip Journey Steward to finalize your captain, customize food & lock your booking.</p>
+
+        <div class="sheet-input-group">
+          <label>Your Name</label>
+          <input type="text" id="sheetName" class="sheet-input" placeholder="e.g. Rajesh Malhotra">
+        </div>
+
+        <div class="sheet-input-group">
+          <label>WhatsApp Mobile Number</label>
+          <input type="tel" id="sheetPhone" class="sheet-input" placeholder="+91 98765 43210">
+        </div>
+
+        <div class="sheet-input-group">
+          <label>Preferred Time</label>
+          <select id="sheetTime" class="sheet-input">
+            <option value="15min">⚡ Immediate (Within 15 Minutes)</option>
+            <option value="afternoon">☀️ Afternoon (12 PM - 3 PM)</option>
+            <option value="evening">🌆 Evening (6 PM - 8 PM)</option>
+            <option value="tomorrow">🌅 Tomorrow Morning (9 AM - 11 AM)</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.85rem 0 1.25rem;">
+          <input type="checkbox" id="sheetWaCheck" checked style="accent-color: var(--primary); width: 16px; height: 16px;">
+          <label for="sheetWaCheck" style="font-size: 0.78rem; color: var(--text-secondary); cursor: pointer;">
+            Send Gemini PDF Itinerary to WhatsApp
+          </label>
+        </div>
+
+        <button class="btn-mobile-primary" style="width: 100%;" onclick="submitCallbackSheet()">
+          Confirm Callback Request
+        </button>
+      </div>
+
+      <!-- Success View -->
+      <div id="sheetSuccessView" style="display: none; text-align: center; padding: 1rem 0;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--emerald-soft); border: 2px solid var(--emerald); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem; color: var(--emerald);">✓</div>
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.35rem;">Callback Request Sent!</h3>
+        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+          Reference ID: <strong style="color: var(--primary);" id="refCodeText">DT-9482-AI</strong><br>
+          A dedicated Journey Steward will call your number within 15 minutes.
+        </p>
+        <button class="btn-mobile-primary" style="width: 100%;" onclick="closeCallbackSheet()">
+          Done
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AI Gemini Loading Modal -->
+  <div class="ai-loader-modal" id="aiLoaderModal">
+    <div class="spinner-ring"></div>
+    <h3 style="font-size: 1.1rem; font-weight: 700;">Google Gemini AI is Planning...</h3>
+    <p style="font-size: 0.78rem; color: var(--text-secondary);">Calculating scenic pitstops, hygienic food hubs & exact budget breakdown.</p>
+  </div>
+
+  <script>
+    // State
+    const appState = {
+      from: 'Delhi (NCR)',
+      to: 'Jaipur Heritage Circuit',
+      days: 3,
+      members: 4,
+      selectedCarId: null,
+      selectedStayId: null,
+      selectedMealId: null,
+      currentDay: 'all',
+      totalBudget: 28450,
+      
+      // Dynamic Database
+      cars: [],
+      stays: [],
+      meals: []
+    };
+
+    // Initialize & Load Dynamic Data
+    async function initAppData() {
+      try {
+        const [cRes, sRes, mRes] = await Promise.all([
+          fetch('/api/cars').then(r => r.json()),
+          fetch('/api/stays').then(r => r.json()),
+          fetch('/api/meals').then(r => r.json())
+        ]);
+
+        appState.cars = (cRes.data || []).filter(c => c.is_active !== false);
+        appState.stays = (sRes.data || []).filter(s => s.is_active !== false);
+        appState.meals = (mRes.data || []).filter(m => m.is_active !== false);
+
+        // Set default selections
+        if (appState.cars.length > 0) appState.selectedCarId = appState.cars[0].id;
+        if (appState.stays.length > 0) appState.selectedStayId = appState.stays[0].id;
+        if (appState.meals.length > 0) appState.selectedMealId = appState.meals[0].id;
+
+        renderDynamicVehicles();
+        renderDynamicStays();
+        renderDynamicMeals();
+        updatePlannerSummary();
+      } catch (e) {
+        console.error('Data init error:', e);
+      }
+    }
+
+    // Dynamic Render: Vehicles
+    function renderDynamicVehicles() {
+      const container = document.getElementById('dynamicVehicleList');
+      if (!container) return;
+
+      let html = '';
+      appState.cars.forEach((car, idx) => {
+        const isSel = car.id === appState.selectedCarId;
+        html += `
+          <div class="vehicle-card ${isSel ? 'selected' : ''}" id="v-card-${car.id}" onclick="selectCar('${car.id}')">
+            <img src="${car.image}" alt="${car.name}" class="vehicle-img-thumb" onerror="this.src='https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=300&q=80'">
+            <div class="vehicle-info">
+              <div class="vehicle-name-row">
+                <span class="vehicle-name">${car.name}</span>
+                <div class="vehicle-select-radio">✓</div>
+              </div>
+              <div class="vehicle-specs">${car.category} • ${car.capacity} Seats • AC</div>
+              <div class="vehicle-price">₹${car.base_fare_per_day.toLocaleString('en-IN')} <span style="font-size: 0.72rem; color: var(--text-muted);">/ day + ₹${car.rate_per_km}/km</span></div>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function selectCar(carId) {
+      appState.selectedCarId = carId;
+      document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove('selected'));
+      const activeEl = document.getElementById(`v-card-${carId}`);
+      if (activeEl) activeEl.classList.add('selected');
+      updatePlannerSummary();
+    }
+
+    // Dynamic Render: Stays
+    function renderDynamicStays() {
+      const container = document.getElementById('dynamicStaysGrid');
+      if (!container) return;
+
+      let html = '';
+      appState.stays.forEach((stay) => {
+        const isSel = stay.id === appState.selectedStayId;
+        html += `
+          <div class="tile-option ${isSel ? 'selected' : ''}" id="s-card-${stay.id}" onclick="selectStay('${stay.id}')">
+            <img src="${stay.image}" class="tile-img" alt="${stay.name}" onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=300&q=80'">
+            <div class="tile-title">${stay.name}</div>
+            <div class="tile-price">₹${stay.price_per_night.toLocaleString('en-IN')}/nt</div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function selectStay(stayId) {
+      appState.selectedStayId = stayId;
+      document.querySelectorAll('.tile-option').forEach(s => s.classList.remove('selected'));
+      const activeEl = document.getElementById(`s-card-${stayId}`);
+      if (activeEl) activeEl.classList.add('selected');
+      updatePlannerSummary();
+    }
+
+    // Dynamic Render: Meals
+    function renderDynamicMeals() {
+      const container = document.getElementById('dynamicMealsGrid');
+      if (!container) return;
+
+      let html = '';
+      appState.meals.forEach((meal) => {
+        const isSel = meal.id === appState.selectedMealId;
+        html += `
+          <div class="diet-card ${isSel ? 'selected' : ''}" id="m-card-${meal.id}" onclick="selectMeal('${meal.id}')">
+            <img src="${meal.image}" class="diet-img-thumb" alt="${meal.name}" onerror="this.src='https://images.unsplash.com/photo-1613292443284-c774643c7b65?auto=format&fit=crop&w=150&q=80'">
+            <div class="diet-card-title">${meal.name}</div>
+            <div class="diet-card-sub">₹${meal.price_per_person_per_day}/person/day</div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function selectMeal(mealId) {
+      appState.selectedMealId = mealId;
+      document.querySelectorAll('.diet-card').forEach(m => m.classList.remove('selected'));
+      const activeEl = document.getElementById(`m-card-${mealId}`);
+      if (activeEl) activeEl.classList.add('selected');
+      updatePlannerSummary();
+    }
+
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(screenId);
+      if (target) target.classList.add('active');
+
+      const isPlanner = screenId === 'screen-planner';
+      document.getElementById('progressBar').style.width = isPlanner ? '50%' : '100%';
+
+      // Update bottom CTA bar
+      const ctaBtn = document.getElementById('btnPrimaryCta');
+      const ctaSummary = document.getElementById('ctaSummaryText');
+
+      if (isPlanner) {
+        ctaBtn.innerHTML = `<span>Generate AI Itinerary with Gemini ✨</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+        updatePlannerSummary();
+      } else {
+        ctaSummary.innerHTML = `<span>Total Approx Budget</span><span style="color: var(--primary); font-weight: 800; font-size: 1rem;">₹${appState.totalBudget.toLocaleString('en-IN')}</span>`;
+        ctaBtn.innerHTML = `<span>Request a Callback for More Details 📞</span>`;
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setQuickRoute(from, to) {
+      document.getElementById('mFromCity').value = from;
+      document.getElementById('mToCity').value = to;
+      appState.from = from;
+      appState.to = to;
+      updatePlannerSummary();
+    }
+
+    function changeVal(type, delta) {
+      if (type === 'days') {
+        appState.days = Math.max(1, Math.min(14, appState.days + delta));
+        document.getElementById('mValDays').innerText = `${appState.days} Days`;
+      } else if (type === 'members') {
+        appState.members = Math.max(1, Math.min(12, appState.members + delta));
+        document.getElementById('mValMembers').innerText = `${appState.members} Members`;
+      }
+      updatePlannerSummary();
+    }
+
+    function updatePlannerSummary() {
+      const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { name: 'Vehicle' };
+      const activeStay = appState.stays.find(s => s.id === appState.selectedStayId) || { name: 'Stay' };
+      const activeMeal = appState.meals.find(m => m.id === appState.selectedMealId) || { name: 'Meal' };
+
+      document.getElementById('ctaSummaryText').innerHTML = `<span>${activeCar.name.split(' ')[0]} • ${activeStay.name.split(' ')[0]} • ${activeMeal.name.split(' ')[0]}</span><span style="color: var(--primary); font-weight: 700;">${appState.days} Days</span>`;
+    }
+
+    function triggerPrimaryAction() {
+      const isPlanner = document.getElementById('screen-planner').classList.contains('active');
+      if (isPlanner) {
+        const loader = document.getElementById('aiLoaderModal');
+        loader.classList.add('active');
+
+        setTimeout(() => {
+          loader.classList.remove('active');
+          buildItineraryAndBudget();
+          showScreen('screen-itinerary');
+        }, 600);
+      } else {
+        openCallbackSheet();
+      }
+    }
+
+    function buildItineraryAndBudget() {
+      appState.from = document.getElementById('mFromCity').value || appState.from;
+      appState.to = document.getElementById('mToCity').value || appState.to;
+
+      const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { name: 'Sedan' };
+      document.getElementById('aiTripHeader').innerText = `${appState.from.split(' ')[0]} to ${appState.to.split(' ')[0]} (${appState.days} Days)`;
+      document.getElementById('aiTripSub').innerText = `Gemini AI • ${appState.members} Members • ${activeCar.name}`;
+
+      // Build Day Pills
+      const pillsBox = document.getElementById('mDayPills');
+      let pillsHtml = `<button class="day-pill-btn ${appState.currentDay === 'all' ? 'active' : ''}" onclick="filterTimeline('all')">All Days</button>`;
+      for (let i = 1; i <= appState.days; i++) {
+        pillsHtml += `<button class="day-pill-btn ${appState.currentDay == i ? 'active' : ''}" onclick="filterTimeline(${i})">Day ${i}</button>`;
+      }
+      pillsBox.innerHTML = pillsHtml;
+
+      renderTimeline();
+      calcBudget();
+    }
+
+    function filterTimeline(day) {
+      appState.currentDay = day;
+      buildItineraryAndBudget();
+    }
+
+    function renderTimeline() {
+      const { from, to, days, currentDay } = appState;
+      const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { name: 'Vehicle' };
+      const activeStay = appState.stays.find(s => s.id === appState.selectedStayId) || { name: 'Stay' };
+      const activeMeal = appState.meals.find(m => m.id === appState.selectedMealId) || { name: 'Food' };
+
+      const container = document.getElementById('mTimelineContainer');
+      let html = '';
+
+      const sampleTimeline = [
+        {
+          day: 1,
+          events: [
+            { time: '07:00 AM', title: 'Doorstep Pickup & Chauffeur Boarding', desc: `Sanitized ${activeCar.name} with certified captain, luggage assistance & chilled water.` },
+            { time: '09:30 AM', title: `Highway Breakfast (${activeMeal.name})`, desc: 'Piping hot breakfast thali with kulhad masala chai at hygienically certified highway partner.' },
+            { time: '01:30 PM', title: `Check-in at ${activeStay.name}`, desc: 'Express check-in with refreshing welcome drinks and curated welcome hamper.' },
+            { time: '04:30 PM', title: 'Guided Landmark Exploration & Sunset Drive', desc: `Scenic tour of top landmarks along ${to.split(' ')[0]} with audio guide.` },
+            { time: '08:00 PM', title: `Gourmet Dinner (${activeMeal.name})`, desc: 'Authentic local culinary feast prepared fresh.' }
+          ]
+        },
+        {
+          day: 2,
+          events: [
+            { time: '08:30 AM', title: 'Buffet Breakfast at Stay', desc: 'Fresh local delicacies, fruits & hot brewed coffee.' },
+            { time: '11:00 AM', title: 'Artisan Courtyards & Cultural Walk', desc: 'Guided stroll through historic spots with special pre-negotiated artisan rates.' },
+            { time: '05:00 PM', title: 'Panoramic Hilltop Sunset Point', desc: 'Evening tea pitstop overlooking panoramic desert/mountain sunset.' }
+          ]
+        },
+        {
+          day: 3,
+          events: [
+            { time: '09:00 AM', title: 'Leisurely Breakfast & Check-out', desc: 'Captain handles luggage loading and vehicle sanitization.' },
+            { time: '01:00 PM', title: 'Scenic Highway Lunch Stop', desc: 'Farm-fresh family lunch in relaxed garden restaurant.' },
+            { time: '06:00 PM', title: `Safe Return to ${from.split(' ')[0]}`, desc: 'Doorstep drop-off with 24/7 SOS monitoring completion.' }
+          ]
+        }
+      ];
+
+      const activeDays = currentDay === 'all' 
+        ? sampleTimeline.slice(0, Math.min(days, sampleTimeline.length))
+        : sampleTimeline.filter(d => d.day == currentDay);
+
+      activeDays.forEach(d => {
+        html += `<div style="font-size: 0.82rem; font-weight: 800; color: var(--primary); margin: 0.85rem 0 0.5rem -1.25rem;">📌 Day ${d.day} Plan</div>`;
+        d.events.forEach(evt => {
+          html += `
+            <div class="tl-step">
+              <div class="tl-dot"></div>
+              <div class="tl-content">
+                <span class="tl-time-badge">${evt.time}</span>
+                <div class="tl-title">${evt.title}</div>
+                <div class="tl-desc">${evt.desc}</div>
+              </div>
+            </div>
+          `;
+        });
+      });
+
+      container.innerHTML = html;
+    }
+
+    function calcBudget() {
+      const { days, members } = appState;
+      const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { base_fare_per_day: 2400, rate_per_km: 14 };
+      const activeStay = appState.stays.find(s => s.id === appState.selectedStayId) || { price_per_night: 3500 };
+      const activeMeal = appState.meals.find(m => m.id === appState.selectedMealId) || { price_per_person_per_day: 850 };
+
+      const totalCar = activeCar.base_fare_per_day * days;
+      const totalStay = activeStay.price_per_night * Math.max(1, days - 1);
+      const totalFood = activeMeal.price_per_person_per_day * members * days;
+      const estFuelTolls = Math.round(days * 220 * activeCar.rate_per_km * 0.45);
+      const subtotal = totalCar + totalStay + totalFood + estFuelTolls;
+      const gst = Math.round(subtotal * 0.05);
+      const total = subtotal + gst;
+      const perPax = Math.round(total / members);
+
+      appState.totalBudget = total;
+
+      document.getElementById('mBudgetLines').innerHTML = `
+        <div class="budget-line-row"><span class="budget-line-name">🚘 ${activeCar.name || 'Vehicle'} (${days} Days)</span><span class="budget-line-val">₹${totalCar.toLocaleString('en-IN')}</span></div>
+        <div class="budget-line-row"><span class="budget-line-name">⛽ Estimated Fuel & Tolls</span><span class="budget-line-val">₹${estFuelTolls.toLocaleString('en-IN')}</span></div>
+        <div class="budget-line-row"><span class="budget-line-name">🏨 ${activeStay.name || 'Stay'} (${days - 1 || 1} Nights)</span><span class="budget-line-val">₹${totalStay.toLocaleString('en-IN')}</span></div>
+        <div class="budget-line-row"><span class="budget-line-name">🍽️ ${activeMeal.name || 'Food Package'}</span><span class="budget-line-val">₹${totalFood.toLocaleString('en-IN')}</span></div>
+        <div class="budget-line-row"><span class="budget-line-name">🚨 24/7 SOS & Captain Concierge</span><span style="color: var(--emerald); font-weight: 700;">FREE</span></div>
+        <div class="budget-line-row"><span class="budget-line-name">🧾 GST (5%)</span><span class="budget-line-val">₹${gst.toLocaleString('en-IN')}</span></div>
+      `;
+
+      document.getElementById('mTotalDisplay').innerText = `₹${total.toLocaleString('en-IN')}`;
+      document.getElementById('mPerPersonDisplay').innerText = `Approx ₹${perPax.toLocaleString('en-IN')} per traveler (${members} Travelers)`;
+    }
+
+    // Bottom Sheet Callback Flow
+    function openCallbackSheet() {
+      document.getElementById('sheetFormView').style.display = 'block';
+      document.getElementById('sheetSuccessView').style.display = 'none';
+      document.getElementById('callbackSheet').classList.add('active');
+    }
+
+    function closeCallbackSheet() {
+      document.getElementById('callbackSheet').classList.remove('active');
+    }
+
+    function submitCallbackSheet() {
+      const name = document.getElementById('sheetName').value || 'DeepTrip Traveler';
+      const phone = document.getElementById('sheetPhone').value || '+91 98765 43210';
+      const refId = `DT-${Math.floor(1000 + Math.random() * 9000)}-AI`;
+
+      const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { name: 'Vehicle' };
+      const activeStay = appState.stays.find(s => s.id === appState.selectedStayId) || { name: 'Stay' };
+      const activeMeal = appState.meals.find(m => m.id === appState.selectedMealId) || { name: 'Food' };
+
+      document.getElementById('refCodeText').innerText = refId;
+      document.getElementById('sheetFormView').style.display = 'none';
+      document.getElementById('sheetSuccessView').style.display = 'block';
+
+      // Save to backend API
+      fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: refId,
+          user_name: name,
+          user_phone: phone,
+          source: appState.from,
+          destination: appState.to,
+          days: appState.days,
+          passengers: appState.members,
+          car_name: activeCar.name,
+          stay_name: activeStay.name,
+          meal_name: activeMeal.name,
+          total_price: appState.totalBudget,
+          status: 'Callback Requested'
+        })
+      }).catch(e => console.log(e));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initAppData();
+    });
+  </script>
+</body>
+</html>

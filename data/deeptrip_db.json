@@ -1,0 +1,485 @@
+{
+  "cars": [
+    {
+      "id": "car-1",
+      "name": "Honda City Elegance / Dzire Prime",
+      "category": "4-Seater Sedan",
+      "capacity": 4,
+      "luggage": "3 Bags",
+      "base_fare_per_day": 2400,
+      "rate_per_km": 14,
+      "transmission": "Automatic / Manual",
+      "fuel_type": "Petrol / Hybrid",
+      "image": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80",
+      "description": "Perfect for small families and couples. Equipped with soft blankets, chilled water, and high-speed Wi-Fi.",
+      "amenities": [
+        "Chauffeur-Guide",
+        "Backseat Pillows",
+        "High-Speed Wi-Fi",
+        "Pet Safety Harness Compatible",
+        "First-Aid Kit"
+      ],
+      "pet_friendly": true,
+      "senior_accessible": true,
+      "is_active": true,
+      "captain": "Rajesh Sharma (4.9 ★, 8+ yrs exp)"
+    },
+    {
+      "id": "car-2",
+      "name": "Toyota Innova Crysta / Hycross (6-Seater)",
+      "category": "7-Seater Premium SUV/MUV",
+      "capacity": 7,
+      "luggage": "6 Bags",
+      "base_fare_per_day": 3950,
+      "rate_per_km": 19,
+      "transmission": "Automatic",
+      "fuel_type": "Diesel / Hybrid",
+      "image": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80",
+      "description": "The gold standard for road trips in India. Ultra-comfortable captain seats, rear AC, senior accessibility side steps, and spacious boot space.",
+      "amenities": [
+        "Captain Chauffeur-Guide",
+        "Android Backseat Screens + Headphones",
+        "Senior Accessibility Step",
+        "Dedicated Pet Space",
+        "Chilled Mini-Fridge",
+        "Fast-Charging Docks"
+      ],
+      "pet_friendly": true,
+      "senior_accessible": true,
+      "is_active": true,
+      "captain": "Vikramaditya Singh (5.0 ★, 12+ yrs exp)"
+    },
+    {
+      "id": "car-3",
+      "name": "Mahindra Scorpio-N / XUV700",
+      "category": "7-Seater Adventure SUV",
+      "capacity": 7,
+      "luggage": "5 Bags",
+      "base_fare_per_day": 3400,
+      "rate_per_km": 17,
+      "transmission": "Automatic 4x4",
+      "fuel_type": "Diesel",
+      "image": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
+      "description": "Rugged yet plush SUV designed for scenic mountain terrains, hill climbs, and coastal highways with panoramic sunroof.",
+      "amenities": [
+        "Expert Mountain Driver",
+        "Panoramic Sunroof",
+        "Pet Seat Covers",
+        "Emergency Oxygen Kit",
+        "Roof Carrier (on demand)"
+      ],
+      "pet_friendly": true,
+      "senior_accessible": true,
+      "is_active": true,
+      "captain": "Manpreet Singh (4.9 ★, 9+ yrs exp)"
+    },
+    {
+      "id": "car-4",
+      "name": "BMW 5 Series / Mercedes-Benz E-Class",
+      "category": "Luxury Chauffeur Sedan",
+      "capacity": 4,
+      "luggage": "3 Bags",
+      "base_fare_per_day": 7500,
+      "rate_per_km": 35,
+      "transmission": "Automatic Luxury",
+      "fuel_type": "Petrol / Diesel",
+      "image": "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80",
+      "description": "First-class road luxury. Reclining massage leather seats, ambient mood lighting, premium Harman Kardon acoustics, and white-glove chauffeur service.",
+      "amenities": [
+        "White-Glove Butler Chauffeur",
+        "Reclining Leather Seats",
+        "Burmester Sound System",
+        "Premium Refreshment Hamper",
+        "Tablet Concierge"
+      ],
+      "pet_friendly": false,
+      "senior_accessible": true,
+      "is_active": true,
+      "captain": "Arjun Malhotra (5.0 ★, 14+ yrs exp)"
+    },
+    {
+      "id": "car-5",
+      "name": "Toyota Fortuner Legender 4x4",
+      "category": "Luxury 7-Seater Flagship",
+      "capacity": 7,
+      "luggage": "6 Bags",
+      "base_fare_per_day": 6200,
+      "rate_per_km": 28,
+      "transmission": "Automatic 4WD",
+      "fuel_type": "Diesel",
+      "image": "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=800&q=80",
+      "description": "Dominating luxury SUV with unmatched road presence, supreme safety, senior hydraulic ease-step, and full pet containment suite.",
+      "amenities": [
+        "Executive Chauffeur",
+        "Hydraulic Easy Step for Seniors",
+        "Pet Carrier Enclosure",
+        "Mini Espresso Machine",
+        "Noise-Cancelling Headphones"
+      ],
+      "pet_friendly": true,
+      "senior_accessible": true,
+      "is_active": true,
+      "captain": "Dharmendra Rawat (4.9 ★, 11+ yrs exp)"
+    },
+    {
+      "name": "Force Gurkha 4x4 Expedition Special",
+      "image": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80",
+      "category": "4x4 Mountain Cruiser",
+      "capacity": 5,
+      "base_fare_per_day": 4800,
+      "rate_per_km": 24,
+      "is_active": true,
+      "id": "car-f6241e"
+    }
+  ],
+  "stays": [
+    {
+      "id": "stay-1",
+      "name": "Heritage Orchard Homestay & Farmhouse",
+      "type": "Budget Homestay",
+      "location": "Jaipur / Shimla / Coorg Outskirts",
+      "price_per_night": 2200,
+      "rating": 4.8,
+      "reviews_count": 142,
+      "image": "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=800&q=80",
+      "description": "Warm, home-cooked organic hospitality with lush gardens, ground-floor accessibility for seniors, and open lawns for pets to run freely.",
+      "amenities": [
+        "Ground Floor Rooms (No Stairs)",
+        "Pet Friendly Lawns",
+        "Home-Cooked Fresh Meals",
+        "Doctor-on-Call",
+        "Bonfire Pit"
+      ],
+      "pet_friendly": true,
+      "senior_accessible": true,
+      "is_active": true
+    },
+    {
+      "id": "stay-2",
+      "name": "Valley View Boutique Hotel & Spa",
+      "type": "Standard 3/4-Star Hotel",
+      "location": "Manali / Udaipur / Goa / Munnar",
+      "price_per_night": 3800,
+      "rating": 4.7,
+      "reviews_count": 298,
+      "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+      "description": "Charming boutique hotel with panoramic balcony views, elevator access, 24-hr room dining, and curated local cultural evenings.",
+      "amenities": [
+        "Elevator / Lift Access",
+        "Heated Pool & Spa",
+        "24/7 Room Service",
+        "Wheelchair Friendly",
+        "Secure Dedicated Parking"
+      ],
+      "pet_friendly": true,
+      "senior_accessible": true,
+      "is_active": true
+    },
+    {
+      "id": "stay-3",
+      "name": "The Royal Palace & Luxury Heritage Resort",
+      "type": "Premium Luxury 5-Star Resort / Villa",
+      "location": "Udaipur / Mussoorie / Goa Beachfront / Kabini",
+      "price_per_night": 7000,
+      "rating": 4.95,
+      "reviews_count": 480,
+      "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+      "description": "Unrivaled luxury living with private plunge pools, butler service, ayurvedic wellness spas, and curated royal dining experiences.",
+      "amenities": [
+        "Private Butler Service",
+        "Infinity Pool & Wellness Spa",
+        "Fine Dining Restaurants",
+        "Pet Concierge & Pet Grooming",
+        "Golf Cart Transit inside Property"
+      ],
+      "pet_friendly": true,
+      "senior_accessible": true,
+      "is_active": true
+    },
+    {
+      "id": "stay-4",
+      "name": "Riverside Wooden Pine Chalet",
+      "type": "Budget Homestay / Eco Lodge",
+      "location": "Jibhi / Kasol / Rishikesh / Wayanad",
+      "price_per_night": 2600,
+      "rating": 4.85,
+      "reviews_count": 89,
+      "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
+      "description": "Tranquil riverside retreat surrounded by whispering pines. Clean spring water, campfire stories, and calming nature trails.",
+      "amenities": [
+        "Riverside Sitout",
+        "Pet Safe Fenced Compound",
+        "Organic Herbal Teas",
+        "Warm Electric Blankets",
+        "Board Games"
+      ],
+      "pet_friendly": true,
+      "senior_accessible": false,
+      "is_active": true
+    },
+    {
+      "name": "Cloud 9 Alpine Glamping & Wooden Chalet",
+      "image": "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=600&q=80",
+      "type": "Luxury Glamping",
+      "price_per_night": 5900,
+      "is_active": true,
+      "id": "stay-6b36d1"
+    }
+  ],
+  "meals": [
+    {
+      "id": "meal-1",
+      "name": "Pure Vegetarian & Satvik Culinary Package",
+      "type": "Veg",
+      "dietary": "100% Vegetarian / Jain Options Available",
+      "price_per_person_per_day": 880,
+      "image": "https://images.unsplash.com/photo-1613292443284-c774643c7b65?auto=format&fit=crop&w=800&q=80",
+      "description": "Wholesome, low-spice, hygienic homestyle thalis curated for road comfort. Includes traditional highway breakfast, lunch thali, evening tea & snack, and dinner.",
+      "inclusions": [
+        "Breakfast: Fresh Poha/Idli/Parathas with Masala Chai/Filter Coffee",
+        "Highway Lunch: Traditional Grand Veg Thali at pre-screened hygienic partner restaurants",
+        "Sunset High Tea: Artisan Cookies & Roadside Kulhad Chai",
+        "Dinner: Light & soothing Dal Tadka, Seasonal Sabzi, Phulkas, Basmati Rice & Sweet"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "meal-2",
+      "name": "Royal Feast & Non-Veg Gourmet Package",
+      "type": "Non-Veg",
+      "dietary": "Non-Vegetarian & Multi-Cuisine",
+      "price_per_person_per_day": 1250,
+      "image": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+      "description": "Authentic regional culinary delights along the journey. Succulent tandoori, curries, highway dhabas, local seafood/chicken specialties, and desserts.",
+      "inclusions": [
+        "Breakfast: Masala Omelettes/Keema Parathas or South Indian Delights",
+        "Highway Lunch: Regional Signature Non-Veg Curry / Biryani with Salads & Raita",
+        "Evening Refreshment: Highway Kebabs or Pakoras with beverages",
+        "Dinner: Mughlai / Coastal Non-Veg specialties with Breads, Rice & Dessert"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "meal-3",
+      "name": "Flexible Combo & Regional Tasting Plan",
+      "type": "Mix (Veg + Non-Veg Choice)",
+      "dietary": "Customizable per traveler",
+      "price_per_person_per_day": 1050,
+      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      "description": "The best of both worlds. Choose vegetarian for light road transit lunches and treat yourself to gourmet non-veg or local delicacies at dinner.",
+      "inclusions": [
+        "Nutritious morning energy breakfast & fresh juices",
+        "Light digestive lunch for smooth scenic drives",
+        "Chilled in-car refreshments (tender coconut, sparkling water, fruit baskets)",
+        "Full customized dinner buffet at resort or premium restaurant"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "meal-4",
+      "name": "Highway Snack Box & Refreshment Kit (Add-On)",
+      "type": "Snack Kit",
+      "dietary": "Veg / Vegan / Low Sugar Options",
+      "price_per_person_per_day": 350,
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+      "description": "Continuous in-car artisanal snack hamper: roasted dry fruits, organic energy bars, digestive candies, mineral water, and diabetic-friendly snacks.",
+      "inclusions": [
+        "Almonds, Cashews & Roasted Makhana pouch",
+        "Fresh seasonal whole fruits (Apples, Bananas, Oranges)",
+        "Glucose and electrolyte drink packs",
+        "Artisan cookies and herbal tea sachets"
+      ],
+      "is_active": true
+    },
+    {
+      "name": "Coastal Malabar & Chettinad Feast",
+      "image": "https://images.unsplash.com/photo-1613292443284-c774643c7b65?auto=format&fit=crop&w=600&q=80",
+      "type": "Coastal Non-Veg",
+      "price_per_person_per_day": 1350,
+      "is_active": true,
+      "id": "meal-7278cd"
+    }
+  ],
+  "trips": [
+    {
+      "id": "trip-1",
+      "title": "Royal Rajasthan & Desert Forts Odyssey",
+      "route": "Delhi → Jaipur → Pushkar → Udaipur",
+      "duration": "5 Days / 4 Nights",
+      "distance_km": 1250,
+      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80",
+      "highlights": [
+        "Amer Fort Sunset Drive",
+        "Pushkar Holy Lake Oasis",
+        "Udaipur Lake Pichola Boat Cruise",
+        "Chauffeur Heritage Storytelling"
+      ],
+      "suggested_car": "car-2",
+      "suggested_stay": "stay-3",
+      "starting_price": 28500
+    },
+    {
+      "id": "trip-2",
+      "title": "Himalayan Serenity & Pine Valley Circuit",
+      "route": "Chandigarh → Shimla → Kullu → Manali",
+      "duration": "6 Days / 5 Nights",
+      "distance_km": 980,
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80",
+      "highlights": [
+        "Atal Tunnel Snow Excursion",
+        "Solang Valley Cable Car",
+        "Old Manali Wooden Cafes",
+        "Senior-Safe Gentle Mountain Paths"
+      ],
+      "suggested_car": "car-3",
+      "suggested_stay": "stay-2",
+      "starting_price": 32000
+    },
+    {
+      "id": "trip-3",
+      "title": "Konkan Coastal Highway & Goa Sunsets",
+      "route": "Mumbai / Pune → Alibaug → Ganpatipule → Goa",
+      "duration": "4 Days / 3 Nights",
+      "distance_km": 720,
+      "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+      "highlights": [
+        "Scenic Coastal Sea Link Bridges",
+        "Secluded Pet-Friendly White Sand Beaches",
+        "Fresh Catch & Konkani Cuisine",
+        "Fort Aguada Sunset View"
+      ],
+      "suggested_car": "car-2",
+      "suggested_stay": "stay-2",
+      "starting_price": 24000
+    },
+    {
+      "id": "trip-4",
+      "title": "Western Ghats & Coffee Plantation Trail",
+      "route": "Bengaluru → Mysore → Coorg → Wayanad",
+      "duration": "4 Days / 3 Nights",
+      "distance_km": 680,
+      "image": "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=800&q=80",
+      "highlights": [
+        "Mysore Palace Illumination",
+        "Coorg Private Coffee Estate Walks",
+        "Abbey Waterfalls",
+        "Pet-Friendly Open Plantation Lawns"
+      ],
+      "suggested_car": "car-1",
+      "suggested_stay": "stay-1",
+      "starting_price": 19500
+    }
+  ],
+  "bookings": [
+    {
+      "id": "DT-4910-AI",
+      "user_name": "DeepTrip Traveler",
+      "user_phone": "+91 98765 43210",
+      "source": "Delhi (NCR)",
+      "destination": "Jaipur Heritage Circuit",
+      "days": 3,
+      "passengers": 4,
+      "car_name": "Toyota Innova Crysta (6-Seater)",
+      "stay_name": "luxury",
+      "meal_name": "veg",
+      "total_price": 42885,
+      "status": "Callback Requested",
+      "created_at": "2026-08-29 16:17",
+      "payment_status": "Paid"
+    },
+    {
+      "id": "DT-VERIFY-7722",
+      "user_name": "Rajesh Malhotra",
+      "user_phone": "+91 98765 43210",
+      "source": "Delhi (NCR)",
+      "destination": "Jaipur Royal Heritage Circuit",
+      "days": 3,
+      "passengers": 4,
+      "car_name": "Toyota Innova Crysta (6-Seater)",
+      "stay_name": "Luxury Hotels",
+      "meal_name": "Pure Veg & Satvik Package",
+      "total_price": 28450,
+      "status": "Callback Requested",
+      "created_at": "2026-08-29 16:08",
+      "payment_status": "Paid"
+    },
+    {
+      "id": "DT-8942",
+      "created_at": "2026-08-26 14:30",
+      "user_name": "Col. Sanjeev Mehra",
+      "user_phone": "+91 98110 54321",
+      "user_email": "sanjeev.mehra@gmail.com",
+      "source": "Delhi NCR",
+      "destination": "Jaipur & Udaipur Heritage Circuit",
+      "start_date": "2026-09-05",
+      "end_date": "2026-09-09",
+      "days": 5,
+      "passengers": 3,
+      "senior_citizens_count": 2,
+      "pets_count": 1,
+      "car_id": "car-2",
+      "car_name": "Toyota Innova Crysta / Hycross",
+      "stay_id": "stay-3",
+      "stay_name": "The Royal Palace & Luxury Heritage Resort",
+      "meal_id": "meal-1",
+      "meal_name": "Pure Vegetarian & Satvik Culinary Package",
+      "total_price": 54200,
+      "status": "Confirmed",
+      "payment_status": "Paid",
+      "captain_assigned": "Vikramaditya Singh",
+      "special_notes": "Wheelchair ramp needed for grandmother at stops. Golden retriever traveling along."
+    },
+    {
+      "id": "DT-8943",
+      "created_at": "2026-08-27 10:15",
+      "user_name": "Pooja & Rohan Varma",
+      "user_phone": "+91 98200 99881",
+      "user_email": "rohan.varma@techcorp.in",
+      "source": "Mumbai",
+      "destination": "Goa Coastal Highway Odyssey",
+      "start_date": "2026-09-12",
+      "end_date": "2026-09-15",
+      "days": 4,
+      "passengers": 2,
+      "senior_citizens_count": 0,
+      "pets_count": 0,
+      "car_id": "car-4",
+      "car_name": "BMW 5 Series / Mercedes-Benz E-Class",
+      "stay_id": "stay-2",
+      "stay_name": "Valley View Boutique Hotel & Spa",
+      "meal_id": "meal-2",
+      "meal_name": "Royal Feast & Non-Veg Gourmet Package",
+      "total_price": 45200,
+      "status": "On Road",
+      "payment_status": "Paid",
+      "captain_assigned": "Arjun Malhotra",
+      "special_notes": "Anniversary trip. Sunset champagne roadside setup requested."
+    },
+    {
+      "id": "DT-8944",
+      "created_at": "2026-08-27 16:45",
+      "user_name": "Dr. Sunita Kulkarni",
+      "user_phone": "+91 94220 12345",
+      "user_email": "sunita.kulkarni@apollo.org",
+      "source": "Bengaluru",
+      "destination": "Coorg & Wayanad Plantation Trail",
+      "start_date": "2026-09-18",
+      "end_date": "2026-09-21",
+      "days": 4,
+      "passengers": 4,
+      "senior_citizens_count": 2,
+      "pets_count": 1,
+      "car_id": "car-1",
+      "car_name": "Honda City Elegance / Dzire Prime",
+      "stay_id": "stay-1",
+      "stay_name": "Heritage Orchard Homestay & Farmhouse",
+      "meal_id": "meal-3",
+      "meal_name": "Flexible Combo & Regional Tasting Plan",
+      "total_price": 28400,
+      "status": "Pending",
+      "payment_status": "Deposit Paid",
+      "captain_assigned": "Rajesh Sharma",
+      "special_notes": "Low sodium meals requested for elderly parents."
+    }
+  ]
+}

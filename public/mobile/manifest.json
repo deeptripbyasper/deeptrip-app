@@ -1,0 +1,22 @@
+{
+  "name": "DeepTrip - Road Trip Partner",
+  "short_name": "DeepTrip",
+  "start_url": "/mobile/index.html",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#6366f1",
+  "description": "Chauffeur-guided premium road trips for families, seniors & pet owners. Customize cars, hotels, and meals.",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=192&q=80",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=512&q=80",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

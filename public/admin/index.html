@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DeepTrip Admin - Fleet, Stays & Food Control</title>
+  <meta name="description" content="Add and customize DeepTrip cars, hotels, food packages, tariffs, and manage live booking dispatch.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FF5A36;
+      --primary-hover: #E44825;
+      --primary-soft: rgba(255, 90, 54, 0.14);
+      --primary-glow: rgba(255, 90, 54, 0.35);
+      
+      --brand-cyan: #00B4D8;
+      --brand-navy: #0C1824;
+      
+      --bg-dark: #070D14;
+      --bg-surface: #101722;
+      --bg-surface-elevated: #182232;
+      --bg-input: #0A0F18;
+      
+      --text-main: #FFFFFF;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      
+      --border-color: rgba(255, 255, 255, 0.09);
+      --border-focus: rgba(255, 90, 54, 0.6);
+      
+      --emerald: #10B981;
+      --emerald-soft: rgba(16, 185, 129, 0.14);
+      --red: #EF4444;
+      --red-soft: rgba(239, 68, 68, 0.14);
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.6);
+      --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.45;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+
+    /* Top Sticky Navigation Bar */
+    header.admin-navbar {
+      background: rgba(16, 23, 34, 0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .nav-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-logo-img {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+    }
+
+    .brand-badge {
+      background: var(--primary-soft);
+      border: 1px solid rgba(255, 90, 54, 0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .link-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .link-pill-btn:hover {
+      border-color: var(--primary);
+      color: #FFF;
+    }
+
+    /* Main Container */
+    main.admin-body {
+      flex: 1;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.25rem 1.15rem 4rem;
+    }
+
+    /* KPI Summary Row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 850px) {
+      .kpi-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .kpi-row { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .kpi-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .kpi-value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #FFF;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .kpi-sub {
+      font-size: 0.72rem;
+      color: var(--emerald);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* Sticky Mobile Navigation Tabs */
+    .tabs-bar {
+      display: flex;
+      gap: 0.45rem;
+      overflow-x: auto;
+      padding-bottom: 0.6rem;
+      margin-bottom: 1.25rem;
+      scrollbar-width: none;
+      position: sticky;
+      top: 55px;
+      z-index: 60;
+      background: rgba(7, 13, 20, 0.92);
+      backdrop-filter: blur(12px);
+      padding-top: 0.4rem;
+    }
+
+    .tabs-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 0.6rem 1.15rem;
+      border-radius: var(--radius-full);
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #FFF;
+      box-shadow: 0 4px 16px var(--primary-glow);
+    }
+
+    /* Tab Panes */
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      color: #FFF;
+    }
+
+    .section-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .btn-add-primary {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #FFF;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.6rem 1.2rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      transition: var(--transition);
+    }
+
+    .btn-add-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+    }
+
+    /* Editable Cards Grid */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.15rem;
+    }
+
+    @media (max-width: 800px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+
+    .edit-item-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .edit-item-card:hover {
+      border-color: rgba(255, 90, 54, 0.4);
+    }
+
+    /* Image Preview & URL Input */
+    .image-edit-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .preview-thumb-box {
+      width: 110px;
+      height: 80px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .preview-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .image-inputs-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    /* Form Inputs */
+    .form-group-clean {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .form-label-clean {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .clean-input {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.75rem;
+      color: #FFF;
+      font-size: 0.88rem;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .clean-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-soft);
+    }
+
+    /* Price Inputs Box */
+    .pricing-fields-box {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 480px) {
+      .pricing-fields-box { grid-template-columns: 1fr; }
+    }
+
+    .price-field-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .price-val-wrapper {
+      display: flex;
+      align-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.6rem;
+    }
+
+    .price-val-wrapper:focus-within {
+      border-color: var(--primary);
+    }
+
+    .currency-sym {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-right: 0.25rem;
+    }
+
+    .price-num-input {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      width: 100%;
+      outline: none;
+    }
+
+    /* Card Actions */
+    .card-footer-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.75rem;
+      margin-top: auto;
+      gap: 0.5rem;
+    }
+
+    .toggle-active-clean {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .toggle-active-clean input {
+      accent-color: var(--emerald);
+      width: 16px;
+      height: 16px;
+    }
+
+    .btn-save-item {
+      background: linear-gradient(135deg, #FF5A36 0%, #E44825 100%);
+      color: #FFF;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: var(--transition);
+      box-shadow: 0 2px 10px rgba(255, 90, 54, 0.35);
+    }
+
+    .btn-save-item:hover {
+      box-shadow: 0 4px 14px rgba(255, 90, 54, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .btn-delete-item {
+      background: var(--red-soft);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: var(--red);
+      border-radius: var(--radius-sm);
+      padding: 0.48rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: var(--transition);
+    }
+
+    .btn-delete-item:hover {
+      background: rgba(239, 68, 68, 0.25);
+    }
+
+    /* Dispatcher Card List */
+    .bookings-list-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .booking-tile {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .booking-tile-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.65rem;
+    }
+
+    .b-user-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .b-user-phone {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .b-id-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .booking-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 600px) {
+      .booking-meta-grid { grid-template-columns: 1fr; }
+    }
+
+    .meta-col label {
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .meta-col span {
+      color: #FFF;
+      font-weight: 600;
+    }
+
+    .booking-status-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 0.65rem;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .status-dropdown {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .btn-contact {
+      background: var(--emerald-soft);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--emerald);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* Modal / Drawer Overlay for Adding Items */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      animation: modalScale 0.2s ease-out;
+    }
+
+    @keyframes modalScale {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.75rem;
+    }
+
+    .modal-title {
+      font-size: 1.15rem;
+      color: #FFF;
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .modal-body-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    /* Toast Notification */
+    .toast-pill {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: #1E293B;
+      border: 1px solid var(--primary);
+      color: #FFF;
+      padding: 0.85rem 1.35rem;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      display: none;
+      animation: toastSlideUp 0.25s ease-out;
+    }
+
+    .toast-pill.active {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @keyframes toastSlideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Admin Navbar with DeepTrip Logo -->
+  <header class="admin-navbar">
+    <div class="nav-inner">
+      <div class="brand-cluster">
+        <img src="/assets/deeptrip_logo.png" alt="DeepTrip" class="brand-logo-img" onerror="this.src='/assets/deeptrip_icon.png'">
+        <span class="brand-badge">Admin Operations</span>
+      </div>
+
+      <div class="nav-actions-group">
+        <a href="/planner" target="_blank" class="link-pill-btn">
+          <span>📱 Open Mobile App</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Body Content -->
+  <main class="admin-body">
+
+    <!-- KPI Summary Row -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <span class="kpi-label">Total Revenue</span>
+        <span class="kpi-value" id="kpiRevenue">₹1,84,200</span>
+        <span class="kpi-sub">↑ 18.5% this month</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Active Journeys</span>
+        <span class="kpi-value" id="kpiActiveTrips">6 On Road</span>
+        <span class="kpi-sub">🛡️ 100% SOS Safe</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Total Bookings</span>
+        <span class="kpi-value" id="kpiTotalBookings">14</span>
+        <span class="kpi-sub">⚡ Real-time Stream</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Captain Rating</span>
+        <span class="kpi-value">4.95 ★</span>
+        <span class="kpi-sub">⭐ 100% Verified</span>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" onclick="switchAdminTab('fleet')">🚘 Fleet Cars</button>
+      <button class="tab-btn" onclick="switchAdminTab('stays')">🏨 Stays & Hotels</button>
+      <button class="tab-btn" onclick="switchAdminTab('meals')">🍽️ Culinary & Food</button>
+      <button class="tab-btn" onclick="switchAdminTab('bookings')">📋 Live Dispatcher</button>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- TAB 1: FLEET CARS (ADD & EDIT) -->
+    <!-- ======================================================== -->
+    <section id="tab-fleet" class="tab-pane active">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🚘 Fleet Vehicles</h2>
+          <p class="section-desc">Add new vehicle models or edit brand names, photos, daily base fares, and per-km rates.</p>
+        </div>
+        <button class="btn-add-primary" onclick="openAddModal('car')">
+          <span>+ Add New Vehicle</span>
+        </button>
+      </div>
+
+      <div class="pricing-grid" id="fleetGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 2: STAYS & HOTELS (ADD & EDIT) -->
+    <!-- ======================================================== -->
+    <section id="tab-stays" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🏨 Accommodations & Stays</h2>
+          <p class="section-desc">Add new homestays, boutique hotels, or luxury resorts and manage nightly tariffs.</p>
+        </div>
+        <button class="btn-add-primary" onclick="openAddModal('stay')">
+          <span>+ Add New Stay / Hotel</span>
+        </button>
+      </div>
+
+      <div class="pricing-grid" id="staysGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 3: CULINARY PACKAGES (ADD & EDIT) -->
+    <!-- ======================================================== -->
+    <section id="tab-meals" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🍽️ Food Packages</h2>
+          <p class="section-desc">Add new dietary packages, thalis, or gourmet tasting menus and manage per-person rates.</p>
+        </div>
+        <button class="btn-add-primary" onclick="openAddModal('meal')">
+          <span>+ Add New Food Package</span>
+        </button>
+      </div>
+
+      <div class="pricing-grid" id="mealsGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 4: LIVE BOOKINGS DISPATCHER -->
+    <!-- ======================================================== -->
+    <section id="tab-bookings" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">📋 Live Bookings Dispatcher</h2>
+          <p class="section-desc">Manage callback requests, assign captains, and update road trip journey statuses.</p>
+        </div>
+        <button class="btn-save-item" onclick="loadAllAdminData()">🔄 Refresh</button>
+      </div>
+
+      <div class="bookings-list-col" id="bookingsList">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ADD NEW ITEM (CAR / STAY / FOOD) -->
+  <!-- ======================================================== -->
+  <div class="modal-overlay" id="addModalOverlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Add New Item</h3>
+        <button class="btn-close-modal" onclick="closeAddModal()">&times;</button>
+      </div>
+
+      <!-- Car Form -->
+      <div class="modal-body-form" id="formAddCar" style="display: none;">
+        <div class="form-group-clean">
+          <label class="form-label-clean">Vehicle Brand & Model Name</label>
+          <input type="text" id="newCarName" class="clean-input" placeholder="e.g. Kia Carnival Luxury Limousine / Dzire">
+        </div>
+
+        <div class="form-group-clean">
+          <label class="form-label-clean">Vehicle Image URL</label>
+          <input type="text" id="newCarImg" class="clean-input" placeholder="https://images.unsplash.com/..." value="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80">
+        </div>
+
+        <div class="form-group-clean">
+          <label class="form-label-clean">Category & Capacity</label>
+          <input type="text" id="newCarCat" class="clean-input" placeholder="e.g. 6-Seater Luxury MUV" value="6-Seater Luxury MUV">
+        </div>
+
+        <div class="pricing-fields-box">
+          <div class="price-field-item">
+            <label class="form-label-clean">Base Fare / Day</label>
+            <div class="price-val-wrapper">
+              <span class="currency-sym">₹</span>
+              <input type="number" id="newCarBase" class="price-num-input" value="4500">
+            </div>
+          </div>
+          <div class="price-field-item">
+            <label class="form-label-clean">Rate per KM</label>
+            <div class="price-val-wrapper">
+              <span class="currency-sym">₹</span>
+              <input type="number" id="newCarKm" class="price-num-input" value="22">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group-clean">
+          <label class="form-label-clean">Luggage & Description</label>
+          <input type="text" id="newCarDesc" class="clean-input" placeholder="e.g. 5 Bags • Chilled mini-fridge & captain guide included">
+        </div>
+
+        <button class="btn-add-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="submitNewCar()">
+          + Save Vehicle to Fleet
+        </button>
+      </div>
+
+      <!-- Stay Form -->
+      <div class="modal-body-form" id="formAddStay" style="display: none;">
+        <div class="form-group-clean">
+          <label class="form-label-clean">Hotel / Stay Name</label>
+          <input type="text" id="newStayName" class="clean-input" placeholder="e.g. Pine Ridge Mountain Glamping & Chalet">
+        </div>
+
+        <div class="form-group-clean">
+          <label class="form-label-clean">Stay Photo Image URL</label>
+          <input type="text" id="newStayImg" class="clean-input" placeholder="https://images.unsplash.com/..." value="https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=600&q=80">
+        </div>
+
+        <div class="form-group-clean">
+          <label class="form-label-clean">Stay Category / Type</label>
+          <input type="text" id="newStayType" class="clean-input" placeholder="e.g. Luxury Glamping / 4-Star Resort" value="Luxury Glamping">
+        </div>
+
+        <div class="pricing-fields-box" style="grid-template-columns: 1fr;">
+          <div class="price-field-item">
+            <label class="form-label-clean">Nightly Tariff (₹ / Night)</label>
+            <div class="price-val-wrapper">
+              <span class="currency-sym">₹</span>
+              <input type="number" id="newStayPrice" class="price-num-input" value="5500">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group-clean">
+          <label class="form-label-clean">Description</label>
+          <input type="text" id="newStayDesc" class="clean-input" placeholder="e.g. Panoramic balcony views, bonfire & farm breakfast">
+        </div>
+
+        <button class="btn-add-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="submitNewStay()">
+          + Save Stay Category
+        </button>
+      </div>
+
+      <!-- Food Form -->
+      <div class="modal-body-form" id="formAddMeal" style="display: none;">
+        <div class="form-group-clean">
+          <label class="form-label-clean">Food Package Name</label>
+          <input type="text" id="newMealName" class="clean-input" placeholder="e.g. Chettinad & Coastal Gourmet Feasts">
+        </div>
+
+        <div class="form-group-clean">
+          <label class="form-label-clean">Food Photo Image URL</label>
+          <input type="text" id="newMealImg" class="clean-input" placeholder="https://images.unsplash.com/..." value="https://images.unsplash.com/photo-1613292443284-c774643c7b65?auto=format&fit=crop&w=600&q=80">
+        </div>
+
+        <div class="form-group-clean">
+          <label class="form-label-clean">Dietary Category</label>
+          <input type="text" id="newMealType" class="clean-input" placeholder="e.g. Non-Veg / Regional Seafood" value="Regional Non-Veg">
+        </div>
+
+        <div class="pricing-fields-box" style="grid-template-columns: 1fr;">
+          <div class="price-field-item">
+            <label class="form-label-clean">Rate (₹ / Person / Day)</label>
+            <div class="price-val-wrapper">
+              <span class="currency-sym">₹</span>
+              <input type="number" id="newMealPrice" class="price-num-input" value="1100">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group-clean">
+          <label class="form-label-clean">Menu Inclusions</label>
+          <input type="text" id="newMealDesc" class="clean-input" placeholder="e.g. Fresh breakfast thali, highway lunch & dinner barbecues">
+        </div>
+
+        <button class="btn-add-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="submitNewMeal()">
+          + Save Food Package
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Message -->
+  <div class="toast-pill" id="toastPill">
+    <span>✓</span>
+    <span id="toastPillText">Changes saved successfully!</span>
+  </div>
+
+  <script>
+    let carsData = [];
+    let staysData = [];
+    let mealsData = [];
+    let bookingsData = [];
+
+    function switchAdminTab(tabKey) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById(`tab-${tabKey}`);
+      if (target) target.classList.add('active');
+
+      const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabKey));
+      if (btn) btn.classList.add('active');
+    }
+
+    function notifyToast(msg) {
+      const toast = document.getElementById('toastPill');
+      document.getElementById('toastPillText').innerText = msg;
+      toast.classList.add('active');
+      setTimeout(() => toast.classList.remove('active'), 3200);
+    }
+
+    // Modal Control
+    function openAddModal(type) {
+      document.getElementById('formAddCar').style.display = type === 'car' ? 'flex' : 'none';
+      document.getElementById('formAddStay').style.display = type === 'stay' ? 'flex' : 'none';
+      document.getElementById('formAddMeal').style.display = type === 'meal' ? 'flex' : 'none';
+
+      const titles = {
+        car: '🚘 Add New Vehicle to Fleet',
+        stay: '🏨 Add New Stay / Hotel Category',
+        meal: '🍽️ Add New Culinary Package'
+      };
+      document.getElementById('modalTitle').innerText = titles[type] || 'Add New Item';
+      document.getElementById('addModalOverlay').classList.add('active');
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModalOverlay').classList.remove('active');
+    }
+
+    async function loadAllAdminData() {
+      try {
+        const [cRes, sRes, mRes, bRes, aRes] = await Promise.all([
+          fetch('/api/cars').then(r => r.json()),
+          fetch('/api/stays').then(r => r.json()),
+          fetch('/api/meals').then(r => r.json()),
+          fetch('/api/bookings').then(r => r.json()),
+          fetch('/api/analytics').then(r => r.json())
+        ]);
+
+        carsData = cRes.data || [];
+        staysData = sRes.data || [];
+        mealsData = mRes.data || [];
+        bookingsData = bRes.data || [];
+
+        renderCarsGrid();
+        renderStaysGrid();
+        renderMealsGrid();
+        renderBookingsList();
+
+        if (aRes.data) {
+          if (aRes.data.total_revenue) document.getElementById('kpiRevenue').innerText = `₹${aRes.data.total_revenue.toLocaleString('en-IN')}`;
+          if (aRes.data.total_bookings) document.getElementById('kpiTotalBookings').innerText = aRes.data.total_bookings;
+          if (aRes.data.active_trips !== undefined) document.getElementById('kpiActiveTrips').innerText = `${aRes.data.active_trips} On Road`;
+        }
+      } catch (err) {
+        console.error('Data load error:', err);
+      }
+    }
+
+    // 1. CARS: RENDER, SAVE, ADD, DELETE
+    function renderCarsGrid() {
+      const container = document.getElementById('fleetGrid');
+      let html = '';
+
+      carsData.forEach(car => {
+        html += `
+          <div class="edit-item-card" id="car-card-${car.id}">
+            <div class="image-edit-row">
+              <div class="preview-thumb-box">
+                <img src="${car.image}" id="img-preview-${car.id}" alt="${car.name}" onerror="this.src='https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=300&q=80'">
+              </div>
+              <div class="image-inputs-col">
+                <div class="form-group-clean">
+                  <label class="form-label-clean">Vehicle Brand & Model Name</label>
+                  <input type="text" id="name-${car.id}" class="clean-input" value="${car.name || ''}" placeholder="e.g. Honda City / Dzire">
+                </div>
+                <div class="form-group-clean">
+                  <label class="form-label-clean">Vehicle Image URL</label>
+                  <input type="text" id="img-${car.id}" class="clean-input" value="${car.image || ''}" placeholder="https://..." oninput="document.getElementById('img-preview-${car.id}').src=this.value">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group-clean">
+              <label class="form-label-clean">Category & Capacity</label>
+              <input type="text" id="cat-${car.id}" class="clean-input" value="${car.category || ''}" placeholder="e.g. 4-Seater Sedan, 6-Seater SUV">
+            </div>
+
+            <div class="pricing-fields-box">
+              <div class="price-field-item">
+                <label class="form-label-clean">Base Fare / Day</label>
+                <div class="price-val-wrapper">
+                  <span class="currency-sym">₹</span>
+                  <input type="number" id="base-${car.id}" class="price-num-input" value="${car.base_fare_per_day || 2400}">
+                </div>
+              </div>
+              <div class="price-field-item">
+                <label class="form-label-clean">Rate per KM</label>
+                <div class="price-val-wrapper">
+                  <span class="currency-sym">₹</span>
+                  <input type="number" id="km-${car.id}" class="price-num-input" value="${car.rate_per_km || 14}">
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer-actions">
+              <label class="toggle-active-clean">
+                <input type="checkbox" id="active-${car.id}" ${car.is_active ? 'checked' : ''}>
+                <span>Active</span>
+              </label>
+              <div style="display: flex; gap: 0.4rem;">
+                <button class="btn-delete-item" onclick="deleteItem('cars', '${car.id}', '${car.name}')">🗑️</button>
+                <button class="btn-save-item" onclick="saveCarRecord('${car.id}')">💾 Save</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    async function saveCarRecord(carId) {
+      const name = document.getElementById(`name-${carId}`).value;
+      const image = document.getElementById(`img-${carId}`).value;
+      const category = document.getElementById(`cat-${carId}`).value;
+      const baseFare = parseInt(document.getElementById(`base-${carId}`).value) || 2400;
+      const rateKm = parseInt(document.getElementById(`km-${carId}`).value) || 14;
+      const isActive = document.getElementById(`active-${carId}`).checked;
+
+      try {
+        const res = await fetch(`/api/cars/${carId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            image,
+            category,
+            base_fare_per_day: baseFare,
+            rate_per_km: rateKm,
+            is_active: isActive
+          })
+        }).then(r => r.json());
+
+        if (res.success) {
+          notifyToast(`Vehicle '${name}' updated: ₹${baseFare}/day + ₹${rateKm}/km!`);
+        }
+      } catch (err) {
+        notifyToast('Failed to update vehicle');
+      }
+    }
+
+    async function submitNewCar() {
+      const name = document.getElementById('newCarName').value;
+      if (!name) return alert('Please enter a vehicle name');
+
+      const image = document.getElementById('newCarImg').value || 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80';
+      const category = document.getElementById('newCarCat').value || '6-Seater SUV';
+      const base_fare_per_day = parseInt(document.getElementById('newCarBase').value) || 3800;
+      const rate_per_km = parseInt(document.getElementById('newCarKm').value) || 18;
+      const description = document.getElementById('newCarDesc').value || 'Premium comfortable vehicle with certified captain';
+
+      try {
+        const res = await fetch('/api/cars', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            image,
+            category,
+            capacity: parseInt(category) || 6,
+            base_fare_per_day,
+            rate_per_km,
+            description,
+            is_active: true
+          })
+        }).then(r => r.json());
+
+        if (res.success) {
+          closeAddModal();
+          notifyToast(`Vehicle '${name}' added to fleet!`);
+          loadAllAdminData();
+        }
+      } catch (e) {
+        notifyToast('Error adding vehicle');
+      }
+    }
+
+    // 2. STAYS: RENDER, SAVE, ADD, DELETE
+    function renderStaysGrid() {
+      const container = document.getElementById('staysGrid');
+      let html = '';
+
+      staysData.forEach(stay => {
+        html += `
+          <div class="edit-item-card" id="stay-card-${stay.id}">
+            <div class="image-edit-row">
+              <div class="preview-thumb-box">
+                <img src="${stay.image}" id="stay-img-preview-${stay.id}" alt="${stay.name}" onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=300&q=80'">
+              </div>
+              <div class="image-inputs-col">
+                <div class="form-group-clean">
+                  <label class="form-label-clean">Hotel / Stay Name</label>
+                  <input type="text" id="stay-name-${stay.id}" class="clean-input" value="${stay.name || ''}" placeholder="e.g. Heritage Luxury Palace">
+                </div>
+                <div class="form-group-clean">
+                  <label class="form-label-clean">Stay Photo Image URL</label>
+                  <input type="text" id="stay-img-${stay.id}" class="clean-input" value="${stay.image || ''}" placeholder="https://..." oninput="document.getElementById('stay-img-preview-${stay.id}').src=this.value">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group-clean">
+              <label class="form-label-clean">Stay Type / Rating</label>
+              <input type="text" id="stay-type-${stay.id}" class="clean-input" value="${stay.type || ''}" placeholder="e.g. Budget Homestays, 5-Star Luxury">
+            </div>
+
+            <div class="pricing-fields-box" style="grid-template-columns: 1fr;">
+              <div class="price-field-item">
+                <label class="form-label-clean">Nightly Tariff (₹ / Night)</label>
+                <div class="price-val-wrapper">
+                  <span class="currency-sym">₹</span>
+                  <input type="number" id="stay-price-${stay.id}" class="price-num-input" value="${stay.price_per_night || 3500}">
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer-actions">
+              <label class="toggle-active-clean">
+                <input type="checkbox" id="stay-active-${stay.id}" ${stay.is_active ? 'checked' : ''}>
+                <span>Active</span>
+              </label>
+              <div style="display: flex; gap: 0.4rem;">
+                <button class="btn-delete-item" onclick="deleteItem('stays', '${stay.id}', '${stay.name}')">🗑️</button>
+                <button class="btn-save-item" onclick="saveStayRecord('${stay.id}')">💾 Save</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    async function saveStayRecord(stayId) {
+      const name = document.getElementById(`stay-name-${stayId}`).value;
+      const image = document.getElementById(`stay-img-${stayId}`).value;
+      const type = document.getElementById(`stay-type-${stayId}`).value;
+      const price = parseInt(document.getElementById(`stay-price-${stayId}`).value) || 3500;
+      const isActive = document.getElementById(`stay-active-${stayId}`).checked;
+
+      try {
+        const res = await fetch(`/api/stays/${stayId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            image,
+            type,
+            price_per_night: price,
+            is_active: isActive
+          })
+        }).then(r => r.json());
+
+        if (res.success) {
+          notifyToast(`Stay '${name}' updated to ₹${price}/night!`);
+        }
+      } catch (err) {
+        notifyToast('Failed to update stay');
+      }
+    }
+
+    async function submitNewStay() {
+      const name = document.getElementById('newStayName').value;
+      if (!name) return alert('Please enter a stay name');
+
+      const image = document.getElementById('newStayImg').value || 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=600&q=80';
+      const type = document.getElementById('newStayType').value || 'Verified Hotels';
+      const price_per_night = parseInt(document.getElementById('newStayPrice').value) || 4500;
+      const description = document.getElementById('newStayDesc').value || 'Verified quality accommodations with breakfast and parking';
+
+      try {
+        const res = await fetch('/api/stays', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            image,
+            type,
+            price_per_night,
+            description,
+            is_active: true
+          })
+        }).then(r => r.json());
+
+        if (res.success) {
+          closeAddModal();
+          notifyToast(`Stay '${name}' added successfully!`);
+          loadAllAdminData();
+        }
+      } catch (e) {
+        notifyToast('Error adding stay');
+      }
+    }
+
+    // 3. MEALS: RENDER, SAVE, ADD, DELETE
+    function renderMealsGrid() {
+      const container = document.getElementById('mealsGrid');
+      let html = '';
+
+      mealsData.forEach(meal => {
+        html += `
+          <div class="edit-item-card" id="meal-card-${meal.id}">
+            <div class="image-edit-row">
+              <div class="preview-thumb-box">
+                <img src="${meal.image}" id="meal-img-preview-${meal.id}" alt="${meal.name}" onerror="this.src='https://images.unsplash.com/photo-1613292443284-c774643c7b65?auto=format&fit=crop&w=300&q=80'">
+              </div>
+              <div class="image-inputs-col">
+                <div class="form-group-clean">
+                  <label class="form-label-clean">Food Package Name</label>
+                  <input type="text" id="meal-name-${meal.id}" class="clean-input" value="${meal.name || ''}" placeholder="e.g. Pure Veg & Satvik Package">
+                </div>
+                <div class="form-group-clean">
+                  <label class="form-label-clean">Food Image URL</label>
+                  <input type="text" id="meal-img-${meal.id}" class="clean-input" value="${meal.image || ''}" placeholder="https://..." oninput="document.getElementById('meal-img-preview-${meal.id}').src=this.value">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group-clean">
+              <label class="form-label-clean">Dietary Category</label>
+              <input type="text" id="meal-type-${meal.id}" class="clean-input" value="${meal.type || ''}" placeholder="e.g. Veg, Non-Veg, Mix">
+            </div>
+
+            <div class="pricing-fields-box" style="grid-template-columns: 1fr;">
+              <div class="price-field-item">
+                <label class="form-label-clean">Rate (₹ / Person / Day)</label>
+                <div class="price-val-wrapper">
+                  <span class="currency-sym">₹</span>
+                  <input type="number" id="meal-price-${meal.id}" class="price-num-input" value="${meal.price_per_person_per_day || 850}">
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer-actions">
+              <label class="toggle-active-clean">
+                <input type="checkbox" id="meal-active-${meal.id}" ${meal.is_active ? 'checked' : ''}>
+                <span>Active</span>
+              </label>
+              <div style="display: flex; gap: 0.4rem;">
+                <button class="btn-delete-item" onclick="deleteItem('meals', '${meal.id}', '${meal.name}')">🗑️</button>
+                <button class="btn-save-item" onclick="saveMealRecord('${meal.id}')">💾 Save</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    async function saveMealRecord(mealId) {
+      const name = document.getElementById(`meal-name-${mealId}`).value;
+      const image = document.getElementById(`meal-img-${mealId}`).value;
+      const type = document.getElementById(`meal-type-${mealId}`).value;
+      const price = parseInt(document.getElementById(`meal-price-${mealId}`).value) || 850;
+      const isActive = document.getElementById(`meal-active-${mealId}`).checked;
+
+      try {
+        const res = await fetch(`/api/meals/${mealId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            image,
+            type,
+            price_per_person_per_day: price,
+            is_active: isActive
+          })
+        }).then(r => r.json());
+
+        if (res.success) {
+          notifyToast(`Food package '${name}' updated to ₹${price}/person/day!`);
+        }
+      } catch (err) {
+        notifyToast('Failed to update food package');
+      }
+    }
+
+    async function submitNewMeal() {
+      const name = document.getElementById('newMealName').value;
+      if (!name) return alert('Please enter a food package name');
+
+      const image = document.getElementById('newMealImg').value || 'https://images.unsplash.com/photo-1613292443284-c774643c7b65?auto=format&fit=crop&w=600&q=80';
+      const type = document.getElementById('newMealType').value || 'Regional Non-Veg';
+      const price_per_person_per_day = parseInt(document.getElementById('newMealPrice').value) || 1000;
+      const description = document.getElementById('newMealDesc').value || 'Full day curated highway breakfast, authentic lunch & gourmet dinner';
+
+      try {
+        const res = await fetch('/api/meals', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            image,
+            type,
+            price_per_person_per_day,
+            description,
+            is_active: true
+          })
+        }).then(r => r.json());
+
+        if (res.success) {
+          closeAddModal();
+          notifyToast(`Food package '${name}' added successfully!`);
+          loadAllAdminData();
+        }
+      } catch (e) {
+        notifyToast('Error adding food package');
+      }
+    }
+
+    // 4. GENERAL DELETE ITEM
+    async function deleteItem(collection, itemId, itemName) {
+      if (!confirm(`Are you sure you want to remove '${itemName}' from ${collection}?`)) return;
+
+      try {
+        const res = await fetch(`/api/${collection}/${itemId}`, { method: 'DELETE' }).then(r => r.json());
+        if (res.success) {
+          notifyToast(`'${itemName}' deleted from ${collection}`);
+          loadAllAdminData();
+        }
+      } catch (e) {
+        notifyToast('Error deleting item');
+      }
+    }
+
+    // 5. DISPATCHER
+    function renderBookingsList() {
+      const container = document.getElementById('bookingsList');
+      let html = '';
+
+      if (bookingsData.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); text-align: center; padding: 2rem;">No bookings yet.</div>';
+        return;
+      }
+
+      bookingsData.forEach(b => {
+        html += `
+          <div class="booking-tile">
+            <div class="booking-tile-head">
+              <div>
+                <div class="b-user-name">${b.user_name || 'Traveler'}</div>
+                <div class="b-user-phone">${b.user_phone || '+91-XXXXX'}</div>
+              </div>
+              <span class="b-id-pill">${b.id}</span>
+            </div>
+
+            <div class="booking-meta-grid">
+              <div class="meta-col">
+                <label>Route</label>
+                <span>${b.source || 'Delhi'} → ${b.destination || 'Jaipur'}</span>
+              </div>
+              <div class="meta-col">
+                <label>Fleet & Group</label>
+                <span>${b.car_name || '6-Seater'} (${b.passengers || 4} Pax, ${b.days || 3} Days)</span>
+              </div>
+              <div class="meta-col">
+                <label>Estimated Value</label>
+                <span style="color: var(--primary); font-weight: 800;">₹${(b.total_price || 0).toLocaleString('en-IN')}</span>
+              </div>
+            </div>
+
+            <div class="booking-status-actions">
+              <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <label style="font-size: 0.72rem; color: var(--text-muted);">Status:</label>
+                <select class="status-dropdown" onchange="changeBookingStatus('${b.id}', this.value)">
+                  <option value="Callback Requested" ${b.status === 'Callback Requested' ? 'selected' : ''}>📞 Callback Requested</option>
+                  <option value="Confirmed" ${b.status === 'Confirmed' ? 'selected' : ''}>✅ Confirmed</option>
+                  <option value="On Road" ${b.status === 'On Road' ? 'selected' : ''}>🚗 On Road</option>
+                  <option value="Completed" ${b.status === 'Completed' ? 'selected' : ''}>🏁 Completed</option>
+                  <option value="Cancelled" ${b.status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
+                </select>
+              </div>
+
+              <div style="display: flex; gap: 0.45rem;">
+                <a href="tel:${b.user_phone || ''}" class="btn-contact">📞 Call</a>
+                <a href="https://wa.me/${(b.user_phone || '').replace(/[^0-9]/g, '')}" target="_blank" class="btn-contact" style="color: #25D366; background: rgba(37,211,102,0.12); border-color: rgba(37,211,102,0.3);">💬 WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    async function changeBookingStatus(bId, newStatus) {
+      try {
+        const res = await fetch(`/api/bookings/${bId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        }).then(r => r.json());
+
+        if (res.success) {
+          notifyToast(`Booking ${bId} status updated to: ${newStatus}`);
+        }
+      } catch (err) {
+        notifyToast('Failed to update status');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAllAdminData();
+    });
+  </script>
+</body>
+</html>
