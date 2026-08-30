@@ -1791,6 +1791,9 @@
     }
 
     // 5. DISPATCHER & BOOKINGS WITH FULL HOTEL & FOOD DETAILS
+    const OPS_ALERT_EMAIL = 'deeptrip.indy@gmail.com';
+    const OPS_ALERT_WHATSAPP = '+91 7980511971';
+    const OPS_ALERT_WHATSAPP_CLEAN = '917980511971';
     let activeAlertBookingId = null;
 
     function renderBookingsList() {
@@ -1811,10 +1814,13 @@
         const cbWindow = b.preferred_callback_time || 'Immediate (Within 15 Mins)';
 
         const waText = `🚨 *DEEPTRIP NEW JOURNEY & CALLBACK ALERT* 🚨\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📋 *Reference ID*: #${b.id}\n👤 *Customer*: ${b.user_name || 'DeepTrip Traveler'}\n📞 *Mobile*: ${b.user_phone || '+91-XXXXX'}\n✉️ *Email*: ${b.user_email || 'traveler@deeptrip.in'}\n⏰ *Preferred Callback*: ${cbWindow}\n\n📍 *Route*: ${b.source || 'Delhi (NCR)'} ➔ ${b.destination || 'Jaipur Heritage Circuit'}\n📅 *Schedule*: ${b.days || 3} Days • ${pax} Travelers\n🚘 *Vehicle Fleet*: ${b.car_name || 'Toyota Innova Crysta'}\n🏨 *Stay Choice*: ${b.stay_name || 'Verified Homestay / Hotel'} (${nights} Nights)\n🍽️ *Food Package*: ${b.meal_name || 'Pure Vegetarian & Satvik Package'}\n💰 *Est. Trip Budget*: ₹${total.toLocaleString('en-IN')} (₹${perPax.toLocaleString('en-IN')}/traveler)\n\n👨‍✈️ *Action Required*: Contact customer immediately to lock Captain & finalize stays.`;
-        const waUrl = `https://wa.me/${(b.user_phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(waText)}`;
+        
+        const opsWaUrl = `https://wa.me/${OPS_ALERT_WHATSAPP_CLEAN}?text=${encodeURIComponent(waText)}`;
+        const custWaUrl = `https://wa.me/${(b.user_phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(waText)}`;
+        
         const emailSubject = encodeURIComponent(`[DeepTrip Alert] New Callback Request #${b.id} - ${b.user_name || 'Traveler'} (${b.source || 'Delhi'} -> ${b.destination || 'Jaipur'})`);
-        const emailBody = encodeURIComponent(`Customer Name: ${b.user_name || 'Traveler'}\nPhone: ${b.user_phone || ''}\nEmail: ${b.user_email || ''}\nPreferred Callback: ${cbWindow}\n\nTrip Route: ${b.source || 'Delhi'} -> ${b.destination || 'Jaipur'}\nSchedule: ${b.days || 3} Days, ${pax} Travelers\nVehicle Fleet: ${b.car_name || 'Toyota Innova Crysta'}\nHotel / Stay: ${b.stay_name || 'Verified Hotel / Resort'}\nFood Package: ${b.meal_name || 'Curated Meal Plan'}\nTotal Trip Budget: ₹${total.toLocaleString('en-IN')}\n`);
-        const mailtoUrl = `mailto:${b.user_email || 'concierge@deeptrip.in'}?subject=${emailSubject}&body=${emailBody}`;
+        const emailBody = encodeURIComponent(`🚨 DEEPTRIP NEW JOURNEY ALERT\n---------------------------------\nBooking ID: #${b.id}\nCustomer: ${b.user_name || 'Traveler'}\nPhone: ${b.user_phone || ''}\nEmail: ${b.user_email || ''}\nCallback Window: ${cbWindow}\n\nTrip Circuit: ${b.source || 'Delhi'} -> ${b.destination || 'Jaipur'}\nSchedule: ${b.days || 3} Days, ${pax} Travelers\nVehicle Fleet: ${b.car_name || 'Toyota Innova Crysta'}\nHotel / Stay: ${b.stay_name || 'Verified Hotel / Resort'}\nFood Package: ${b.meal_name || 'Curated Meal Plan'}\nTotal Trip Budget: ₹${total.toLocaleString('en-IN')} (Approx ₹${perPax.toLocaleString('en-IN')}/pax)\n\nDestination: ${OPS_ALERT_EMAIL}\n`);
+        const opsMailtoUrl = `mailto:${OPS_ALERT_EMAIL}?subject=${emailSubject}&body=${emailBody}`;
 
         html += `
           <div class="booking-tile" id="booking-card-${b.id}">
@@ -1905,17 +1911,17 @@
               </div>
 
               <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
-                <a href="tel:${b.user_phone || ''}" class="btn-action-alert" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); color: #FFF;">
-                  📞 Call
+                <a href="${opsWaUrl}" target="_blank" class="btn-action-alert btn-action-wa" title="Send WhatsApp alert to Operations (+91 7980511971)">
+                  📱 Alert Ops WhatsApp
                 </a>
-                <a href="${waUrl}" target="_blank" class="btn-action-alert btn-action-wa" title="Open WhatsApp alert with journey requirements">
-                  💬 WhatsApp Alert
+                <a href="${opsMailtoUrl}" class="btn-action-alert btn-action-email" title="Send Email alert to Operations (deeptrip.indy@gmail.com)">
+                  ✉️ Alert Ops Email
                 </a>
-                <a href="${mailtoUrl}" class="btn-action-alert btn-action-email" title="Open Email alert template">
-                  ✉️ Email Alert
+                <a href="tel:${b.user_phone || ''}" class="btn-action-alert" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); color: #FFF;" title="Call Customer directly">
+                  📞 Call Customer
                 </a>
                 <button class="btn-action-alert" onclick="openAlertModal('${b.id}')" title="Preview Alert copy & HTML template">
-                  🚨 View Alert
+                  🚨 Alert Console
                 </button>
               </div>
             </div>
@@ -1951,7 +1957,7 @@
       if (!b) return;
 
       activeAlertBookingId = bookingId;
-      document.getElementById('alertModalTitle').innerText = `Alert Dispatcher • #${b.id}`;
+      document.getElementById('alertModalTitle').innerText = `Operations Alert Dispatcher • #${b.id}`;
 
       const nights = Math.max(1, (b.days || 3) - 1);
       const pax = b.passengers || 4;
@@ -1962,13 +1968,17 @@
       const waText = `🚨 *DEEPTRIP NEW JOURNEY & CALLBACK ALERT* 🚨\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📋 *Reference ID*: #${b.id}\n👤 *Customer*: ${b.user_name || 'DeepTrip Traveler'}\n📞 *Mobile*: ${b.user_phone || '+91-XXXXX'}\n✉️ *Email*: ${b.user_email || 'traveler@deeptrip.in'}\n⏰ *Preferred Callback*: ${cbWindow}\n\n📍 *Route*: ${b.source || 'Delhi (NCR)'} ➔ ${b.destination || 'Jaipur Heritage Circuit'}\n📅 *Schedule*: ${b.days || 3} Days • ${pax} Travelers\n🚘 *Vehicle Fleet*: ${b.car_name || 'Toyota Innova Crysta'}\n🏨 *Stay Choice*: ${b.stay_name || 'Verified Homestay / Hotel'} (${nights} Nights)\n🍽️ *Food Package*: ${b.meal_name || 'Pure Vegetarian & Satvik Package'}\n💰 *Est. Trip Budget*: ₹${total.toLocaleString('en-IN')} (₹${perPax.toLocaleString('en-IN')}/traveler)\n\n👨‍✈️ *Action Required*: Contact customer immediately to lock Captain & finalize stays.`;
       
       document.getElementById('alertWaTextarea').value = waText;
-      document.getElementById('btnDirectSendWa').href = `https://wa.me/${(b.user_phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(waText)}`;
+      
+      const opsWaLink = `https://wa.me/${OPS_ALERT_WHATSAPP_CLEAN}?text=${encodeURIComponent(waText)}`;
+      document.getElementById('btnDirectSendWa').href = opsWaLink;
+      document.getElementById('btnDirectSendWa').innerHTML = `📱 Open Ops WhatsApp (${OPS_ALERT_WHATSAPP})`;
 
       const subject = `[DeepTrip Alert] New Callback Request #${b.id} - ${b.user_name || 'Traveler'} (${b.source || 'Delhi'} -> ${b.destination || 'Jaipur'})`;
       document.getElementById('alertEmailSubject').value = subject;
       
-      const emailBody = `Customer: ${b.user_name}\nPhone: ${b.user_phone}\nEmail: ${b.user_email}\nCallback: ${cbWindow}\n\nRoute: ${b.source} -> ${b.destination}\nDuration: ${b.days} Days, ${pax} Pax\nVehicle: ${b.car_name}\nHotel: ${b.stay_name}\nFood: ${b.meal_name}\nTotal: ₹${total.toLocaleString('en-IN')}`;
-      document.getElementById('btnDirectSendEmail').href = `mailto:${b.user_email || 'concierge@deeptrip.in'}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+      const emailBody = `Customer: ${b.user_name}\nPhone: ${b.user_phone}\nEmail: ${b.user_email}\nCallback Window: ${cbWindow}\n\nRoute: ${b.source} -> ${b.destination}\nDuration: ${b.days} Days, ${pax} Pax\nVehicle: ${b.car_name}\nHotel: ${b.stay_name}\nFood: ${b.meal_name}\nTotal: ₹${total.toLocaleString('en-IN')}\n\nAlert sent to Operations: ${OPS_ALERT_EMAIL}`;
+      document.getElementById('btnDirectSendEmail').href = `mailto:${OPS_ALERT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+      document.getElementById('btnDirectSendEmail').innerHTML = `✉️ Send Email to ${OPS_ALERT_EMAIL}`;
 
       const emailHtmlPreview = `
         <div style="font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #0F172A; font-size: 13px;">
@@ -1977,6 +1987,9 @@
             <span style="opacity: 0.9; font-size: 12px;">Customer Callback & Itinerary Requirement</span>
           </div>
           <div style="padding: 14px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 0 0 8px 8px;">
+            <div style="background: #EFF6FF; border-left: 3px solid #0284C7; padding: 6px 10px; margin-bottom: 10px; font-size: 11px; color: #1E40AF; border-radius: 3px;">
+              <strong>Recipient:</strong> <code>${OPS_ALERT_EMAIL}</code> | WhatsApp: <code>${OPS_ALERT_WHATSAPP}</code>
+            </div>
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
               <tr style="border-bottom: 1px solid #E2E8F0;"><td style="padding: 6px 0; color: #64748B; font-weight: bold; width: 35%;">Customer</td><td style="padding: 6px 0; font-weight: 600;">${b.user_name || 'Traveler'} (${b.user_phone})</td></tr>
               <tr style="border-bottom: 1px solid #E2E8F0;"><td style="padding: 6px 0; color: #64748B; font-weight: bold;">Preferred Time</td><td style="padding: 6px 0; font-weight: bold; color: #0284C7;">${cbWindow}</td></tr>
@@ -2039,7 +2052,7 @@
         }).then(r => r.json());
 
         if (res.success) {
-          notifyToast('Alert dispatched via WhatsApp and Email channels!');
+          notifyToast(`Alert dispatched to ${OPS_ALERT_EMAIL} & WhatsApp ${OPS_ALERT_WHATSAPP}!`);
           closeAlertModal();
         } else {
           notifyToast(res.error || 'Failed to dispatch alert');

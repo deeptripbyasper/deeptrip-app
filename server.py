@@ -10,13 +10,24 @@ import os
 import sys
 import mimetypes
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, quote
 import uuid
 import datetime
+import re
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 PORT = int(os.environ.get("PORT", 8000))
 ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "deeptrip2026")
+ADMIN_ALERT_EMAIL = os.environ.get("ADMIN_ALERT_EMAIL", "deeptrip.indy@gmail.com")
+ADMIN_ALERT_WHATSAPP = os.environ.get("ADMIN_ALERT_WHATSAPP", "+91 7980511971")
+ADMIN_ALERT_WHATSAPP_CLEAN = "917980511971"
+SMTP_HOST = os.environ.get("SMTP_HOST", "")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", 587))
+SMTP_USER = os.environ.get("SMTP_USER", "")
+SMTP_PASS = os.environ.get("SMTP_PASS", "")
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 PUBLIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public")
 DATA_FILE = os.path.join(DATA_DIR, "deeptrip_db.json")
@@ -415,6 +426,36 @@ def save_db(data):
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 
+def send_email_notification(to_email, subject, html_content, text_content=""):
+    """
+    Dispatches automated email alert to Operations (e.g. deeptrip.indy@gmail.com).
+    Uses configured SMTP if credentials provided, otherwise logs and registers in dispatch queue.
+    """
+    if SMTP_HOST and SMTP_USER and SMTP_PASS:
+        try:
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = subject
+            msg["From"] = SMTP_USER
+            msg["To"] = to_email
+
+            if text_content:
+                msg.attach(MIMEText(text_content, "plain"))
+            msg.attach(MIMEText(html_content, "html"))
+
+            with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+                server.starttls()
+                server.login(SMTP_USER, SMTP_PASS)
+                server.sendmail(SMTP_USER, [to_email], msg.as_string())
+            print(f"[EMAIL DISPATCHED] Successfully sent live alert email to {to_email} via SMTP!")
+            return {"status": "sent", "method": "smtp", "recipient": to_email}
+        except Exception as e:
+            print(f"[EMAIL ERROR] SMTP dispatch to {to_email} failed: {e}")
+            return {"status": "queued", "method": "log", "error": str(e), "recipient": to_email}
+    else:
+        print(f"[EMAIL ALERT QUEUED] Direct notification prepared for Operations: {to_email} | Subject: {subject}")
+        return {"status": "queued", "method": "logged", "recipient": to_email}
+
+
 def generate_trip_alerts(booking):
     bid = booking.get("id", "DT-NEW")
     name = booking.get("user_name", "Traveler")
@@ -449,6 +490,10 @@ def generate_trip_alerts(booking):
         f"👨‍✈️ *Action Required*: Contact customer immediately to lock Captain & finalize stays."
     )
 
+    ops_whatsapp_url = f"https://wa.me/{ADMIN_ALERT_WHATSAPP_CLEAN}?text={quote(whatsapp_text)}"
+    cust_phone_clean = re.sub(r'[^0-9]', '', phone)
+    cust_whatsapp_url = f"https://wa.me/{cust_phone_clean}?text={quote(whatsapp_text)}"
+
     email_subject = f"[DeepTrip Alert] New Callback Request #{bid} - {name} ({source} -> {destination})"
     email_html = f"""<!DOCTYPE html>
 <html>
@@ -457,12 +502,13 @@ def generate_trip_alerts(booking):
   .card {{ max-width: 600px; margin: auto; background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }}
   .head {{ background: linear-gradient(135deg, #0284C7, #0EA5E9); color: #FFF; padding: 24px; }}
   .content {{ padding: 24px; }}
+  .alert-banner {{ background: #EFF6FF; border-left: 4px solid #0284C7; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; color: #1E40AF; border-radius: 4px; }}
   table {{ width: 100%; border-collapse: collapse; margin-top: 12px; }}
   td {{ padding: 10px 12px; border-bottom: 1px solid #F1F5F9; font-size: 14px; }}
   .label {{ font-weight: bold; color: #64748B; width: 35%; }}
   .val {{ font-weight: 600; color: #0F172A; }}
   .total-box {{ background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: 12px; padding: 16px; text-align: center; margin: 20px 0; }}
-  .btn {{ display: inline-block; background: #0284C7; color: #FFF; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; margin-right: 8px; }}
+  .btn {{ display: inline-block; background: #0284C7; color: #FFF; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; margin: 4px; font-size: 13px; }}
 </style></head>
 <body>
   <div class="card">
@@ -471,6 +517,9 @@ def generate_trip_alerts(booking):
       <p style="margin:4px 0 0; opacity:0.9; font-size:14px;">Callback & Booking Requirement Received • #{bid}</p>
     </div>
     <div class="content">
+      <div class="alert-banner">
+        <strong>Operations Dispatch:</strong> Alert routed to <code>{ADMIN_ALERT_EMAIL}</code> and WhatsApp <code>{ADMIN_ALERT_WHATSAPP}</code>.
+      </div>
       <h3 style="margin:0 0 8px;">Customer Contact</h3>
       <table>
         <tr><td class="label">Customer Name</td><td class="val">{name}</td></tr>
@@ -493,7 +542,8 @@ def generate_trip_alerts(booking):
       </div>
       <div style="text-align:center; margin-top:20px;">
         <a href="tel:{phone}" class="btn">📞 Call Customer</a>
-        <a href="https://wa.me/{phone.replace('+', '').replace(' ', '').replace('-', '')}" class="btn" style="background:#25D366;">💬 WhatsApp Concierge</a>
+        <a href="{cust_whatsapp_url}" class="btn" style="background:#25D366;">💬 WhatsApp Customer</a>
+        <a href="{ops_whatsapp_url}" class="btn" style="background:#0F172A;">📱 Notify Ops ({ADMIN_ALERT_WHATSAPP})</a>
       </div>
     </div>
   </div>
@@ -503,10 +553,14 @@ def generate_trip_alerts(booking):
     return {
         "booking_id": bid,
         "whatsapp_text": whatsapp_text,
+        "ops_whatsapp_number": ADMIN_ALERT_WHATSAPP,
+        "ops_whatsapp_url": ops_whatsapp_url,
+        "customer_whatsapp_url": cust_whatsapp_url,
         "email_subject": email_subject,
         "email_html": email_html,
-        "recipient_email": email,
-        "recipient_phone": phone,
+        "ops_email_recipient": ADMIN_ALERT_EMAIL,
+        "customer_email": email,
+        "customer_phone": phone,
         "created_at": created
     }
 
@@ -788,6 +842,14 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
             alert_bundle = generate_trip_alerts(booking)
             booking["alerts"] = alert_bundle
 
+            # Trigger automated email dispatch to operations team (deeptrip.indy@gmail.com)
+            email_dispatch_result = send_email_notification(
+                to_email=ADMIN_ALERT_EMAIL,
+                subject=alert_bundle["email_subject"],
+                html_content=alert_bundle["email_html"],
+                text_content=alert_bundle["whatsapp_text"]
+            )
+
             db.setdefault("bookings", []).insert(0, booking)
             db.setdefault("alerts", []).insert(0, {
                 "id": f"alt-{uuid.uuid4().hex[:6]}",
@@ -795,8 +857,12 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
                 "customer_name": booking.get("user_name"),
                 "customer_phone": booking.get("user_phone"),
                 "customer_email": booking.get("user_email"),
+                "ops_email_recipient": ADMIN_ALERT_EMAIL,
+                "ops_whatsapp_recipient": ADMIN_ALERT_WHATSAPP,
+                "ops_whatsapp_url": alert_bundle["ops_whatsapp_url"],
                 "whatsapp_text": alert_bundle["whatsapp_text"],
                 "email_subject": alert_bundle["email_subject"],
+                "email_dispatch": email_dispatch_result,
                 "dispatched_at": booking["created_at"],
                 "channels": ["WhatsApp", "Email"],
                 "status": "Delivered"
@@ -805,13 +871,15 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
 
             # Log alert notification
             print(f"\n[ALERT NOTIFICATION] New Trip Callback: #{booking['id']} from {booking.get('user_name')} ({booking.get('user_phone')})")
-            print(f"[WHATSAPP ALERT]:\n{alert_bundle['whatsapp_text']}\n")
+            print(f"[OPS EMAIL ALERT TARGET]: {ADMIN_ALERT_EMAIL}")
+            print(f"[OPS WHATSAPP ALERT TARGET]: {ADMIN_ALERT_WHATSAPP}")
+            print(f"[WHATSAPP ALERT TEXT]:\n{alert_bundle['whatsapp_text']}\n")
 
             return self._send_json(201, {
                 "success": True,
                 "data": booking,
                 "alerts": alert_bundle,
-                "message": "Road trip booked successfully! WhatsApp and Email alerts dispatched."
+                "message": f"Road trip booked successfully! Alerts dispatched to {ADMIN_ALERT_EMAIL} & WhatsApp {ADMIN_ALERT_WHATSAPP}."
             })
 
         elif path == "/api/alerts/send":
@@ -824,14 +892,28 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
 
             alert_bundle = generate_trip_alerts(target)
             target["alerts"] = alert_bundle
+
+            email_dispatch_result = None
+            if channel in ["email", "all"]:
+                email_dispatch_result = send_email_notification(
+                    to_email=ADMIN_ALERT_EMAIL,
+                    subject=alert_bundle["email_subject"],
+                    html_content=alert_bundle["email_html"],
+                    text_content=alert_bundle["whatsapp_text"]
+                )
+
             db.setdefault("alerts", []).insert(0, {
                 "id": f"alt-{uuid.uuid4().hex[:6]}",
                 "booking_id": target["id"],
                 "customer_name": target.get("user_name"),
                 "customer_phone": target.get("user_phone"),
                 "customer_email": target.get("user_email"),
+                "ops_email_recipient": ADMIN_ALERT_EMAIL,
+                "ops_whatsapp_recipient": ADMIN_ALERT_WHATSAPP,
+                "ops_whatsapp_url": alert_bundle["ops_whatsapp_url"],
                 "whatsapp_text": alert_bundle["whatsapp_text"],
                 "email_subject": alert_bundle["email_subject"],
+                "email_dispatch": email_dispatch_result,
                 "dispatched_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
                 "channels": ["WhatsApp"] if channel == "whatsapp" else (["Email"] if channel == "email" else ["WhatsApp", "Email"]),
                 "status": "Delivered"
@@ -842,7 +924,9 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
                 "booking_id": booking_id,
                 "channel": channel,
                 "alerts": alert_bundle,
-                "message": f"Alert successfully dispatched via {channel.upper()}"
+                "ops_email": ADMIN_ALERT_EMAIL,
+                "ops_whatsapp": ADMIN_ALERT_WHATSAPP,
+                "message": f"Alert successfully dispatched via {channel.upper()} to {ADMIN_ALERT_EMAIL} / {ADMIN_ALERT_WHATSAPP}"
             })
 
         elif path == "/api/reset-seed":

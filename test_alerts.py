@@ -58,6 +58,10 @@ def run_tests():
         assert "Pure Vegetarian & Satvik" in wa_text, "Meal name missing in WhatsApp alert"
         assert "Toyota Innova Crysta" in wa_text, "Car name missing in WhatsApp alert"
         assert "Kavita Sharma" in wa_text, "User name missing in WhatsApp alert"
+        assert res["alerts"]["ops_email_recipient"] == "deeptrip.indy@gmail.com", "Operations email mismatch"
+        assert res["alerts"]["ops_whatsapp_number"] == "+91 7980511971", "Operations WhatsApp mismatch"
+        assert "917980511971" in res["alerts"]["ops_whatsapp_url"], "Operations WhatsApp URL missing clean number"
+        print("✅ Operations Alert Destinations Verified: deeptrip.indy@gmail.com & +91 7980511971")
 
     # Test 3: Check /api/alerts
     req = urllib.request.Request(f"{BASE_URL}/api/alerts")
