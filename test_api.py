@@ -52,8 +52,22 @@ def run_tests():
         test_endpoint("Update Car", f"/api/cars/{car_id}", method="PUT", payload={"base_fare_per_day": 9800})
         test_endpoint("Delete Car", f"/api/cars/{car_id}", method="DELETE")
 
+    print("\n=== TESTING USER AUTH & BOOKING HISTORY ===")
+    signup_res = test_endpoint("User Signup", "/api/user/signup", method="POST", payload={
+        "name": "Ananya Sharma",
+        "email": "ananya.sharma@example.com",
+        "phone": "+91 98765 11223",
+        "password": "pass123Secure"
+    })
+    test_endpoint("User Login", "/api/user/login", method="POST", payload={
+        "email": "ananya.sharma@example.com",
+        "password": "pass123Secure"
+    })
+    test_endpoint("User Bookings", "/api/user/bookings?email=sanjeev.mehra@gmail.com")
+
     print("\n=== TESTING STATIC PAGES ===")
     test_endpoint("Mobile View", "/mobile")
+    test_endpoint("Planner View", "/planner")
     test_endpoint("Admin View", "/admin")
     print("=== ALL TESTS COMPLETED ===")
 

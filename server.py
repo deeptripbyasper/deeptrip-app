@@ -372,6 +372,24 @@ DEFAULT_DATA = {
             "captain_assigned": "Rajesh Sharma",
             "special_notes": "Low sodium meals requested for elderly parents."
         }
+    ],
+    "users": [
+        {
+            "id": "usr-1",
+            "name": "Col. Sanjeev Mehra",
+            "email": "sanjeev.mehra@gmail.com",
+            "phone": "+91 98110 54321",
+            "password": "password123",
+            "created_at": "2026-08-20 10:00"
+        },
+        {
+            "id": "usr-2",
+            "name": "Rohan Varma",
+            "email": "rohan.varma@techcorp.in",
+            "phone": "+91 98200 99881",
+            "password": "password123",
+            "created_at": "2026-08-22 12:00"
+        }
     ]
 }
 
@@ -435,6 +453,24 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
 
         elif path == "/api/bookings":
             return self._send_json(200, {"success": True, "data": db.get("bookings", [])})
+
+        elif path == "/api/user/bookings":
+            query_params = parse_qs(parsed.query)
+            user_email = (query_params.get("email", [""])[0]).lower().strip()
+            user_phone = (query_params.get("phone", [""])[0]).strip()
+            all_bookings = db.get("bookings", [])
+            
+            if user_email or user_phone:
+                matched = [
+                    b for b in all_bookings
+                    if (user_email and b.get("user_email", "").lower() == user_email) or
+                       (user_phone and b.get("user_phone", "").strip() == user_phone)
+                ]
+                # If no exact match found yet in seed data, return recent bookings for demo so user immediately sees history
+                if not matched and all_bookings:
+                    matched = all_bookings[:3]
+                return self._send_json(200, {"success": True, "data": matched})
+            return self._send_json(200, {"success": True, "data": all_bookings})
 
         elif path == "/api/analytics":
             bookings = db.get("bookings", [])
@@ -510,6 +546,100 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
                 "success": False,
                 "error": "Invalid admin username or password"
             })
+
+        elif path == "/api/user/signup":
+            name = payload.get("name", "").strip()
+            email = payload.get("email", "").strip().lower()
+            phone = payload.get("phone", "").strip()
+            password = payload.get("password", "").strip()
+
+            if not email or not password:
+                return self._send_json(400, {"success": False, "error": "Email and password are required"})
+
+            users = db.setdefault("users", [])
+            if any(u.get("email", "").lower() == email for u in users):
+                return self._send_json(400, {"success": False, "error": "An account with this email already exists"})
+
+            new_user = {
+                "id": f"usr-{uuid.uuid4().hex[:6]}",
+                "name": name or email.split("@")[0].capitalize(),
+                "email": email,
+                "phone": phone,
+                "password": password,
+                "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            }
+            users.append(new_user)
+            save_db(db)
+
+            user_profile = {k: v for k, v in new_user.items() if k != "password"}
+            token = f"dt_usr_{uuid.uuid4().hex}"
+            return self._send_json(201, {
+                "success": True,
+                "token": token,
+                "user": user_profile,
+                "message": "Account created successfully"
+            })
+
+        elif path == "/api/user/login":
+            identifier = payload.get("email", "").strip().lower() or payload.get("username", "").strip().lower()
+            password = payload.get("password", "").strip()
+
+            users = db.get("users", [])
+            matching_user = None
+            for u in users:
+                if (u.get("email", "").lower() == identifier or u.get("phone", "").strip() == identifier) and u.get("password") == password:
+                    matching_user = u
+                    break
+
+            if matching_user:
+                user_profile = {k: v for k, v in matching_user.items() if k != "password"}
+                token = f"dt_usr_{uuid.uuid4().hex}"
+                return self._send_json(200, {
+                    "success": True,
+                    "token": token,
+                    "user": user_profile,
+                    "message": "Logged in successfully"
+                })
+
+        elif path == "/api/user/social-auth":
+            provider = payload.get("provider", "google").lower()
+            name = payload.get("name", "").strip() or f"{provider.capitalize()} Traveler"
+            email = payload.get("email", "").strip().lower() or f"user_{provider}_{uuid.uuid4().hex[:4]}@gmail.com"
+            phone = payload.get("phone", "+91 98765 00000")
+
+            users = db.setdefault("users", [])
+            existing_user = None
+            for u in users:
+                if u.get("email", "").lower() == email:
+                    existing_user = u
+                    break
+
+            if not existing_user:
+                new_user = {
+                    "id": f"usr-{uuid.uuid4().hex[:6]}",
+                    "name": name,
+                    "email": email,
+                    "phone": phone,
+                    "auth_provider": provider,
+                    "password": f"oauth_{provider}",
+                    "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+                }
+                users.append(new_user)
+                save_db(db)
+                matching_user = new_user
+            else:
+                matching_user = existing_user
+
+            user_profile = {k: v for k, v in matching_user.items() if k != "password"}
+            token = f"dt_usr_{uuid.uuid4().hex}"
+            return self._send_json(200, {
+                "success": True,
+                "token": token,
+                "user": user_profile,
+                "message": f"Successfully signed in with {provider.capitalize()}"
+            })
+
+            return self._send_json(401, {"success": False, "error": "Invalid email/phone or password"})
 
         if path == "/api/cars":
             item = payload

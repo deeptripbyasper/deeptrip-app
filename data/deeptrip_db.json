@@ -372,6 +372,23 @@
   ],
   "bookings": [
     {
+      "user_name": "Vikram Adani",
+      "user_email": "vikram_1788077640@example.com",
+      "user_phone": "+91 98765 99999",
+      "source": "Delhi",
+      "destination": "Jaipur Heritage Circuit",
+      "days": 4,
+      "passengers": 4,
+      "car_name": "Toyota Innova Crysta",
+      "stay_name": "Valley View Boutique Hotel & Spa",
+      "meal_name": "Pure Vegetarian & Satvik Culinary Package",
+      "total_price": 38400,
+      "status": "Confirmed",
+      "id": "DT-0938",
+      "created_at": "2026-08-30 13:44",
+      "payment_status": "Paid"
+    },
+    {
       "id": "DT-4910-AI",
       "user_name": "DeepTrip Traveler",
       "user_phone": "+91 98765 43210",
@@ -480,6 +497,58 @@
       "payment_status": "Deposit Paid",
       "captain_assigned": "Rajesh Sharma",
       "special_notes": "Low sodium meals requested for elderly parents."
+    }
+  ],
+  "users": [
+    {
+      "id": "usr-1",
+      "name": "Col. Sanjeev Mehra",
+      "email": "sanjeev.mehra@gmail.com",
+      "phone": "+91 98110 54321",
+      "password": "password123",
+      "created_at": "2026-08-20 10:00"
+    },
+    {
+      "id": "usr-2",
+      "name": "Rohan Varma",
+      "email": "rohan.varma@techcorp.in",
+      "phone": "+91 98200 99881",
+      "password": "password123",
+      "created_at": "2026-08-22 12:00"
+    },
+    {
+      "id": "usr-d2fb2a",
+      "name": "Ananya Sharma",
+      "email": "ananya.sharma@example.com",
+      "phone": "+91 98765 11223",
+      "password": "pass123Secure",
+      "created_at": "2026-08-30 13:43"
+    },
+    {
+      "id": "usr-352ef8",
+      "name": "Vikram Adani",
+      "email": "vikram_1788077640@example.com",
+      "phone": "+91 98765 99999",
+      "password": "mysecretpassword",
+      "created_at": "2026-08-30 13:44"
+    },
+    {
+      "id": "usr-47d898",
+      "name": "Aarav Mehta (Google)",
+      "email": "aarav.mehta.google@gmail.com",
+      "phone": "+91 98200 45678",
+      "auth_provider": "google",
+      "password": "oauth_google",
+      "created_at": "2026-08-30 13:50"
+    },
+    {
+      "id": "usr-de68bf",
+      "name": "Pooja Iyer (Facebook)",
+      "email": "pooja.iyer.fb@example.com",
+      "phone": "+91 98333 78901",
+      "auth_provider": "facebook",
+      "password": "oauth_facebook",
+      "created_at": "2026-08-30 13:50"
     }
   ]
 }

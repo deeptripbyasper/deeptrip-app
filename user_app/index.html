@@ -4,46 +4,52 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>DeepTrip - India's Ultimate Road Trip Partner</title>
-  <meta name="description" content="Chauffeur-guided road trips across India. AI-powered itineraries, verified stays, tailored culinary packages, and turnkey journey stewardship.">
+  <meta name="description" content="DeepTrip: Chauffeur-guided road trips across India. AI-powered itineraries, verified stays, curated culinary packages, and turnkey journey stewardship.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #FF5A36;
-      --primary-hover: #E44825;
-      --primary-soft: rgba(255, 90, 54, 0.14);
-      --primary-glow: rgba(255, 90, 54, 0.35);
+      /* Stitch Taste Design System - White & Light Blue Palette */
+      --primary: #0284C7;             /* Sky-600 / Azure */
+      --primary-hover: #0369A1;       /* Sky-700 */
+      --primary-light: #38BDF8;       /* Sky-400 */
+      --primary-soft: rgba(2, 132, 199, 0.08);
+      --primary-glow: rgba(2, 132, 199, 0.22);
       
-      --brand-cyan: #00B4D8;
-      --brand-navy: #0C1824;
+      --brand-cyan: #0EA5E9;
+      --brand-navy: #0F172A;
       
-      --bg-canvas: #070D14;
-      --bg-card: #101722;
-      --bg-card-elevated: #182232;
-      --bg-input: #0A0F18;
+      --bg-canvas: #FFFFFF;
+      --bg-surface: #F8FAFC;
+      --bg-card: #FFFFFF;
+      --bg-card-elevated: #F8FAFC;
+      --bg-input: #F8FAFC;
       
-      --text-main: #FFFFFF;
-      --text-secondary: #94A3B8;
-      --text-muted: #64748B;
+      --text-main: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
       
-      --border-subtle: rgba(255, 255, 255, 0.09);
-      --border-active: rgba(255, 90, 54, 0.6);
+      --border-subtle: #E2E8F0;
+      --border-focus: #0284C7;
+      --border-active: #0284C7;
       
-      --emerald: #10B981;
-      --emerald-soft: rgba(16, 185, 129, 0.14);
-      --red: #EF4444;
-      --red-soft: rgba(239, 68, 68, 0.14);
-      --amber: #F59E0B;
+      --emerald: #059669;
+      --emerald-soft: rgba(5, 150, 105, 0.1);
+      --red: #DC2626;
+      --red-soft: rgba(220, 38, 38, 0.1);
+      --amber: #D97706;
+      --amber-soft: rgba(217, 119, 6, 0.1);
       
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
       --radius-full: 9999px;
       
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
-      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-      --shadow-glow: 0 4px 20px rgba(255, 90, 54, 0.4);
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.1), 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+      --shadow-glow: 0 4px 20px rgba(2, 132, 199, 0.25);
       
       --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -57,7 +63,7 @@
 
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-canvas);
+      background-color: #F1F5F9;
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
@@ -79,31 +85,149 @@
       position: relative;
       border-left: 1px solid var(--border-subtle);
       border-right: 1px solid var(--border-subtle);
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 40px rgba(15, 23, 42, 0.08);
     }
 
     @media (min-width: 640px) {
       body {
         padding: 20px 0;
-        background: radial-gradient(circle at top, #141E2C 0%, #06090E 100%);
+        background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
       }
       .mobile-app-wrapper {
         min-height: calc(100vh - 40px);
-        border-radius: 36px;
+        border-radius: 28px;
         overflow: hidden;
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--border-subtle);
       }
     }
 
-    /* Top Sticky App Header */
+    /* ======================================================== */
+    /* APP LOADER / SPLASH SCREEN */
+    /* ======================================================== */
+    .app-splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #FFFFFF;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+    }
+
+    .app-splash-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-logo-container {
+      position: relative;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .splash-logo-glow {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(2, 132, 199, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
+      border-radius: 50%;
+      animation: pulseGlow 2.2s infinite ease-in-out;
+    }
+
+    .splash-logo-img {
+      width: 110px;
+      height: auto;
+      max-height: 90px;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      animation: logoFloat 2.4s infinite ease-in-out;
+    }
+
+    .splash-brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .splash-brand-title span {
+      color: var(--primary);
+    }
+
+    .splash-tagline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--primary-soft);
+      border: 1px solid rgba(2, 132, 199, 0.2);
+      padding: 0.5rem 1.1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+      margin-top: 0.25rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .splash-progress-track {
+      width: 160px;
+      height: 4px;
+      background: #E2E8F0;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .splash-progress-bar {
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, #38BDF8, #0284C7);
+      border-radius: var(--radius-full);
+      position: absolute;
+      animation: splashSlide 1.2s infinite ease-in-out;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+
+    @keyframes splashSlide {
+      0% { left: -40%; width: 40%; }
+      50% { left: 30%; width: 50%; }
+      100% { left: 100%; width: 40%; }
+    }
+
+    /* ======================================================== */
+    /* TOP STICKY APP HEADER */
+    /* ======================================================== */
     .app-header {
       position: sticky;
       top: 0;
       z-index: 80;
-      background: rgba(16, 23, 34, 0.94);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 0.75rem 1.2rem;
+      padding: 0.75rem 1.15rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -112,16 +236,15 @@
     .brand-group {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.65rem;
       text-decoration: none;
       cursor: pointer;
     }
 
     .brand-logo-img {
-      height: 36px;
+      height: 34px;
       width: auto;
       object-fit: contain;
-      border-radius: var(--radius-sm);
     }
 
     .brand-text-block {
@@ -129,18 +252,64 @@
       flex-direction: column;
     }
 
-    .brand-tagline {
-      font-size: 0.68rem;
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .brand-title span {
+      color: var(--primary);
+    }
+
+    .brand-subline {
+      font-size: 0.65rem;
       color: var(--primary);
       font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
+    }
+
+    .user-auth-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .user-auth-btn:hover {
+      background: var(--primary-soft);
+      border-color: rgba(2, 132, 199, 0.3);
+      color: var(--primary);
+    }
+
+    .user-avatar-badge {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #FFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 800;
     }
 
     .sos-pill {
@@ -148,8 +317,8 @@
       align-items: center;
       gap: 0.35rem;
       background: var(--emerald-soft);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 0.3rem 0.65rem;
+      border: 1px solid rgba(5, 150, 105, 0.25);
+      padding: 0.35rem 0.65rem;
       border-radius: var(--radius-full);
       font-size: 0.72rem;
       font-weight: 700;
@@ -161,34 +330,35 @@
       height: 6px;
       background: var(--emerald);
       border-radius: 50%;
-      animation: pulse 1.8s infinite;
+      animation: pulseGreen 1.8s infinite;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    @keyframes pulseGreen {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(5, 150, 105, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
     }
 
-    /* Screen Progress Bar */
+    /* Screen Step Progress Bar */
     .screen-progress {
       display: flex;
-      height: 3px;
-      background: var(--bg-card);
+      height: 4px;
+      background: #F1F5F9;
       width: 100%;
     }
 
     .progress-bar-fill {
-      width: 50%;
-      background: linear-gradient(90deg, #FF5A36, #FFA07A);
-      transition: width 0.3s ease;
+      width: 25%;
+      background: linear-gradient(90deg, #38BDF8, #0284C7);
+      transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* Main Scrollable Body */
     .screen-content {
       flex: 1;
-      padding: 1.25rem 1.15rem 7rem;
+      padding: 1.15rem 1.15rem 7.5rem;
       overflow-y: auto;
+      background-color: var(--bg-canvas);
     }
 
     /* Screen Views */
@@ -202,27 +372,80 @@
     }
 
     @keyframes slideUpFade {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Screen Step Header Nav */
+    .screen-nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .btn-back-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-back-step:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .step-counter-badge {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 0.3rem 0.7rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(2, 132, 199, 0.2);
     }
 
     /* Hero Banner Mini */
     .hero-mobile {
-      background: linear-gradient(180deg, rgba(255, 90, 54, 0.16) 0%, rgba(16, 23, 34, 0.95) 100%);
-      border: 1px solid var(--border-subtle);
+      background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+      border: 1px solid rgba(2, 132, 199, 0.2);
       border-radius: var(--radius-lg);
       padding: 1.25rem;
       margin-bottom: 1.25rem;
       position: relative;
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-mobile-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+      display: block;
     }
 
     .hero-mobile-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 700;
+      font-size: 1.35rem;
+      font-weight: 800;
       line-height: 1.25;
-      margin-bottom: 0.4rem;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
     }
 
     .hero-mobile-title span {
@@ -242,48 +465,59 @@
       border-radius: var(--radius-lg);
       padding: 1.15rem;
       margin-bottom: 1.15rem;
+      box-shadow: var(--shadow-sm);
     }
 
     .section-card-title {
       font-size: 0.95rem;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-main);
+      margin-bottom: 0.85rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.85rem;
     }
 
-    .section-card-title .badge {
+    .section-card-sub {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: -0.5rem;
+      margin-bottom: 0.9rem;
+      line-height: 1.35;
+    }
+
+    .badge {
       font-size: 0.7rem;
-      color: var(--primary);
-      font-weight: 600;
-      background: var(--primary-soft);
-      padding: 0.15rem 0.5rem;
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      padding: 0.2rem 0.55rem;
       border-radius: var(--radius-full);
+      font-weight: 700;
     }
 
-    /* Route Input Fields */
+    /* Route Input Boxes */
     .route-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       background: var(--bg-input);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
       padding: 0.75rem 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
       margin-bottom: 0.65rem;
       transition: var(--transition);
     }
 
     .route-box:focus-within {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px var(--primary-soft);
+      border-color: var(--border-focus);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
     }
 
     .route-icon {
-      font-size: 1rem;
-      color: var(--text-muted);
+      font-size: 1.1rem;
+      flex-shrink: 0;
     }
 
     .route-field {
@@ -295,9 +529,10 @@
     .route-field label {
       font-size: 0.68rem;
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.15rem;
     }
 
     .route-field input {
@@ -306,17 +541,21 @@
       color: var(--text-main);
       font-size: 0.92rem;
       font-weight: 600;
-      font-family: inherit;
       outline: none;
+      font-family: inherit;
       width: 100%;
     }
 
+    .route-field input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Quick Route Chips */
     .chips-slider {
       display: flex;
-      gap: 0.4rem;
+      gap: 0.45rem;
       overflow-x: auto;
-      padding-bottom: 0.25rem;
-      margin-top: 0.5rem;
+      padding: 0.35rem 0 0.15rem;
       scrollbar-width: none;
     }
 
@@ -325,24 +564,25 @@
     }
 
     .route-chip {
-      background: var(--bg-card-elevated);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      padding: 0.35rem 0.75rem;
       border-radius: var(--radius-full);
-      font-size: 0.75rem;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-secondary);
+      font-weight: 700;
       white-space: nowrap;
       cursor: pointer;
       transition: var(--transition);
     }
 
-    .route-chip:hover, .route-chip:active {
+    .route-chip:hover {
+      background: var(--primary-soft);
       border-color: var(--primary);
       color: var(--primary);
-      background: var(--primary-soft);
     }
 
-    /* Counters Row */
+    /* Counters Grid */
     .counters-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -350,55 +590,62 @@
     }
 
     .counter-tile {
-      background: var(--bg-input);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 0.75rem;
+      padding: 0.85rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      align-items: center;
+      gap: 0.45rem;
     }
 
     .counter-tile-label {
       font-size: 0.72rem;
-      color: var(--text-muted);
-      font-weight: 600;
+      color: var(--text-secondary);
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     .counter-tile-control {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 0.75rem;
     }
 
     .btn-step {
-      width: 28px;
-      height: 28px;
-      border-radius: var(--radius-sm);
-      background: var(--bg-card-elevated);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #FFFFFF;
       border: 1px solid var(--border-subtle);
       color: var(--text-main);
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 700;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
     }
 
-    .btn-step:active {
+    .btn-step:hover {
       background: var(--primary);
-      color: #FFF;
+      color: #FFFFFF;
+      border-color: var(--primary);
     }
 
     .counter-tile-val {
       font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--primary);
+      font-weight: 800;
+      color: var(--text-main);
+      min-width: 68px;
+      text-align: center;
     }
 
-    /* Dynamic Vehicle Cards */
+    /* Fleet Cards */
     .vehicle-cards-list {
       display: flex;
       flex-direction: column;
@@ -406,10 +653,10 @@
     }
 
     .vehicle-card {
-      background: var(--bg-input);
+      background: #FFFFFF;
       border: 2px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 0.9rem;
+      padding: 0.85rem;
       display: flex;
       gap: 0.85rem;
       cursor: pointer;
@@ -417,17 +664,22 @@
       position: relative;
     }
 
+    .vehicle-card:hover {
+      border-color: rgba(2, 132, 199, 0.4);
+      background: #F8FAFC;
+    }
+
     .vehicle-card.selected {
       border-color: var(--primary);
-      background: linear-gradient(135deg, rgba(255, 90, 54, 0.1) 0%, rgba(16, 23, 34, 1) 100%);
-      box-shadow: var(--shadow-sm);
+      background: #F0F9FF;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12);
     }
 
     .vehicle-img-thumb {
       width: 90px;
-      height: 75px;
-      border-radius: var(--radius-sm);
+      height: 72px;
       object-fit: cover;
+      border-radius: var(--radius-sm);
       flex-shrink: 0;
     }
 
@@ -442,222 +694,280 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .vehicle-name {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #FFF;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-main);
     }
 
     .vehicle-select-radio {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       border: 2px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       color: transparent;
+      transition: var(--transition);
     }
 
     .vehicle-card.selected .vehicle-select-radio {
-      border-color: var(--primary);
       background: var(--primary);
+      border-color: var(--primary);
       color: #FFF;
     }
 
     .vehicle-specs {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       color: var(--text-secondary);
       margin-bottom: 0.35rem;
     }
 
     .vehicle-price {
-      font-size: 0.88rem;
-      font-weight: 700;
+      font-size: 0.85rem;
+      font-weight: 800;
       color: var(--primary);
     }
 
-    /* Stays 2x2 Dynamic Grid */
-    .grid-2x2 {
+    /* Stays Grid */
+    .stays-cards-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.65rem;
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
     }
 
-    .tile-option {
-      background: var(--bg-input);
+    .stay-card-rich {
+      background: #FFFFFF;
       border: 2px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 0.75rem;
+      overflow: hidden;
       cursor: pointer;
       transition: var(--transition);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
 
-    .tile-option.selected {
+    .stay-card-rich:hover {
+      border-color: rgba(2, 132, 199, 0.4);
+    }
+
+    .stay-card-rich.selected {
       border-color: var(--primary);
-      background: rgba(255, 90, 54, 0.1);
+      background: #F0F9FF;
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.12);
     }
 
-    .tile-img {
+    .stay-img-wrap {
       width: 100%;
-      height: 60px;
-      object-fit: cover;
-      border-radius: var(--radius-sm);
-      margin-bottom: 0.5rem;
+      height: 120px;
+      position: relative;
     }
 
-    .tile-title {
-      font-size: 0.82rem;
-      font-weight: 700;
+    .stay-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stay-badge-overlay {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
       color: #FFF;
-      margin-bottom: 0.2rem;
-    }
-
-    .tile-price {
-      font-size: 0.78rem;
-      color: var(--primary);
+      padding: 0.25rem 0.55rem;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
       font-weight: 700;
     }
 
-    /* Food Dynamic Cards */
-    .diet-toggle-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.65rem;
-    }
-
-    .diet-card {
-      background: var(--bg-input);
-      border: 2px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 0.85rem 0.65rem;
-      cursor: pointer;
-      transition: var(--transition);
-      text-align: center;
+    .stay-details-body {
+      padding: 0.85rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      gap: 0.35rem;
     }
 
-    .diet-card.selected {
-      border-color: var(--primary);
-      background: rgba(255, 90, 54, 0.1);
-    }
-
-    .diet-img-thumb {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 0.35rem;
-      border: 1px solid var(--border-subtle);
-    }
-
-    .diet-card-title {
-      font-size: 0.82rem;
-      font-weight: 700;
-      margin-bottom: 0.15rem;
-    }
-
-    .diet-card-sub {
-      font-size: 0.72rem;
-      color: var(--primary);
-      font-weight: 700;
-    }
-
-    /* Sticky Bottom Mobile Bar */
-    .bottom-cta-bar {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 480px;
-      background: rgba(16, 23, 34, 0.96);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid var(--border-subtle);
-      padding: 0.85rem 1.15rem;
-      z-index: 90;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.6);
-    }
-
-    .bottom-summary-text {
+    .stay-title-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.75rem;
+    }
+
+    .stay-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .stay-desc {
+      font-size: 0.76rem;
       color: var(--text-secondary);
+      line-height: 1.35;
     }
 
-    .btn-mobile-primary {
-      background: linear-gradient(135deg, #FF5A36 0%, #E44825 100%);
-      color: #FFF;
-      border: none;
-      border-radius: var(--radius-md);
-      padding: 0.95rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
+    .stay-amenities-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0.25rem 0;
+    }
+
+    .stay-amenity-tag {
+      font-size: 0.68rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .stay-price-row {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      box-shadow: var(--shadow-glow);
+      justify-content: space-between;
+      margin-top: 0.2rem;
+      padding-top: 0.4rem;
+      border-top: 1px dashed var(--border-subtle);
+    }
+
+    .stay-price-val {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Food Package Cards */
+    .meals-cards-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .meal-card-rich {
+      background: #FFFFFF;
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      cursor: pointer;
       transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
-    .btn-mobile-primary:active {
-      transform: scale(0.98);
+    .meal-card-rich:hover {
+      border-color: rgba(2, 132, 199, 0.4);
     }
 
-    /* ======================================================== */
-    /* SCREEN 2: GEMINI AI ITINERARY & BUDGET (MOBILE-FIRST) */
-    /* ======================================================== */
+    .meal-card-rich.selected {
+      border-color: var(--primary);
+      background: #F0F9FF;
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.12);
+    }
+
+    .meal-header-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .meal-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .meal-title-block {
+      flex: 1;
+    }
+
+    .meal-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .meal-diet-type {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .meal-inclusions-list {
+      background: var(--bg-surface);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .meal-inclusion-item {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+
+    .meal-price-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Gemini AI Banner */
     .ai-banner-mobile {
-      background: linear-gradient(135deg, rgba(0, 180, 216, 0.15) 0%, rgba(255, 90, 54, 0.15) 100%);
-      border: 1px solid rgba(0, 180, 216, 0.35);
+      background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+      border: 1px solid rgba(2, 132, 199, 0.3);
       border-radius: var(--radius-lg);
       padding: 1rem;
       margin-bottom: 1.15rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      box-shadow: var(--shadow-sm);
     }
 
     .ai-sparkle-badge {
       width: 38px;
       height: 38px;
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, #00B4D8, #FF5A36);
+      background: linear-gradient(135deg, #38BDF8, #0284C7);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
+      color: #FFF;
       flex-shrink: 0;
     }
 
     .ai-banner-text h3 {
       font-size: 0.95rem;
-      font-weight: 700;
+      font-weight: 800;
+      color: var(--text-main);
       margin-bottom: 0.15rem;
     }
 
     .ai-banner-text p {
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       color: var(--text-secondary);
     }
 
+    /* Day Tabs */
     .day-selector-pills {
       display: flex;
       gap: 0.4rem;
@@ -668,28 +978,30 @@
     }
 
     .day-pill-btn {
-      background: var(--bg-card);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-full);
       padding: 0.4rem 0.9rem;
       font-size: 0.78rem;
       color: var(--text-secondary);
-      font-weight: 600;
+      font-weight: 700;
       white-space: nowrap;
       cursor: pointer;
+      transition: var(--transition);
     }
 
     .day-pill-btn.active {
       background: var(--primary);
       border-color: var(--primary);
       color: #FFF;
+      box-shadow: var(--shadow-sm);
     }
 
-    /* Timeline Mobile */
+    /* Timeline */
     .mobile-timeline {
       position: relative;
       padding-left: 1.25rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .mobile-timeline::before {
@@ -710,16 +1022,16 @@
     .tl-dot {
       position: absolute;
       left: -1.25rem;
-      top: 5px;
+      top: 6px;
       width: 10px;
       height: 10px;
       border-radius: 50%;
       background: var(--primary);
-      box-shadow: 0 0 8px var(--primary-glow);
+      box-shadow: 0 0 6px var(--primary-glow);
     }
 
     .tl-content {
-      background: var(--bg-card);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
       padding: 0.85rem;
@@ -728,7 +1040,7 @@
     .tl-time-badge {
       display: inline-block;
       font-size: 0.7rem;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--primary);
       background: var(--primary-soft);
       padding: 0.15rem 0.45rem;
@@ -738,9 +1050,9 @@
 
     .tl-title {
       font-size: 0.88rem;
-      font-weight: 700;
-      color: #FFF;
-      margin-bottom: 0.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
     }
 
     .tl-desc {
@@ -749,13 +1061,14 @@
       line-height: 1.35;
     }
 
-    /* Budget Breakdown Card Mobile */
+    /* Budget Breakdown */
     .budget-card-mobile {
-      background: var(--bg-card);
+      background: #FFFFFF;
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
       padding: 1.15rem;
       margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-sm);
     }
 
     .budget-line-row {
@@ -763,7 +1076,7 @@
       justify-content: space-between;
       padding: 0.45rem 0;
       font-size: 0.82rem;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+      border-bottom: 1px dashed #E2E8F0;
     }
 
     .budget-line-row:last-child {
@@ -776,12 +1089,12 @@
 
     .budget-line-val {
       font-weight: 700;
-      color: #FFF;
+      color: var(--text-main);
     }
 
     .total-highlight-mobile {
-      background: linear-gradient(135deg, rgba(255, 90, 54, 0.16) 0%, rgba(16, 23, 34, 1) 100%);
-      border: 1px solid rgba(255, 90, 54, 0.35);
+      background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+      border: 1px solid rgba(2, 132, 199, 0.3);
       border-radius: var(--radius-md);
       padding: 0.9rem;
       text-align: center;
@@ -795,35 +1108,92 @@
       font-family: 'Montserrat', sans-serif;
     }
 
+    /* Sticky Bottom Mobile Bar */
+    .bottom-cta-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-subtle);
+      padding: 0.85rem 1.15rem;
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    .bottom-summary-text {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .btn-mobile-primary {
+      background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+      color: #FFFFFF;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.95rem;
+      font-size: 0.95rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-glow);
+      transition: var(--transition);
+    }
+
+    .btn-mobile-primary:hover {
+      background: linear-gradient(135deg, #38BDF8 0%, #0369A1 100%);
+    }
+
+    .btn-mobile-primary:active {
+      transform: scale(0.98);
+    }
+
     /* ======================================================== */
-    /* MODAL: REQUEST A CALLBACK SHEET */
+    /* MODALS & BOTTOM SHEETS */
     /* ======================================================== */
-    .bottom-sheet-overlay {
+    .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(6px);
       z-index: 200;
       display: none;
       align-items: flex-end;
       justify-content: center;
     }
 
-    .bottom-sheet-overlay.active {
+    .modal-overlay.active {
       display: flex;
     }
 
-    .bottom-sheet {
-      background: var(--bg-card);
+    .modal-sheet {
+      background: #FFFFFF;
       border-top: 1px solid var(--border-subtle);
       border-radius: 24px 24px 0 0;
       width: 100%;
       max-width: 480px;
-      padding: 1.5rem 1.25rem 2rem;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 1.5rem 1.25rem 2.2rem;
       animation: sheetUp 0.25s ease-out forwards;
+      box-shadow: var(--shadow-lg);
     }
 
     @keyframes sheetUp {
@@ -834,50 +1204,239 @@
     .sheet-handle {
       width: 40px;
       height: 4px;
-      background: var(--border-subtle);
+      background: #CBD5E1;
       border-radius: var(--radius-full);
       margin: 0 auto 1.25rem;
     }
 
     .sheet-title {
-      font-size: 1.15rem;
-      font-weight: 700;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
       margin-bottom: 0.25rem;
     }
 
     .sheet-sub {
       font-size: 0.8rem;
       color: var(--text-secondary);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.15rem;
+      line-height: 1.4;
     }
 
-    .sheet-input-group {
+    .input-group {
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.3rem;
       margin-bottom: 0.85rem;
     }
 
-    .sheet-input-group label {
+    .input-group label {
       font-size: 0.72rem;
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
 
-    .sheet-input {
+    .input-field {
       background: var(--bg-input);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
       padding: 0.8rem 0.9rem;
-      color: #FFF;
+      color: var(--text-main);
       font-size: 0.9rem;
       font-family: inherit;
       outline: none;
+      transition: var(--transition);
     }
 
-    .sheet-input:focus {
-      border-color: var(--primary);
+    .input-field:focus {
+      border-color: var(--border-focus);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+    }
+
+    /* Auth Tab Switcher */
+    .auth-tab-row {
+      display: flex;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      padding: 0.25rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 0.6rem;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .auth-tab-btn.active {
+      background: #FFFFFF;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Modal Top Header & Close Button */
+    .sheet-top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+    }
+
+    .modal-close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+
+    .modal-close-btn:hover {
+      background: var(--red-soft);
+      border-color: rgba(220, 38, 38, 0.3);
+      color: var(--red);
+      transform: scale(1.05);
+    }
+
+    /* Social Auth Options (Google & Facebook) */
+    .social-auth-divider {
+      display: flex;
+      align-items: center;
+      margin: 1.1rem 0 0.85rem;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .social-auth-divider::before,
+    .social-auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .social-auth-divider span {
+      padding: 0 0.65rem;
+    }
+
+    .social-auth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-social {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-social:hover {
+      background: var(--bg-surface);
+      border-color: rgba(2, 132, 199, 0.35);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .btn-social svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    .btn-social-google {
+      color: #1F2937;
+    }
+
+    .btn-social-fb {
+      color: #1877F2;
+    }
+
+    /* Booking History Card */
+    .history-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .history-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .history-id {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .history-status-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-full);
+      background: var(--emerald-soft);
+      color: var(--emerald);
+      border: 1px solid rgba(5, 150, 105, 0.2);
+    }
+
+    .history-route {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .history-meta {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .history-price {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-top: 0.2rem;
     }
 
     /* AI Loading Spinner */
@@ -887,7 +1446,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(7, 13, 20, 0.94);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
       z-index: 300;
       display: none;
@@ -906,9 +1465,9 @@
     .spinner-ring {
       width: 52px;
       height: 52px;
-      border: 4px solid var(--bg-card);
-      border-top: 4px solid var(--primary);
-      border-right: 4px solid #00B4D8;
+      border: 4px solid #E0F2FE;
+      border-top: 4px solid #0284C7;
+      border-right: 4px solid #38BDF8;
       border-radius: 50%;
       animation: spin 0.9s linear infinite;
     }
@@ -920,18 +1479,44 @@
 </head>
 <body>
 
+  <!-- ======================================================== -->
+  <!-- 1. APP LOADER / SPLASH SCREEN -->
+  <!-- ======================================================== -->
+  <div class="app-splash-screen" id="appSplashScreen" onclick="dismissSplashScreen()">
+    <div class="splash-logo-container">
+      <div class="splash-logo-glow"></div>
+      <img src="/assets/deeptrip_logo.png" alt="DeepTrip Logo" class="splash-logo-img" onerror="this.src='/assets/deeptrip_icon.png'">
+    </div>
+    <div class="splash-brand-title">Deep<span>Trip</span></div>
+    <div class="splash-tagline-badge">
+      <span>✨ India's ultimate Road Trip Partner</span>
+    </div>
+    <div class="splash-progress-track">
+      <div class="splash-progress-bar"></div>
+    </div>
+  </div>
+
+  <!-- Mobile App Frame Container -->
   <div class="mobile-app-wrapper">
 
-    <!-- Top Sticky Brand Header with Actual Logo -->
+    <!-- ======================================================== -->
+    <!-- TOP STICKY BRAND HEADER -->
+    <!-- ======================================================== -->
     <header class="app-header">
-      <div class="brand-group" onclick="showScreen('screen-planner')">
+      <div class="brand-group" onclick="showScreen('screen-step1')">
         <img src="/assets/deeptrip_logo.png" alt="DeepTrip Logo" class="brand-logo-img" onerror="this.src='/assets/deeptrip_icon.png'">
         <div class="brand-text-block">
-          <span class="brand-tagline">Deep Trip</span>
+          <span class="brand-title">Deep<span>Trip</span></span>
+          <span class="brand-subline">Road Mobility & Beyond</span>
         </div>
       </div>
 
       <div class="header-actions">
+        <button class="user-auth-btn" id="headerAuthBtn" onclick="openUserAuthModal()">
+          <span class="user-avatar-badge" id="headerUserAvatar">👤</span>
+          <span id="headerUserName">Sign In</span>
+        </button>
+
         <div class="sos-pill">
           <span class="pulse-indicator"></span>
           24/7 SOS
@@ -948,17 +1533,18 @@
     <div class="screen-content">
 
       <!-- ======================================================== -->
-      <!-- SCREEN 1: TRIP PLANNER (MOBILE-FIRST) -->
+      <!-- SCREEN 1: STEP 1 - ENROUTE & FLEET SELECTION -->
       <!-- ======================================================== -->
-      <section id="screen-planner" class="screen-view active">
+      <section id="screen-step1" class="screen-view active">
         
-        <!-- Clean Hero Card -->
+        <!-- Clean Hero Banner -->
         <div class="hero-mobile">
+          <span class="hero-mobile-tag">India's Ultimate Road Trip Partner</span>
           <h1 class="hero-mobile-title">Plan Your <span>Road Trip</span></h1>
-          <p class="hero-mobile-sub">Verified Captains, sanitized vehicles & AI turnkey itinerary.</p>
+          <p class="hero-mobile-sub">Verified Captains, sanitized luxury fleet & Google Gemini AI turnkey itinerary.</p>
         </div>
 
-        <!-- 1. Origin & Destination -->
+        <!-- 1. Enroute (Origin & Destination) -->
         <div class="section-card">
           <div class="section-card-title">
             <span>📍 Enroute</span>
@@ -969,7 +1555,7 @@
             <span class="route-icon">🟢</span>
             <div class="route-field">
               <label>From (Departure City)</label>
-              <input type="text" id="mFromCity" value="Delhi (NCR)" placeholder="e.g. Delhi, Mumbai...">
+              <input type="text" id="mFromCity" value="" placeholder="">
             </div>
           </div>
 
@@ -977,7 +1563,7 @@
             <span class="route-icon">📍</span>
             <div class="route-field">
               <label>To (Destination Circuit)</label>
-              <input type="text" id="mToCity" value="Jaipur Heritage Circuit" placeholder="e.g. Jaipur, Goa...">
+              <input type="text" id="mToCity" value="" placeholder="">
             </div>
           </div>
 
@@ -990,7 +1576,7 @@
           </div>
         </div>
 
-        <!-- 2. Trip Metrics (Days & Members) -->
+        <!-- 2. Trip Metrics (Days & Travelers) -->
         <div class="section-card">
           <div class="section-card-title">
             <span>📅 Schedule & Group</span>
@@ -1024,32 +1610,61 @@
             <span>🚘 Vehicle Fleet</span>
             <span class="badge">Chauffeur Included</span>
           </div>
+          <p class="section-card-sub">Select your vehicle category. Every fleet comes with a certified Captain.</p>
 
           <div class="vehicle-cards-list" id="dynamicVehicleList">
             <!-- Loaded dynamically from /api/cars -->
           </div>
         </div>
 
-        <!-- 4. Accommodation Preference (Dynamically Loaded from DB) -->
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SCREEN 2: STEP 2 - ACCOMMODATION / STAY PREFERENCE -->
+      <!-- ======================================================== -->
+      <section id="screen-step2" class="screen-view">
+        
+        <div class="screen-nav-header">
+          <button class="btn-back-step" onclick="showScreen('screen-step1')">
+            <span>← Back to Vehicle</span>
+          </button>
+          <span class="step-counter-badge">Step 2 of 4</span>
+        </div>
+
         <div class="section-card">
           <div class="section-card-title">
-            <span>🏡 Stay Category</span>
+            <span>🏡 Handpicked Stays & Retreats</span>
             <span class="badge">Verified Quality</span>
           </div>
+          <p class="section-card-sub">All properties are verified for cleanliness, senior-accessibility and pet friendliness.</p>
 
-          <div class="grid-2x2" id="dynamicStaysGrid">
+          <div class="stays-cards-grid" id="dynamicStaysGrid">
             <!-- Loaded dynamically from /api/stays -->
           </div>
         </div>
 
-        <!-- 5. Food Preference (Dynamically Loaded from DB) -->
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SCREEN 3: STEP 3 - FOOD & DINING PACKAGES -->
+      <!-- ======================================================== -->
+      <section id="screen-step3" class="screen-view">
+        
+        <div class="screen-nav-header">
+          <button class="btn-back-step" onclick="showScreen('screen-step2')">
+            <span>← Back to Stays</span>
+          </button>
+          <span class="step-counter-badge">Step 3 of 4</span>
+        </div>
+
         <div class="section-card">
           <div class="section-card-title">
-            <span>🍽️ Food Preference</span>
-            <span class="badge">Highway Rest Stops</span>
+            <span>🍽️ Highway & Destination Dining</span>
+            <span class="badge">Pre-Screened Halts</span>
           </div>
+          <p class="section-card-sub">Select your culinary package covering breakfast, hygienic highway lunches, and gourmet dinners.</p>
 
-          <div class="diet-toggle-grid" id="dynamicMealsGrid">
+          <div class="meals-cards-grid" id="dynamicMealsGrid">
             <!-- Loaded dynamically from /api/meals -->
           </div>
         </div>
@@ -1057,10 +1672,17 @@
       </section>
 
       <!-- ======================================================== -->
-      <!-- SCREEN 2: GEMINI AI ITINERARY & BUDGET (MOBILE-FIRST) -->
+      <!-- SCREEN 4: STEP 4 - GEMINI AI ITINERARY & BUDGET BREAKDOWN -->
       <!-- ======================================================== -->
-      <section id="screen-itinerary" class="screen-view">
+      <section id="screen-step4" class="screen-view">
         
+        <div class="screen-nav-header">
+          <button class="btn-back-step" onclick="showScreen('screen-step3')">
+            <span>← Back to Food</span>
+          </button>
+          <span class="step-counter-badge">Step 4 of 4</span>
+        </div>
+
         <!-- Gemini AI Banner -->
         <div class="ai-banner-mobile">
           <div class="ai-sparkle-badge">✨</div>
@@ -1077,9 +1699,9 @@
 
         <!-- Timeline -->
         <div class="section-card" style="padding: 1.15rem 1rem 0.5rem;">
-          <div class="section-card-title" style="margin-bottom: 1.25rem;">
+          <div class="section-card-title" style="margin-bottom: 1.15rem;">
             <span>🗓️ Day-by-Day Journey</span>
-            <span class="badge" onclick="showScreen('screen-planner')">Modify ✏️</span>
+            <span class="badge" onclick="showScreen('screen-step1')">Modify ✏️</span>
           </div>
 
           <div class="mobile-timeline" id="mTimelineContainer">
@@ -1099,7 +1721,7 @@
           </div>
 
           <div class="total-highlight-mobile">
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Estimated Total Trip Budget</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Estimated Total Trip Budget</div>
             <div class="total-amount-text" id="mTotalDisplay">₹28,450</div>
             <div style="font-size: 0.78rem; color: var(--text-secondary);" id="mPerPersonDisplay">Approx ₹7,112 per traveler</div>
           </div>
@@ -1109,45 +1731,216 @@
 
     </div>
 
-    <!-- Bottom Sticky Mobile Bar -->
+    <!-- ======================================================== -->
+    <!-- BOTTOM STICKY MOBILE ACTION BAR -->
+    <!-- ======================================================== -->
     <div class="bottom-cta-bar" id="bottomCtaBar">
       <div class="bottom-summary-text" id="ctaSummaryText">
-        <span>6-Seater • Luxury Hotel • Pure Veg</span>
-        <span style="color: var(--primary); font-weight: 700;">3 Days</span>
+        <span>Vehicle • Stay • Food</span>
+        <span style="color: var(--primary); font-weight: 800;">3 Days</span>
       </div>
       <button class="btn-mobile-primary" id="btnPrimaryCta" onclick="triggerPrimaryAction()">
-        <span>Generate AI Itinerary with Gemini ✨</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span>Next: Choose Stay (Step 2) ➔</span>
       </button>
     </div>
 
   </div>
 
   <!-- ======================================================== -->
-  <!-- BOTTOM SHEET: REQUEST A CALLBACK -->
+  <!-- MODAL 1: USER AUTH (LOGIN / SIGNUP) -->
   <!-- ======================================================== -->
-  <div class="bottom-sheet-overlay" id="callbackSheet">
-    <div class="bottom-sheet">
+  <div class="modal-overlay" id="authModal" onclick="closeOnBackdrop(event, 'authModal')">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+
+      <!-- Top Header with Close Button -->
+      <div class="sheet-top-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <img src="/assets/deeptrip_logo.png" alt="DeepTrip" style="height: 22px; width: auto;" onerror="this.src='/assets/deeptrip_icon.png'">
+          <span style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">DeepTrip Account</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('authModal')" title="Close Window">✕</button>
+      </div>
+
+      <!-- Auth Tab Switcher -->
+      <div class="auth-tab-row">
+        <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab-btn" id="tabSignupBtn" onclick="switchAuthTab('signup')">Create Account</button>
+      </div>
+
+      <!-- Login View -->
+      <div id="authLoginView">
+        <h3 class="sheet-title">Welcome Back to DeepTrip</h3>
+        <p class="sheet-sub">Sign in to manage your road trip bookings, track active journeys, and access VIP support.</p>
+
+        <!-- Social Auth Buttons -->
+        <div class="social-auth-grid">
+          <button class="btn-social btn-social-google" onclick="socialAuth('google')">
+            <svg viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Google</span>
+          </button>
+
+          <button class="btn-social btn-social-fb" onclick="socialAuth('facebook')">
+            <svg viewBox="0 0 24 24" fill="#1877F2">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span>Facebook</span>
+          </button>
+        </div>
+
+        <div class="social-auth-divider">
+          <span>or continue with email</span>
+        </div>
+
+        <div class="input-group">
+          <label>Email or Mobile Number</label>
+          <input type="text" id="loginIdentifier" class="input-field" placeholder="e.g. sanjeev.mehra@gmail.com">
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" class="input-field" placeholder="••••••••">
+        </div>
+
+        <div id="loginErrorMsg" style="color: var(--red); font-size: 0.76rem; font-weight: 700; margin-bottom: 0.6rem; display: none;"></div>
+
+        <button class="btn-mobile-primary" style="width: 100%; margin-top: 0.5rem;" onclick="submitLogin()">
+          Sign In
+        </button>
+
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.75rem; margin-top: 1rem; text-align: center;">
+          <span style="font-size: 0.72rem; color: var(--text-muted);">Quick Demo Account:</span><br>
+          <button style="background: none; border: none; color: var(--primary); font-weight: 800; font-size: 0.78rem; cursor: pointer; margin-top: 0.2rem;" onclick="fillDemoUser('sanjeev.mehra@gmail.com', 'password123')">
+            Col. Sanjeev Mehra (Click to auto-fill)
+          </button>
+        </div>
+      </div>
+
+      <!-- Signup View -->
+      <div id="authSignupView" style="display: none;">
+        <h3 class="sheet-title">Create DeepTrip Account</h3>
+        <p class="sheet-sub">Join thousands of travelers exploring India with certified Captains and seamless itineraries.</p>
+
+        <!-- Social Auth Buttons for Signup -->
+        <div class="social-auth-grid">
+          <button class="btn-social btn-social-google" onclick="socialAuth('google')">
+            <svg viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Sign up with Google</span>
+          </button>
+
+          <button class="btn-social btn-social-fb" onclick="socialAuth('facebook')">
+            <svg viewBox="0 0 24 24" fill="#1877F2">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span>Sign up with Facebook</span>
+          </button>
+        </div>
+
+        <div class="social-auth-divider">
+          <span>or sign up with email</span>
+        </div>
+
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" id="signupName" class="input-field" placeholder="e.g. Rajesh Malhotra">
+        </div>
+
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" id="signupEmail" class="input-field" placeholder="rajesh@example.com">
+        </div>
+
+        <div class="input-group">
+          <label>Mobile Number</label>
+          <input type="tel" id="signupPhone" class="input-field" placeholder="+91 98765 43210">
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="signupPassword" class="input-field" placeholder="Create a password">
+        </div>
+
+        <div id="signupErrorMsg" style="color: var(--red); font-size: 0.76rem; font-weight: 700; margin-bottom: 0.6rem; display: none;"></div>
+
+        <button class="btn-mobile-primary" style="width: 100%; margin-top: 0.5rem;" onclick="submitSignup()">
+          Create Account
+        </button>
+      </div>
+
+      <button style="background: none; border: none; color: var(--text-muted); font-size: 0.8rem; font-weight: 700; width: 100%; padding: 0.85rem 0 0; cursor: pointer;" onclick="closeModal('authModal')">
+        ✕ Close Window
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- ======================================================== -->
+  <!-- MODAL 2: USER PROFILE & BOOKING HISTORY -->
+  <!-- ======================================================== -->
+  <div class="modal-overlay" id="historyModal" onclick="closeOnBackdrop(event, 'historyModal')">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-top-header">
+        <h3 class="sheet-title" style="margin-bottom: 0;">My Journey Bookings</h3>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button style="background: var(--red-soft); border: 1px solid rgba(220, 38, 38, 0.2); color: var(--red); font-size: 0.72rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: var(--radius-full); cursor: pointer;" onclick="userLogout()">
+            Log Out
+          </button>
+          <button class="modal-close-btn" onclick="closeModal('historyModal')" title="Close Window">✕</button>
+        </div>
+      </div>
+      <p class="sheet-sub" id="historyUserGreeting">Viewing past & active itineraries for your account.</p>
+
+      <div id="historyBookingsList">
+        <!-- Injected via JS -->
+      </div>
+
+      <button class="btn-mobile-primary" style="width: 100%; margin-top: 1rem;" onclick="closeModal('historyModal')">
+        Close Window
+      </button>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 3: REQUEST A CALLBACK & BOOKING SHEET -->
+  <!-- ======================================================== -->
+  <div class="modal-overlay" id="callbackSheet" onclick="closeOnBackdrop(event, 'callbackSheet')">
+    <div class="modal-sheet">
       <div class="sheet-handle"></div>
 
       <!-- Form View -->
       <div id="sheetFormView">
-        <h3 class="sheet-title">📞 Request a Callback</h3>
-        <p class="sheet-sub">Speak with a DeepTrip Journey Steward to finalize your captain, customize food & lock your booking.</p>
+        <div class="sheet-top-header">
+          <h3 class="sheet-title" style="margin-bottom: 0;">📞 Confirm Trip Callback</h3>
+          <button class="modal-close-btn" onclick="closeCallbackSheet()" title="Close Window">✕</button>
+        </div>
+        <p class="sheet-sub">Speak with a dedicated DeepTrip Journey Steward to finalize your captain, customize food & lock your booking.</p>
 
-        <div class="sheet-input-group">
+        <div class="input-group">
           <label>Your Name</label>
-          <input type="text" id="sheetName" class="sheet-input" placeholder="e.g. Rajesh Malhotra">
+          <input type="text" id="sheetName" class="input-field" placeholder="e.g. Rajesh Malhotra">
         </div>
 
-        <div class="sheet-input-group">
+        <div class="input-group">
           <label>WhatsApp Mobile Number</label>
-          <input type="tel" id="sheetPhone" class="sheet-input" placeholder="+91 98765 43210">
+          <input type="tel" id="sheetPhone" class="input-field" placeholder="+91 98765 43210">
         </div>
 
-        <div class="sheet-input-group">
-          <label>Preferred Time</label>
-          <select id="sheetTime" class="sheet-input">
+        <div class="input-group">
+          <label>Preferred Callback Time</label>
+          <select id="sheetTime" class="input-field">
             <option value="15min">⚡ Immediate (Within 15 Minutes)</option>
             <option value="afternoon">☀️ Afternoon (12 PM - 3 PM)</option>
             <option value="evening">🌆 Evening (6 PM - 8 PM)</option>
@@ -1163,22 +1956,26 @@
         </div>
 
         <button class="btn-mobile-primary" style="width: 100%;" onclick="submitCallbackSheet()">
-          Confirm Callback Request
+          Confirm Callback & Book
         </button>
       </div>
 
       <!-- Success View -->
       <div id="sheetSuccessView" style="display: none; text-align: center; padding: 1rem 0;">
         <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--emerald-soft); border: 2px solid var(--emerald); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem; color: var(--emerald);">✓</div>
-        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.35rem;">Callback Request Sent!</h3>
-        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Trip Request Confirmed!</h3>
+        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.4;">
           Reference ID: <strong style="color: var(--primary);" id="refCodeText">DT-9482-AI</strong><br>
-          A dedicated Journey Steward will call your number within 15 minutes.
+          A dedicated Journey Steward will call your number within 15 minutes to lock your Captain & Stays.
         </p>
         <button class="btn-mobile-primary" style="width: 100%;" onclick="closeCallbackSheet()">
           Done
         </button>
       </div>
+
+      <button style="background: none; border: none; color: var(--text-muted); font-size: 0.8rem; font-weight: 700; width: 100%; padding: 0.85rem 0 0; cursor: pointer;" onclick="closeCallbackSheet()">
+        ✕ Close Window
+      </button>
 
     </div>
   </div>
@@ -1186,15 +1983,18 @@
   <!-- AI Gemini Loading Modal -->
   <div class="ai-loader-modal" id="aiLoaderModal">
     <div class="spinner-ring"></div>
-    <h3 style="font-size: 1.1rem; font-weight: 700;">Google Gemini AI is Planning...</h3>
+    <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Google Gemini AI is Planning...</h3>
     <p style="font-size: 0.78rem; color: var(--text-secondary);">Calculating scenic pitstops, hygienic food hubs & exact budget breakdown.</p>
   </div>
 
+  <!-- ======================================================== -->
+  <!-- JAVASCRIPT LOGIC -->
+  <!-- ======================================================== -->
   <script>
     // State
     const appState = {
-      from: 'Delhi (NCR)',
-      to: 'Jaipur Heritage Circuit',
+      from: '',
+      to: '',
       days: 3,
       members: 4,
       selectedCarId: null,
@@ -1202,15 +2002,47 @@
       selectedMealId: null,
       currentDay: 'all',
       totalBudget: 28450,
+      activeScreen: 'screen-step1',
       
+      // User Auth State
+      currentUser: null,
+      userToken: null,
+
       // Dynamic Database
       cars: [],
       stays: [],
       meals: []
     };
 
-    // Initialize & Load Dynamic Data
+    // Splash Screen Dismissal
+    function dismissSplashScreen() {
+      const splash = document.getElementById('appSplashScreen');
+      if (splash) {
+        splash.classList.add('hidden');
+      }
+    }
+
+    // Initialize Application
     async function initAppData() {
+      // Auto dismiss splash screen after 1.4s
+      setTimeout(() => {
+        dismissSplashScreen();
+      }, 1400);
+
+      // Restore User Session
+      try {
+        const savedUser = localStorage.getItem('deeptrip_user');
+        const savedToken = localStorage.getItem('deeptrip_token');
+        if (savedUser && savedToken) {
+          appState.currentUser = JSON.parse(savedUser);
+          appState.userToken = savedToken;
+          updateHeaderUserUI();
+        }
+      } catch (e) {
+        console.error('Session restore error:', e);
+      }
+
+      // Fetch dynamic datasets
       try {
         const [cRes, sRes, mRes] = await Promise.all([
           fetch('/api/cars').then(r => r.json()),
@@ -1222,7 +2054,7 @@
         appState.stays = (sRes.data || []).filter(s => s.is_active !== false);
         appState.meals = (mRes.data || []).filter(m => m.is_active !== false);
 
-        // Set default selections
+        // Default selections
         if (appState.cars.length > 0) appState.selectedCarId = appState.cars[0].id;
         if (appState.stays.length > 0) appState.selectedStayId = appState.stays[0].id;
         if (appState.meals.length > 0) appState.selectedMealId = appState.meals[0].id;
@@ -1230,7 +2062,7 @@
         renderDynamicVehicles();
         renderDynamicStays();
         renderDynamicMeals();
-        updatePlannerSummary();
+        updateScreenCTA();
       } catch (e) {
         console.error('Data init error:', e);
       }
@@ -1242,7 +2074,7 @@
       if (!container) return;
 
       let html = '';
-      appState.cars.forEach((car, idx) => {
+      appState.cars.forEach((car) => {
         const isSel = car.id === appState.selectedCarId;
         html += `
           <div class="vehicle-card ${isSel ? 'selected' : ''}" id="v-card-${car.id}" onclick="selectCar('${car.id}')">
@@ -1253,7 +2085,7 @@
                 <div class="vehicle-select-radio">✓</div>
               </div>
               <div class="vehicle-specs">${car.category} • ${car.capacity} Seats • AC</div>
-              <div class="vehicle-price">₹${car.base_fare_per_day.toLocaleString('en-IN')} <span style="font-size: 0.72rem; color: var(--text-muted);">/ day + ₹${car.rate_per_km}/km</span></div>
+              <div class="vehicle-price">₹${car.base_fare_per_day.toLocaleString('en-IN')} <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 500;">/ day + ₹${car.rate_per_km}/km</span></div>
             </div>
           </div>
         `;
@@ -1266,7 +2098,7 @@
       document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove('selected'));
       const activeEl = document.getElementById(`v-card-${carId}`);
       if (activeEl) activeEl.classList.add('selected');
-      updatePlannerSummary();
+      updateScreenCTA();
     }
 
     // Dynamic Render: Stays
@@ -1277,11 +2109,27 @@
       let html = '';
       appState.stays.forEach((stay) => {
         const isSel = stay.id === appState.selectedStayId;
+        const amenitiesHtml = (stay.amenities || []).slice(0, 3).map(a => `<span class="stay-amenity-tag">✓ ${a}</span>`).join('');
         html += `
-          <div class="tile-option ${isSel ? 'selected' : ''}" id="s-card-${stay.id}" onclick="selectStay('${stay.id}')">
-            <img src="${stay.image}" class="tile-img" alt="${stay.name}" onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=300&q=80'">
-            <div class="tile-title">${stay.name}</div>
-            <div class="tile-price">₹${stay.price_per_night.toLocaleString('en-IN')}/nt</div>
+          <div class="stay-card-rich ${isSel ? 'selected' : ''}" id="s-card-${stay.id}" onclick="selectStay('${stay.id}')">
+            <div class="stay-img-wrap">
+              <img src="${stay.image}" alt="${stay.name}" onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80'">
+              <div class="stay-badge-overlay">★ ${stay.rating || '4.8'} (${stay.reviews_count || 120})</div>
+            </div>
+            <div class="stay-details-body">
+              <div class="stay-title-row">
+                <span class="stay-title">${stay.name}</span>
+                <div class="vehicle-select-radio" style="${isSel ? 'background: var(--primary); border-color: var(--primary); color: #FFF;' : ''}">✓</div>
+              </div>
+              <div class="stay-desc">${stay.type} • ${stay.location}</div>
+              <div class="stay-amenities-row">
+                ${amenitiesHtml}
+              </div>
+              <div class="stay-price-row">
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Tariff</span>
+                <span class="stay-price-val">₹${stay.price_per_night.toLocaleString('en-IN')}<span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 500;">/night</span></span>
+              </div>
+            </div>
           </div>
         `;
       });
@@ -1290,10 +2138,11 @@
 
     function selectStay(stayId) {
       appState.selectedStayId = stayId;
-      document.querySelectorAll('.tile-option').forEach(s => s.classList.remove('selected'));
+      document.querySelectorAll('.stay-card-rich').forEach(s => s.classList.remove('selected'));
       const activeEl = document.getElementById(`s-card-${stayId}`);
       if (activeEl) activeEl.classList.add('selected');
-      updatePlannerSummary();
+      renderDynamicStays();
+      updateScreenCTA();
     }
 
     // Dynamic Render: Meals
@@ -1304,11 +2153,24 @@
       let html = '';
       appState.meals.forEach((meal) => {
         const isSel = meal.id === appState.selectedMealId;
+        const inclusionsHtml = (meal.inclusions || []).slice(0, 3).map(inc => `<div class="meal-inclusion-item"><span>•</span><span>${inc}</span></div>`).join('');
         html += `
-          <div class="diet-card ${isSel ? 'selected' : ''}" id="m-card-${meal.id}" onclick="selectMeal('${meal.id}')">
-            <img src="${meal.image}" class="diet-img-thumb" alt="${meal.name}" onerror="this.src='https://images.unsplash.com/photo-1613292443284-c774643c7b65?auto=format&fit=crop&w=150&q=80'">
-            <div class="diet-card-title">${meal.name}</div>
-            <div class="diet-card-sub">₹${meal.price_per_person_per_day}/person/day</div>
+          <div class="meal-card-rich ${isSel ? 'selected' : ''}" id="m-card-${meal.id}" onclick="selectMeal('${meal.id}')">
+            <div class="meal-header-row">
+              <img src="${meal.image}" alt="${meal.name}" class="meal-thumb" onerror="this.src='https://images.unsplash.com/photo-1613292443284-c774643c7b65?auto=format&fit=crop&w=200&q=80'">
+              <div class="meal-title-block">
+                <div class="meal-title">${meal.name}</div>
+                <div class="meal-diet-type">${meal.dietary || meal.type}</div>
+              </div>
+              <div class="vehicle-select-radio" style="${isSel ? 'background: var(--primary); border-color: var(--primary); color: #FFF;' : ''}">✓</div>
+            </div>
+            <div class="meal-inclusions-list">
+              ${inclusionsHtml}
+            </div>
+            <div class="meal-price-footer">
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Package Cost</span>
+              <span>₹${meal.price_per_person_per_day} <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 500;">/ person / day</span></span>
+            </div>
           </div>
         `;
       });
@@ -1317,32 +2179,29 @@
 
     function selectMeal(mealId) {
       appState.selectedMealId = mealId;
-      document.querySelectorAll('.diet-card').forEach(m => m.classList.remove('selected'));
+      document.querySelectorAll('.meal-card-rich').forEach(m => m.classList.remove('selected'));
       const activeEl = document.getElementById(`m-card-${mealId}`);
       if (activeEl) activeEl.classList.add('selected');
-      updatePlannerSummary();
+      renderDynamicMeals();
+      updateScreenCTA();
     }
 
+    // Screen Transitions (4 Steps)
     function showScreen(screenId) {
       document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
       const target = document.getElementById(screenId);
       if (target) target.classList.add('active');
+      appState.activeScreen = screenId;
 
-      const isPlanner = screenId === 'screen-planner';
-      document.getElementById('progressBar').style.width = isPlanner ? '50%' : '100%';
+      const progressMap = {
+        'screen-step1': '25%',
+        'screen-step2': '50%',
+        'screen-step3': '75%',
+        'screen-step4': '100%'
+      };
+      document.getElementById('progressBar').style.width = progressMap[screenId] || '25%';
 
-      // Update bottom CTA bar
-      const ctaBtn = document.getElementById('btnPrimaryCta');
-      const ctaSummary = document.getElementById('ctaSummaryText');
-
-      if (isPlanner) {
-        ctaBtn.innerHTML = `<span>Generate AI Itinerary with Gemini ✨</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-        updatePlannerSummary();
-      } else {
-        ctaSummary.innerHTML = `<span>Total Approx Budget</span><span style="color: var(--primary); font-weight: 800; font-size: 1rem;">₹${appState.totalBudget.toLocaleString('en-IN')}</span>`;
-        ctaBtn.innerHTML = `<span>Request a Callback for More Details 📞</span>`;
-      }
-
+      updateScreenCTA();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1351,7 +2210,7 @@
       document.getElementById('mToCity').value = to;
       appState.from = from;
       appState.to = to;
-      updatePlannerSummary();
+      updateScreenCTA();
     }
 
     function changeVal(type, delta) {
@@ -1362,36 +2221,54 @@
         appState.members = Math.max(1, Math.min(12, appState.members + delta));
         document.getElementById('mValMembers').innerText = `${appState.members} Members`;
       }
-      updatePlannerSummary();
+      updateScreenCTA();
     }
 
-    function updatePlannerSummary() {
+    function updateScreenCTA() {
       const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { name: 'Vehicle' };
       const activeStay = appState.stays.find(s => s.id === appState.selectedStayId) || { name: 'Stay' };
-      const activeMeal = appState.meals.find(m => m.id === appState.selectedMealId) || { name: 'Meal' };
+      const activeMeal = appState.meals.find(m => m.id === appState.selectedMealId) || { name: 'Food' };
 
-      document.getElementById('ctaSummaryText').innerHTML = `<span>${activeCar.name.split(' ')[0]} • ${activeStay.name.split(' ')[0]} • ${activeMeal.name.split(' ')[0]}</span><span style="color: var(--primary); font-weight: 700;">${appState.days} Days</span>`;
+      const ctaBtn = document.getElementById('btnPrimaryCta');
+      const ctaSummary = document.getElementById('ctaSummaryText');
+
+      if (appState.activeScreen === 'screen-step1') {
+        ctaSummary.innerHTML = `<span>${activeCar.name.split(' ')[0]} Selected</span><span style="color: var(--primary); font-weight: 800;">${appState.days} Days</span>`;
+        ctaBtn.innerHTML = `<span>Next: Choose Stay (Step 2) ➔</span>`;
+      } else if (appState.activeScreen === 'screen-step2') {
+        ctaSummary.innerHTML = `<span>${activeStay.name.split(' ')[0]} Selected</span><span style="color: var(--primary); font-weight: 800;">Step 2 of 4</span>`;
+        ctaBtn.innerHTML = `<span>Next: Choose Food (Step 3) ➔</span>`;
+      } else if (appState.activeScreen === 'screen-step3') {
+        ctaSummary.innerHTML = `<span>${activeMeal.name.split(' ')[0]} Selected</span><span style="color: var(--primary); font-weight: 800;">Step 3 of 4</span>`;
+        ctaBtn.innerHTML = `<span>Generate AI Itinerary with Gemini ✨</span>`;
+      } else if (appState.activeScreen === 'screen-step4') {
+        ctaSummary.innerHTML = `<span>Total Approx Budget</span><span style="color: var(--primary); font-weight: 800; font-size: 1rem;">₹${appState.totalBudget.toLocaleString('en-IN')}</span>`;
+        ctaBtn.innerHTML = `<span>Request a Callback / Book Trip 📞</span>`;
+      }
     }
 
     function triggerPrimaryAction() {
-      const isPlanner = document.getElementById('screen-planner').classList.contains('active');
-      if (isPlanner) {
+      if (appState.activeScreen === 'screen-step1') {
+        showScreen('screen-step2');
+      } else if (appState.activeScreen === 'screen-step2') {
+        showScreen('screen-step3');
+      } else if (appState.activeScreen === 'screen-step3') {
         const loader = document.getElementById('aiLoaderModal');
         loader.classList.add('active');
 
         setTimeout(() => {
           loader.classList.remove('active');
           buildItineraryAndBudget();
-          showScreen('screen-itinerary');
+          showScreen('screen-step4');
         }, 600);
-      } else {
+      } else if (appState.activeScreen === 'screen-step4') {
         openCallbackSheet();
       }
     }
 
     function buildItineraryAndBudget() {
-      appState.from = document.getElementById('mFromCity').value || appState.from;
-      appState.to = document.getElementById('mToCity').value || appState.to;
+      appState.from = document.getElementById('mFromCity').value || 'Delhi (NCR)';
+      appState.to = document.getElementById('mToCity').value || 'Jaipur Heritage Circuit';
 
       const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { name: 'Sedan' };
       document.getElementById('aiTripHeader').innerText = `${appState.from.split(' ')[0]} to ${appState.to.split(' ')[0]} (${appState.days} Days)`;
@@ -1497,7 +2374,7 @@
         <div class="budget-line-row"><span class="budget-line-name">⛽ Estimated Fuel & Tolls</span><span class="budget-line-val">₹${estFuelTolls.toLocaleString('en-IN')}</span></div>
         <div class="budget-line-row"><span class="budget-line-name">🏨 ${activeStay.name || 'Stay'} (${days - 1 || 1} Nights)</span><span class="budget-line-val">₹${totalStay.toLocaleString('en-IN')}</span></div>
         <div class="budget-line-row"><span class="budget-line-name">🍽️ ${activeMeal.name || 'Food Package'}</span><span class="budget-line-val">₹${totalFood.toLocaleString('en-IN')}</span></div>
-        <div class="budget-line-row"><span class="budget-line-name">🚨 24/7 SOS & Captain Concierge</span><span style="color: var(--emerald); font-weight: 700;">FREE</span></div>
+        <div class="budget-line-row"><span class="budget-line-name">🚨 24/7 SOS & Captain Concierge</span><span style="color: var(--emerald); font-weight: 800;">FREE</span></div>
         <div class="budget-line-row"><span class="budget-line-name">🧾 GST (5%)</span><span class="budget-line-val">₹${gst.toLocaleString('en-IN')}</span></div>
       `;
 
@@ -1505,8 +2382,253 @@
       document.getElementById('mPerPersonDisplay').innerText = `Approx ₹${perPax.toLocaleString('en-IN')} per traveler (${members} Travelers)`;
     }
 
-    // Bottom Sheet Callback Flow
+    // ========================================================
+    // USER AUTHENTICATION & PROFILE LOGIC
+    // ========================================================
+    function openUserAuthModal() {
+      if (appState.currentUser) {
+        openBookingHistoryModal();
+      } else {
+        document.getElementById('authModal').classList.add('active');
+        switchAuthTab('login');
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.remove('active');
+    }
+
+    function closeOnBackdrop(event, modalId) {
+      if (event.target && event.target.id === modalId) {
+        closeModal(modalId);
+      }
+    }
+
+    async function socialAuth(provider) {
+      const defaultProfiles = {
+        google: { name: 'Aarav Mehta', email: 'aarav.mehta@gmail.com', phone: '+91 98200 45678' },
+        facebook: { name: 'Pooja Iyer', email: 'pooja.iyer@facebook.com', phone: '+91 98333 78901' }
+      };
+      const profile = defaultProfiles[provider] || defaultProfiles.google;
+
+      try {
+        const res = await fetch('/api/user/social-auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            provider: provider,
+            name: profile.name,
+            email: profile.email,
+            phone: profile.phone
+          })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          appState.currentUser = data.user;
+          appState.userToken = data.token;
+          localStorage.setItem('deeptrip_user', JSON.stringify(data.user));
+          localStorage.setItem('deeptrip_token', data.token);
+          updateHeaderUserUI();
+          closeModal('authModal');
+          openBookingHistoryModal();
+        }
+      } catch (err) {
+        console.error('Social login error:', err);
+      }
+    }
+
+    function switchAuthTab(tab) {
+      const loginTab = document.getElementById('tabLoginBtn');
+      const signupTab = document.getElementById('tabSignupBtn');
+      const loginView = document.getElementById('authLoginView');
+      const signupView = document.getElementById('authSignupView');
+
+      if (tab === 'login') {
+        loginTab.classList.add('active');
+        signupTab.classList.remove('active');
+        loginView.style.display = 'block';
+        signupView.style.display = 'none';
+      } else {
+        signupTab.classList.add('active');
+        loginTab.classList.remove('active');
+        signupView.style.display = 'block';
+        loginView.style.display = 'none';
+      }
+    }
+
+    function fillDemoUser(email, pass) {
+      document.getElementById('loginIdentifier').value = email;
+      document.getElementById('loginPassword').value = pass;
+    }
+
+    async function submitLogin() {
+      const iden = document.getElementById('loginIdentifier').value.trim();
+      const pass = document.getElementById('loginPassword').value.trim();
+      const errEl = document.getElementById('loginErrorMsg');
+      errEl.style.display = 'none';
+
+      if (!iden || !pass) {
+        errEl.innerText = 'Please enter both email/phone and password.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/user/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: iden, password: pass })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          appState.currentUser = data.user;
+          appState.userToken = data.token;
+          localStorage.setItem('deeptrip_user', JSON.stringify(data.user));
+          localStorage.setItem('deeptrip_token', data.token);
+          updateHeaderUserUI();
+          closeModal('authModal');
+          openBookingHistoryModal();
+        } else {
+          errEl.innerText = data.error || 'Login failed. Please verify credentials.';
+          errEl.style.display = 'block';
+        }
+      } catch (err) {
+        errEl.innerText = 'Network error. Please try again.';
+        errEl.style.display = 'block';
+      }
+    }
+
+    async function submitSignup() {
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const phone = document.getElementById('signupPhone').value.trim();
+      const pass = document.getElementById('signupPassword').value.trim();
+      const errEl = document.getElementById('signupErrorMsg');
+      errEl.style.display = 'none';
+
+      if (!name || !email || !pass) {
+        errEl.innerText = 'Name, email, and password are required.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/user/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, password: pass })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          appState.currentUser = data.user;
+          appState.userToken = data.token;
+          localStorage.setItem('deeptrip_user', JSON.stringify(data.user));
+          localStorage.setItem('deeptrip_token', data.token);
+          updateHeaderUserUI();
+          closeModal('authModal');
+          openBookingHistoryModal();
+        } else {
+          errEl.innerText = data.error || 'Signup failed.';
+          errEl.style.display = 'block';
+        }
+      } catch (err) {
+        errEl.innerText = 'Network error. Please try again.';
+        errEl.style.display = 'block';
+      }
+    }
+
+    function updateHeaderUserUI() {
+      const nameEl = document.getElementById('headerUserName');
+      const avatarEl = document.getElementById('headerUserAvatar');
+
+      if (appState.currentUser) {
+        const firstName = appState.currentUser.name ? appState.currentUser.name.split(' ')[0] : 'User';
+        nameEl.innerText = firstName;
+        avatarEl.innerText = firstName.charAt(0).toUpperCase();
+      } else {
+        nameEl.innerText = 'Sign In';
+        avatarEl.innerText = '👤';
+      }
+    }
+
+    function userLogout() {
+      appState.currentUser = null;
+      appState.userToken = null;
+      localStorage.removeItem('deeptrip_user');
+      localStorage.removeItem('deeptrip_token');
+      updateHeaderUserUI();
+      closeModal('historyModal');
+    }
+
+    // ========================================================
+    // BOOKING HISTORY VIEWER
+    // ========================================================
+    async function openBookingHistoryModal() {
+      if (!appState.currentUser) {
+        openUserAuthModal();
+        return;
+      }
+
+      document.getElementById('historyUserGreeting').innerText = `Welcome, ${appState.currentUser.name}! Here are your journey itineraries:`;
+      const container = document.getElementById('historyBookingsList');
+      container.innerHTML = '<div style="text-align: center; padding: 1.5rem; color: var(--text-muted);">Loading bookings...</div>';
+      document.getElementById('historyModal').classList.add('active');
+
+      try {
+        const userEmail = encodeURIComponent(appState.currentUser.email || '');
+        const userPhone = encodeURIComponent(appState.currentUser.phone || '');
+        const res = await fetch(`/api/user/bookings?email=${userEmail}&phone=${userPhone}`);
+        const json = await res.json();
+        const bookings = json.data || [];
+
+        if (bookings.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 2rem 1rem; color: var(--text-secondary);">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛣️</div>
+              <h4 style="font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem;">No Bookings Yet</h4>
+              <p style="font-size: 0.78rem;">Plan your first trip with verified Captains and seamless stays.</p>
+            </div>
+          `;
+          return;
+        }
+
+        let html = '';
+        bookings.forEach(b => {
+          html += `
+            <div class="history-card">
+              <div class="history-header">
+                <span class="history-id">#${b.id}</span>
+                <span class="history-status-badge">${b.status || 'Confirmed'}</span>
+              </div>
+              <div class="history-route">${b.source || 'Delhi'} → ${b.destination || 'Jaipur Circuit'}</div>
+              <div class="history-meta">
+                🚘 ${b.car_name || 'Innova Crysta'} • 🏨 ${b.stay_name ? b.stay_name.split(' ')[0] : 'Hotel'}<br>
+                📅 ${b.days || 3} Days • 👥 ${b.passengers || 4} Travelers • 👨‍✈️ Captain: ${b.captain_assigned || 'Assigned on Dispatch'}
+              </div>
+              <div class="history-price">₹${(b.total_price || 28450).toLocaleString('en-IN')}</div>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      } catch (err) {
+        container.innerHTML = '<div style="color: var(--red); text-align: center; padding: 1rem;">Failed to load booking history.</div>';
+      }
+    }
+
+    // ========================================================
+    // CALLBACK / BOOKING SUBMISSION FLOW
+    // ========================================================
     function openCallbackSheet() {
+      // Auto pre-fill if user is logged in
+      if (appState.currentUser) {
+        document.getElementById('sheetName').value = appState.currentUser.name || '';
+        document.getElementById('sheetPhone').value = appState.currentUser.phone || '';
+      }
+
       document.getElementById('sheetFormView').style.display = 'block';
       document.getElementById('sheetSuccessView').style.display = 'none';
       document.getElementById('callbackSheet').classList.add('active');
@@ -1517,8 +2639,9 @@
     }
 
     function submitCallbackSheet() {
-      const name = document.getElementById('sheetName').value || 'DeepTrip Traveler';
-      const phone = document.getElementById('sheetPhone').value || '+91 98765 43210';
+      const name = document.getElementById('sheetName').value || (appState.currentUser ? appState.currentUser.name : 'DeepTrip Traveler');
+      const phone = document.getElementById('sheetPhone').value || (appState.currentUser ? appState.currentUser.phone : '+91 98765 43210');
+      const email = appState.currentUser ? appState.currentUser.email : 'traveler@deeptrip.in';
       const refId = `DT-${Math.floor(1000 + Math.random() * 9000)}-AI`;
 
       const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { name: 'Vehicle' };
@@ -1537,17 +2660,18 @@
           id: refId,
           user_name: name,
           user_phone: phone,
-          source: appState.from,
-          destination: appState.to,
+          user_email: email,
+          source: appState.from || 'Delhi (NCR)',
+          destination: appState.to || 'Jaipur Heritage Circuit',
           days: appState.days,
           passengers: appState.members,
           car_name: activeCar.name,
           stay_name: activeStay.name,
           meal_name: activeMeal.name,
           total_price: appState.totalBudget,
-          status: 'Callback Requested'
+          status: 'Confirmed'
         })
-      }).catch(e => console.log(e));
+      }).catch(e => console.error('Booking save error:', e));
     }
 
     document.addEventListener('DOMContentLoaded', () => {
