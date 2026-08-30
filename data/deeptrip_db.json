@@ -372,6 +372,37 @@
   ],
   "bookings": [
     {
+      "id": "DT-TEST-9999",
+      "user_name": "Kavita Sharma",
+      "user_phone": "+91 98765 12345",
+      "user_email": "kavita.sharma@example.com",
+      "preferred_callback_time": "Immediate (Within 15 Mins)",
+      "whatsapp_optin": true,
+      "source": "Delhi (NCR)",
+      "destination": "Jaipur Heritage Circuit",
+      "days": 4,
+      "passengers": 5,
+      "car_name": "Toyota Innova Crysta",
+      "car_category": "6-Seater MUV",
+      "stay_name": "Heritage Haveli Palace & Spa",
+      "stay_type": "5-Star Luxury Heritage",
+      "meal_name": "Pure Vegetarian & Satvik Culinary Package",
+      "meal_dietary": "Pure Veg Satvik",
+      "total_price": 38500,
+      "status": "Callback Requested",
+      "payment_status": "Pending Callback",
+      "created_at": "2026-08-30 14:54",
+      "alerts": {
+        "booking_id": "DT-TEST-9999",
+        "whatsapp_text": "🚨 *DEEPTRIP NEW JOURNEY & CALLBACK ALERT* 🚨\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📋 *Reference ID*: #DT-TEST-9999\n👤 *Customer*: Kavita Sharma\n📞 *Mobile*: +91 98765 12345\n✉️ *Email*: kavita.sharma@example.com\n⏰ *Preferred Callback*: Immediate (Within 15 Mins)\n\n📍 *Route*: Delhi (NCR) ➔ Jaipur Heritage Circuit\n📅 *Schedule*: 4 Days • 5 Travelers\n🚘 *Vehicle Fleet*: Toyota Innova Crysta\n🏨 *Stay Choice*: Heritage Haveli Palace & Spa (3 Nights)\n🍽️ *Food Package*: Pure Vegetarian & Satvik Culinary Package\n💰 *Est. Trip Budget*: ₹38,500 (₹7,700/person)\n\n👨‍✈️ *Action Required*: Contact customer immediately to lock Captain & finalize stays.",
+        "email_subject": "[DeepTrip Alert] New Callback Request #DT-TEST-9999 - Kavita Sharma (Delhi (NCR) -> Jaipur Heritage Circuit)",
+        "email_html": "<!DOCTYPE html>\n<html>\n<head><meta charset=\"UTF-8\"><style>\n  body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; background: #F1F5F9; color: #0F172A; padding: 20px; margin: 0; }\n  .card { max-width: 600px; margin: auto; background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }\n  .head { background: linear-gradient(135deg, #0284C7, #0EA5E9); color: #FFF; padding: 24px; }\n  .content { padding: 24px; }\n  table { width: 100%; border-collapse: collapse; margin-top: 12px; }\n  td { padding: 10px 12px; border-bottom: 1px solid #F1F5F9; font-size: 14px; }\n  .label { font-weight: bold; color: #64748B; width: 35%; }\n  .val { font-weight: 600; color: #0F172A; }\n  .total-box { background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: 12px; padding: 16px; text-align: center; margin: 20px 0; }\n  .btn { display: inline-block; background: #0284C7; color: #FFF; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; margin-right: 8px; }\n</style></head>\n<body>\n  <div class=\"card\">\n    <div class=\"head\">\n      <h2 style=\"margin:0;\">DeepTrip New Trip Alert</h2>\n      <p style=\"margin:4px 0 0; opacity:0.9; font-size:14px;\">Callback & Booking Requirement Received • #DT-TEST-9999</p>\n    </div>\n    <div class=\"content\">\n      <h3 style=\"margin:0 0 8px;\">Customer Contact</h3>\n      <table>\n        <tr><td class=\"label\">Customer Name</td><td class=\"val\">Kavita Sharma</td></tr>\n        <tr><td class=\"label\">Mobile Number</td><td class=\"val\">+91 98765 12345</td></tr>\n        <tr><td class=\"label\">Email Address</td><td class=\"val\">kavita.sharma@example.com</td></tr>\n        <tr><td class=\"label\">Preferred Callback</td><td class=\"val\" style=\"color:#0284C7; font-weight:bold;\">Immediate (Within 15 Mins)</td></tr>\n      </table>\n      <h3 style=\"margin:20px 0 8px;\">Trip & Package Requirements</h3>\n      <table>\n        <tr><td class=\"label\">Circuit / Route</td><td class=\"val\">Delhi (NCR) ➔ Jaipur Heritage Circuit</td></tr>\n        <tr><td class=\"label\">Trip Schedule</td><td class=\"val\">4 Days • 5 Travelers</td></tr>\n        <tr><td class=\"label\">Vehicle Fleet</td><td class=\"val\">Toyota Innova Crysta</td></tr>\n        <tr><td class=\"label\">Stay / Hotel</td><td class=\"val\">Heritage Haveli Palace & Spa (3 Nights)</td></tr>\n        <tr><td class=\"label\">Food Package</td><td class=\"val\">Pure Vegetarian & Satvik Culinary Package</td></tr>\n      </table>\n      <div class=\"total-box\">\n        <div style=\"font-size:12px; color:#64748B; text-transform:uppercase; font-weight:bold;\">Estimated Trip Value</div>\n        <div style=\"font-size:24px; font-weight:bold; color:#0284C7;\">₹38,500</div>\n        <div style=\"font-size:13px; color:#64748B;\">Approx ₹7,700 per traveler</div>\n      </div>\n      <div style=\"text-align:center; margin-top:20px;\">\n        <a href=\"tel:+91 98765 12345\" class=\"btn\">📞 Call Customer</a>\n        <a href=\"https://wa.me/919876512345\" class=\"btn\" style=\"background:#25D366;\">💬 WhatsApp Concierge</a>\n      </div>\n    </div>\n  </div>\n</body>\n</html>",
+        "recipient_email": "kavita.sharma@example.com",
+        "recipient_phone": "+91 98765 12345",
+        "created_at": "2026-08-30 14:54"
+      }
+    },
+    {
       "user_name": "Vikram Adani",
       "user_email": "vikram_1788077640@example.com",
       "user_phone": "+91 98765 99999",
@@ -549,6 +580,38 @@
       "auth_provider": "facebook",
       "password": "oauth_facebook",
       "created_at": "2026-08-30 13:50"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "alt-4e9b0a",
+      "booking_id": "DT-TEST-9999",
+      "customer_name": "Kavita Sharma",
+      "customer_phone": "+91 98765 12345",
+      "customer_email": "kavita.sharma@example.com",
+      "whatsapp_text": "🚨 *DEEPTRIP NEW JOURNEY & CALLBACK ALERT* 🚨\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📋 *Reference ID*: #DT-TEST-9999\n👤 *Customer*: Kavita Sharma\n📞 *Mobile*: +91 98765 12345\n✉️ *Email*: kavita.sharma@example.com\n⏰ *Preferred Callback*: Immediate (Within 15 Mins)\n\n📍 *Route*: Delhi (NCR) ➔ Jaipur Heritage Circuit\n📅 *Schedule*: 4 Days • 5 Travelers\n🚘 *Vehicle Fleet*: Toyota Innova Crysta\n🏨 *Stay Choice*: Heritage Haveli Palace & Spa (3 Nights)\n🍽️ *Food Package*: Pure Vegetarian & Satvik Culinary Package\n💰 *Est. Trip Budget*: ₹38,500 (₹7,700/person)\n\n👨‍✈️ *Action Required*: Contact customer immediately to lock Captain & finalize stays.",
+      "email_subject": "[DeepTrip Alert] New Callback Request #DT-TEST-9999 - Kavita Sharma (Delhi (NCR) -> Jaipur Heritage Circuit)",
+      "dispatched_at": "2026-08-30 14:54",
+      "channels": [
+        "WhatsApp",
+        "Email"
+      ],
+      "status": "Delivered"
+    },
+    {
+      "id": "alt-7df244",
+      "booking_id": "DT-TEST-9999",
+      "customer_name": "Kavita Sharma",
+      "customer_phone": "+91 98765 12345",
+      "customer_email": "kavita.sharma@example.com",
+      "whatsapp_text": "🚨 *DEEPTRIP NEW JOURNEY & CALLBACK ALERT* 🚨\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📋 *Reference ID*: #DT-TEST-9999\n👤 *Customer*: Kavita Sharma\n📞 *Mobile*: +91 98765 12345\n✉️ *Email*: kavita.sharma@example.com\n⏰ *Preferred Callback*: Immediate (Within 15 Mins)\n\n📍 *Route*: Delhi (NCR) ➔ Jaipur Heritage Circuit\n📅 *Schedule*: 4 Days • 5 Travelers\n🚘 *Vehicle Fleet*: Toyota Innova Crysta\n🏨 *Stay Choice*: Heritage Haveli Palace & Spa (3 Nights)\n🍽️ *Food Package*: Pure Vegetarian & Satvik Culinary Package\n💰 *Est. Trip Budget*: ₹38,500 (₹7,700/person)\n\n👨‍✈️ *Action Required*: Contact customer immediately to lock Captain & finalize stays.",
+      "email_subject": "[DeepTrip Alert] New Callback Request #DT-TEST-9999 - Kavita Sharma (Delhi (NCR) -> Jaipur Heritage Circuit)",
+      "dispatched_at": "2026-08-30 14:54",
+      "channels": [
+        "WhatsApp",
+        "Email"
+      ],
+      "status": "Delivered"
     }
   ]
 }

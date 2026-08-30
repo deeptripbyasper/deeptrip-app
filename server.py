@@ -415,6 +415,102 @@ def save_db(data):
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 
+def generate_trip_alerts(booking):
+    bid = booking.get("id", "DT-NEW")
+    name = booking.get("user_name", "Traveler")
+    phone = booking.get("user_phone", "+91-XXXXX")
+    email = booking.get("user_email", "traveler@deeptrip.in")
+    source = booking.get("source", "Delhi (NCR)")
+    destination = booking.get("destination", "Jaipur Heritage Circuit")
+    days = booking.get("days", 3)
+    pax = booking.get("passengers", 4)
+    car = booking.get("car_name", "Toyota Innova Crysta")
+    stay = booking.get("stay_name", "Verified Homestay / Hotel")
+    meal = booking.get("meal_name", "Pure Vegetarian & Satvik Culinary Package")
+    price = booking.get("total_price", 28450)
+    per_pax = round(price / max(1, pax))
+    cb_time = booking.get("preferred_callback_time", "Immediate (Within 15 Mins)")
+    created = booking.get("created_at", datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+
+    whatsapp_text = (
+        f"🚨 *DEEPTRIP NEW JOURNEY & CALLBACK ALERT* 🚨\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"📋 *Reference ID*: #{bid}\n"
+        f"👤 *Customer*: {name}\n"
+        f"📞 *Mobile*: {phone}\n"
+        f"✉️ *Email*: {email}\n"
+        f"⏰ *Preferred Callback*: {cb_time}\n\n"
+        f"📍 *Route*: {source} ➔ {destination}\n"
+        f"📅 *Schedule*: {days} Days • {pax} Travelers\n"
+        f"🚘 *Vehicle Fleet*: {car}\n"
+        f"🏨 *Stay Choice*: {stay} ({max(1, days-1)} Nights)\n"
+        f"🍽️ *Food Package*: {meal}\n"
+        f"💰 *Est. Trip Budget*: ₹{price:,.0f} (₹{per_pax:,.0f}/person)\n\n"
+        f"👨‍✈️ *Action Required*: Contact customer immediately to lock Captain & finalize stays."
+    )
+
+    email_subject = f"[DeepTrip Alert] New Callback Request #{bid} - {name} ({source} -> {destination})"
+    email_html = f"""<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><style>
+  body {{ font-family: 'Plus Jakarta Sans', Arial, sans-serif; background: #F1F5F9; color: #0F172A; padding: 20px; margin: 0; }}
+  .card {{ max-width: 600px; margin: auto; background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }}
+  .head {{ background: linear-gradient(135deg, #0284C7, #0EA5E9); color: #FFF; padding: 24px; }}
+  .content {{ padding: 24px; }}
+  table {{ width: 100%; border-collapse: collapse; margin-top: 12px; }}
+  td {{ padding: 10px 12px; border-bottom: 1px solid #F1F5F9; font-size: 14px; }}
+  .label {{ font-weight: bold; color: #64748B; width: 35%; }}
+  .val {{ font-weight: 600; color: #0F172A; }}
+  .total-box {{ background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: 12px; padding: 16px; text-align: center; margin: 20px 0; }}
+  .btn {{ display: inline-block; background: #0284C7; color: #FFF; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; margin-right: 8px; }}
+</style></head>
+<body>
+  <div class="card">
+    <div class="head">
+      <h2 style="margin:0;">DeepTrip New Trip Alert</h2>
+      <p style="margin:4px 0 0; opacity:0.9; font-size:14px;">Callback & Booking Requirement Received • #{bid}</p>
+    </div>
+    <div class="content">
+      <h3 style="margin:0 0 8px;">Customer Contact</h3>
+      <table>
+        <tr><td class="label">Customer Name</td><td class="val">{name}</td></tr>
+        <tr><td class="label">Mobile Number</td><td class="val">{phone}</td></tr>
+        <tr><td class="label">Email Address</td><td class="val">{email}</td></tr>
+        <tr><td class="label">Preferred Callback</td><td class="val" style="color:#0284C7; font-weight:bold;">{cb_time}</td></tr>
+      </table>
+      <h3 style="margin:20px 0 8px;">Trip & Package Requirements</h3>
+      <table>
+        <tr><td class="label">Circuit / Route</td><td class="val">{source} ➔ {destination}</td></tr>
+        <tr><td class="label">Trip Schedule</td><td class="val">{days} Days • {pax} Travelers</td></tr>
+        <tr><td class="label">Vehicle Fleet</td><td class="val">{car}</td></tr>
+        <tr><td class="label">Stay / Hotel</td><td class="val">{stay} ({max(1, days-1)} Nights)</td></tr>
+        <tr><td class="label">Food Package</td><td class="val">{meal}</td></tr>
+      </table>
+      <div class="total-box">
+        <div style="font-size:12px; color:#64748B; text-transform:uppercase; font-weight:bold;">Estimated Trip Value</div>
+        <div style="font-size:24px; font-weight:bold; color:#0284C7;">₹{price:,.0f}</div>
+        <div style="font-size:13px; color:#64748B;">Approx ₹{per_pax:,.0f} per traveler</div>
+      </div>
+      <div style="text-align:center; margin-top:20px;">
+        <a href="tel:{phone}" class="btn">📞 Call Customer</a>
+        <a href="https://wa.me/{phone.replace('+', '').replace(' ', '').replace('-', '')}" class="btn" style="background:#25D366;">💬 WhatsApp Concierge</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>"""
+
+    return {
+        "booking_id": bid,
+        "whatsapp_text": whatsapp_text,
+        "email_subject": email_subject,
+        "email_html": email_html,
+        "recipient_email": email,
+        "recipient_phone": phone,
+        "created_at": created
+    }
+
+
 class DeepTripHTTPHandler(BaseHTTPRequestHandler):
     def _send_cors_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -515,6 +611,10 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
                 ]
             }
             return self._send_json(200, {"success": True, "data": analytics})
+
+        elif path == "/api/alerts":
+            alerts = db.get("alerts", [])
+            return self._send_json(200, {"success": True, "data": alerts, "total": len(alerts)})
 
         # Static File Serving
         return self._serve_static_file(path)
@@ -678,14 +778,72 @@ class DeepTripHTTPHandler(BaseHTTPRequestHandler):
         elif path == "/api/bookings":
             booking = payload
             booking["id"] = booking.get("id") or f"DT-{uuid.uuid4().hex[:4].upper()}"
-            booking["created_at"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            booking["created_at"] = booking.get("created_at") or datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             if "status" not in booking:
-                booking["status"] = "Confirmed"
+                booking["status"] = "Callback Requested"
             if "payment_status" not in booking:
-                booking["payment_status"] = "Paid"
+                booking["payment_status"] = "Pending Callback"
+
+            # Auto-generate WhatsApp & Email Alert templates for operations concierge
+            alert_bundle = generate_trip_alerts(booking)
+            booking["alerts"] = alert_bundle
+
             db.setdefault("bookings", []).insert(0, booking)
+            db.setdefault("alerts", []).insert(0, {
+                "id": f"alt-{uuid.uuid4().hex[:6]}",
+                "booking_id": booking["id"],
+                "customer_name": booking.get("user_name"),
+                "customer_phone": booking.get("user_phone"),
+                "customer_email": booking.get("user_email"),
+                "whatsapp_text": alert_bundle["whatsapp_text"],
+                "email_subject": alert_bundle["email_subject"],
+                "dispatched_at": booking["created_at"],
+                "channels": ["WhatsApp", "Email"],
+                "status": "Delivered"
+            })
             save_db(db)
-            return self._send_json(201, {"success": True, "data": booking, "message": "Road trip booked successfully!"})
+
+            # Log alert notification
+            print(f"\n[ALERT NOTIFICATION] New Trip Callback: #{booking['id']} from {booking.get('user_name')} ({booking.get('user_phone')})")
+            print(f"[WHATSAPP ALERT]:\n{alert_bundle['whatsapp_text']}\n")
+
+            return self._send_json(201, {
+                "success": True,
+                "data": booking,
+                "alerts": alert_bundle,
+                "message": "Road trip booked successfully! WhatsApp and Email alerts dispatched."
+            })
+
+        elif path == "/api/alerts/send":
+            booking_id = payload.get("booking_id")
+            channel = payload.get("channel", "all").lower()  # "whatsapp", "email", or "all"
+            bookings = db.get("bookings", [])
+            target = next((b for b in bookings if b.get("id") == booking_id), None)
+            if not target:
+                return self._send_json(404, {"success": False, "error": "Booking not found"})
+
+            alert_bundle = generate_trip_alerts(target)
+            target["alerts"] = alert_bundle
+            db.setdefault("alerts", []).insert(0, {
+                "id": f"alt-{uuid.uuid4().hex[:6]}",
+                "booking_id": target["id"],
+                "customer_name": target.get("user_name"),
+                "customer_phone": target.get("user_phone"),
+                "customer_email": target.get("user_email"),
+                "whatsapp_text": alert_bundle["whatsapp_text"],
+                "email_subject": alert_bundle["email_subject"],
+                "dispatched_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "channels": ["WhatsApp"] if channel == "whatsapp" else (["Email"] if channel == "email" else ["WhatsApp", "Email"]),
+                "status": "Delivered"
+            })
+            save_db(db)
+            return self._send_json(200, {
+                "success": True,
+                "booking_id": booking_id,
+                "channel": channel,
+                "alerts": alert_bundle,
+                "message": f"Alert successfully dispatched via {channel.upper()}"
+            })
 
         elif path == "/api/reset-seed":
             save_db(DEFAULT_DATA)

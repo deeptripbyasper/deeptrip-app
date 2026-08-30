@@ -2642,17 +2642,20 @@
       const name = document.getElementById('sheetName').value || (appState.currentUser ? appState.currentUser.name : 'DeepTrip Traveler');
       const phone = document.getElementById('sheetPhone').value || (appState.currentUser ? appState.currentUser.phone : '+91 98765 43210');
       const email = appState.currentUser ? appState.currentUser.email : 'traveler@deeptrip.in';
+      const timeSelect = document.getElementById('sheetTime');
+      const preferredTime = timeSelect ? timeSelect.value : 'Immediate (Within 15 Mins)';
+      const waOptin = document.getElementById('sheetWaCheck') ? document.getElementById('sheetWaCheck').checked : true;
       const refId = `DT-${Math.floor(1000 + Math.random() * 9000)}-AI`;
 
-      const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { name: 'Vehicle' };
-      const activeStay = appState.stays.find(s => s.id === appState.selectedStayId) || { name: 'Stay' };
-      const activeMeal = appState.meals.find(m => m.id === appState.selectedMealId) || { name: 'Food' };
+      const activeCar = appState.cars.find(c => c.id === appState.selectedCarId) || { name: 'Toyota Innova Crysta', category: '6-Seater MUV' };
+      const activeStay = appState.stays.find(s => s.id === appState.selectedStayId) || { name: 'Heritage Haveli & Resort', type: 'Boutique Stay' };
+      const activeMeal = appState.meals.find(m => m.id === appState.selectedMealId) || { name: 'Pure Vegetarian & Satvik Package', type: 'Pure Veg Satvik' };
 
       document.getElementById('refCodeText').innerText = refId;
       document.getElementById('sheetFormView').style.display = 'none';
       document.getElementById('sheetSuccessView').style.display = 'block';
 
-      // Save to backend API
+      // Save to backend API with full hotel, food, fleet, and callback parameters
       fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -2661,15 +2664,21 @@
           user_name: name,
           user_phone: phone,
           user_email: email,
+          preferred_callback_time: preferredTime,
+          whatsapp_optin: waOptin,
           source: appState.from || 'Delhi (NCR)',
           destination: appState.to || 'Jaipur Heritage Circuit',
           days: appState.days,
           passengers: appState.members,
           car_name: activeCar.name,
+          car_category: activeCar.category || '6-Seater MUV',
           stay_name: activeStay.name,
+          stay_type: activeStay.type || 'Verified Hotel / Resort',
           meal_name: activeMeal.name,
+          meal_dietary: activeMeal.type || 'Curated Meal Plan',
           total_price: appState.totalBudget,
-          status: 'Confirmed'
+          status: 'Callback Requested',
+          payment_status: 'Pending Callback'
         })
       }).catch(e => console.error('Booking save error:', e));
     }

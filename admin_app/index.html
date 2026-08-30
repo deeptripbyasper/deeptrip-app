@@ -634,10 +634,15 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
-      padding: 1.15rem;
+      padding: 1.25rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .booking-tile:hover {
+      border-color: rgba(2, 132, 199, 0.4);
     }
 
     .booking-tile-head {
@@ -645,81 +650,199 @@
       align-items: flex-start;
       justify-content: space-between;
       border-bottom: 1px solid var(--border-color);
-      padding-bottom: 0.65rem;
+      padding-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .b-user-info-cluster {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .b-user-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284C7, #0EA5E9);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      flex-shrink: 0;
     }
 
     .b-user-name {
-      font-size: 0.95rem;
-      font-weight: 700;
+      font-size: 1rem;
+      font-weight: 800;
       color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
-    .b-user-phone {
+    .b-user-contact-row {
       font-size: 0.78rem;
       color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 0.15rem;
+    }
+
+    .b-user-contact-row a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .b-user-contact-row a:hover {
+      color: #38BDF8;
+    }
+
+    .b-badges-cluster {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
     }
 
     .b-id-pill {
       font-size: 0.75rem;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--primary);
       background: var(--primary-soft);
-      padding: 0.2rem 0.55rem;
-      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255, 90, 54, 0.2);
     }
 
+    .b-callback-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #38BDF8;
+      background: rgba(2, 132, 199, 0.12);
+      border: 1px solid rgba(2, 132, 199, 0.25);
+      padding: 0.25rem 0.55rem;
+      border-radius: var(--radius-full);
+    }
+
+    /* 4-Column Requirements Grid (Fleet, Stay, Food, Circuit) */
     .booking-meta-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      font-size: 0.78rem;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.75rem;
     }
 
-    .meta-col label {
-      color: var(--text-muted);
+    .meta-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .meta-card-label {
       font-size: 0.68rem;
+      color: var(--text-muted);
+      font-weight: 700;
       text-transform: uppercase;
-      display: block;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
     }
 
-    .meta-col span {
+    .meta-card-value {
+      font-size: 0.88rem;
+      font-weight: 700;
       color: #FFF;
-      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .meta-card-sub {
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+
+    /* Value & Summary Row */
+    .booking-value-strip {
+      background: rgba(2, 132, 199, 0.06);
+      border: 1px dashed rgba(2, 132, 199, 0.25);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
     .booking-status-actions {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px dashed var(--border-color);
-      padding-top: 0.65rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.75rem;
       flex-wrap: wrap;
-      gap: 0.6rem;
+      gap: 0.65rem;
     }
 
     .status-dropdown {
       background: var(--bg-input);
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 0.35rem 0.65rem;
+      padding: 0.4rem 0.75rem;
       border-radius: var(--radius-sm);
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.8rem;
+      font-weight: 700;
       outline: none;
     }
 
-    .btn-contact {
-      background: var(--emerald-soft);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: var(--emerald);
-      padding: 0.35rem 0.75rem;
+    .btn-action-alert {
+      background: rgba(2, 132, 199, 0.15);
+      border: 1px solid rgba(2, 132, 199, 0.35);
+      color: #38BDF8;
+      padding: 0.4rem 0.75rem;
       border-radius: var(--radius-sm);
       font-size: 0.78rem;
       font-weight: 700;
-      text-decoration: none;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.35rem;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-action-alert:hover {
+      background: rgba(2, 132, 199, 0.28);
+      transform: translateY(-1px);
+    }
+
+    .btn-action-wa {
+      background: rgba(37, 211, 102, 0.14);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: #25D366;
+    }
+
+    .btn-action-wa:hover {
+      background: rgba(37, 211, 102, 0.25);
+    }
+
+    .btn-action-email {
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #FBBF24;
+    }
+
+    .btn-action-email:hover {
+      background: rgba(245, 158, 11, 0.25);
     }
 
     /* Modal */
@@ -1100,6 +1223,52 @@
 
       </div>
     </div>
+
+    <!-- Modal for Viewing & Dispatching Alerts -->
+    <div class="modal-overlay" id="alertModalOverlay">
+      <div class="modal-box" style="max-width: 640px;">
+        <div class="modal-header">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 1.2rem;">🚨</span>
+            <h3 class="modal-title" id="alertModalTitle">Booking Alert Dispatcher</h3>
+          </div>
+          <button class="btn-close-modal" onclick="closeAlertModal()">&times;</button>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+          <button id="tabAlertWa" class="tab-btn active" style="padding: 0.4rem 0.9rem; font-size: 0.78rem;" onclick="switchAlertPreviewTab('wa')">💬 WhatsApp Message</button>
+          <button id="tabAlertEmail" class="tab-btn" style="padding: 0.4rem 0.9rem; font-size: 0.78rem;" onclick="switchAlertPreviewTab('email')">✉️ Email Notification</button>
+        </div>
+
+        <!-- WhatsApp Tab -->
+        <div id="alertWaView">
+          <label class="form-label-clean" style="margin-bottom: 0.35rem; display: block;">WhatsApp Alert Copy (Ready for dispatch):</label>
+          <textarea id="alertWaTextarea" class="clean-input" style="height: 220px; font-family: monospace; font-size: 0.8rem; line-height: 1.4; resize: vertical;" readonly></textarea>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+            <button class="btn-add-primary" style="flex: 1; justify-content: center; background: #334155;" onclick="copyAlertText()">📋 Copy Text</button>
+            <a id="btnDirectSendWa" href="#" target="_blank" class="btn-add-primary btn-action-wa" style="flex: 1; justify-content: center; text-decoration: none;">💬 Open in WhatsApp</a>
+          </div>
+        </div>
+
+        <!-- Email Tab -->
+        <div id="alertEmailView" style="display: none;">
+          <div class="form-group-clean" style="margin-bottom: 0.6rem;">
+            <label class="form-label-clean">Subject</label>
+            <input type="text" id="alertEmailSubject" class="clean-input" readonly>
+          </div>
+          <label class="form-label-clean" style="margin-bottom: 0.35rem; display: block;">Email HTML Preview:</label>
+          <div id="alertEmailPreviewBox" style="background: #FFF; border-radius: var(--radius-md); max-height: 260px; overflow-y: auto; padding: 0.5rem; border: 1px solid var(--border-color);"></div>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+            <a id="btnDirectSendEmail" href="#" class="btn-add-primary btn-action-email" style="flex: 1; justify-content: center; text-decoration: none;">✉️ Send via Default Mail Client</a>
+          </div>
+        </div>
+
+        <button class="btn-save-item" style="width: 100%; justify-content: center; margin-top: 1rem; padding: 0.75rem;" onclick="dispatchLiveAlert()">
+          🚀 Trigger Multi-Channel Alert (WhatsApp + Email)
+        </button>
+      </div>
+    </div>
+
 
     <!-- Toast Notification -->
     <div class="toast-pill" id="toastPill">
@@ -1621,45 +1790,111 @@
       }
     }
 
-    // 5. DISPATCHER
+    // 5. DISPATCHER & BOOKINGS WITH FULL HOTEL & FOOD DETAILS
+    let activeAlertBookingId = null;
+
     function renderBookingsList() {
       const container = document.getElementById('bookingsList');
       let html = '';
 
       if (bookingsData.length === 0) {
-        container.innerHTML = '<div style="color: var(--text-muted); text-align: center; padding: 2rem;">No bookings yet.</div>';
+        container.innerHTML = '<div style="color: var(--text-muted); text-align: center; padding: 2rem;">No bookings or callback requests yet.</div>';
         return;
       }
 
       bookingsData.forEach(b => {
+        const initials = (b.user_name || 'T').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'DT';
+        const nights = Math.max(1, (b.days || 3) - 1);
+        const pax = b.passengers || 4;
+        const total = b.total_price || 0;
+        const perPax = Math.round(total / pax);
+        const cbWindow = b.preferred_callback_time || 'Immediate (Within 15 Mins)';
+
+        const waText = `🚨 *DEEPTRIP NEW JOURNEY & CALLBACK ALERT* 🚨\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📋 *Reference ID*: #${b.id}\n👤 *Customer*: ${b.user_name || 'DeepTrip Traveler'}\n📞 *Mobile*: ${b.user_phone || '+91-XXXXX'}\n✉️ *Email*: ${b.user_email || 'traveler@deeptrip.in'}\n⏰ *Preferred Callback*: ${cbWindow}\n\n📍 *Route*: ${b.source || 'Delhi (NCR)'} ➔ ${b.destination || 'Jaipur Heritage Circuit'}\n📅 *Schedule*: ${b.days || 3} Days • ${pax} Travelers\n🚘 *Vehicle Fleet*: ${b.car_name || 'Toyota Innova Crysta'}\n🏨 *Stay Choice*: ${b.stay_name || 'Verified Homestay / Hotel'} (${nights} Nights)\n🍽️ *Food Package*: ${b.meal_name || 'Pure Vegetarian & Satvik Package'}\n💰 *Est. Trip Budget*: ₹${total.toLocaleString('en-IN')} (₹${perPax.toLocaleString('en-IN')}/traveler)\n\n👨‍✈️ *Action Required*: Contact customer immediately to lock Captain & finalize stays.`;
+        const waUrl = `https://wa.me/${(b.user_phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(waText)}`;
+        const emailSubject = encodeURIComponent(`[DeepTrip Alert] New Callback Request #${b.id} - ${b.user_name || 'Traveler'} (${b.source || 'Delhi'} -> ${b.destination || 'Jaipur'})`);
+        const emailBody = encodeURIComponent(`Customer Name: ${b.user_name || 'Traveler'}\nPhone: ${b.user_phone || ''}\nEmail: ${b.user_email || ''}\nPreferred Callback: ${cbWindow}\n\nTrip Route: ${b.source || 'Delhi'} -> ${b.destination || 'Jaipur'}\nSchedule: ${b.days || 3} Days, ${pax} Travelers\nVehicle Fleet: ${b.car_name || 'Toyota Innova Crysta'}\nHotel / Stay: ${b.stay_name || 'Verified Hotel / Resort'}\nFood Package: ${b.meal_name || 'Curated Meal Plan'}\nTotal Trip Budget: ₹${total.toLocaleString('en-IN')}\n`);
+        const mailtoUrl = `mailto:${b.user_email || 'concierge@deeptrip.in'}?subject=${emailSubject}&body=${emailBody}`;
+
         html += `
-          <div class="booking-tile">
+          <div class="booking-tile" id="booking-card-${b.id}">
             <div class="booking-tile-head">
-              <div>
-                <div class="b-user-name">${b.user_name || 'Traveler'}</div>
-                <div class="b-user-phone">${b.user_phone || '+91-XXXXX'}</div>
+              <div class="b-user-info-cluster">
+                <div class="b-user-avatar">${initials}</div>
+                <div>
+                  <div class="b-user-name">
+                    ${b.user_name || 'DeepTrip Traveler'}
+                    ${b.status === 'Callback Requested' ? '<span style="font-size: 0.68rem; color: #EF4444; background: rgba(239,68,68,0.12); padding: 0.15rem 0.45rem; border-radius: 4px; font-weight: 800;">CALL BACK PENDING</span>' : ''}
+                  </div>
+                  <div class="b-user-contact-row">
+                    <span>📞 <a href="tel:${b.user_phone || ''}">${b.user_phone || '+91-XXXXX'}</a></span>
+                    <span>•</span>
+                    <span>✉️ <a href="mailto:${b.user_email || ''}">${b.user_email || 'traveler@deeptrip.in'}</a></span>
+                  </div>
+                </div>
               </div>
-              <span class="b-id-pill">${b.id}</span>
+
+              <div class="b-badges-cluster">
+                <span class="b-callback-badge">⏰ ${cbWindow}</span>
+                <span class="b-id-pill">#${b.id}</span>
+              </div>
             </div>
 
+            <!-- Complete 4-Way Requirements Grid: Circuit, Fleet, Hotel & Food -->
             <div class="booking-meta-grid">
-              <div class="meta-col">
-                <label>Route</label>
-                <span>${b.source || 'Delhi'} → ${b.destination || 'Jaipur'}</span>
+              <!-- 1. Circuit & Duration -->
+              <div class="meta-card">
+                <div class="meta-card-label">📍 Circuit & Route</div>
+                <div class="meta-card-value">${b.source || 'Delhi (NCR)'} ➔ ${b.destination || 'Jaipur Circuit'}</div>
+                <div class="meta-card-sub">📅 ${b.days || 3} Days Duration • 👥 ${pax} Travelers</div>
               </div>
-              <div class="meta-col">
-                <label>Fleet & Group</label>
-                <span>${b.car_name || '6-Seater'} (${b.passengers || 4} Pax, ${b.days || 3} Days)</span>
+
+              <!-- 2. Fleet Vehicle -->
+              <div class="meta-card">
+                <div class="meta-card-label">🚘 Vehicle Fleet</div>
+                <div class="meta-card-value">${b.car_name || 'Toyota Innova Crysta'}</div>
+                <div class="meta-card-sub">👨‍✈️ Captain: ${b.captain_assigned || 'Assign on Dispatch'}</div>
               </div>
-              <div class="meta-col">
-                <label>Estimated Value</label>
-                <span style="color: var(--primary); font-weight: 800;">₹${(b.total_price || 0).toLocaleString('en-IN')}</span>
+
+              <!-- 3. Hotel / Stay Booking -->
+              <div class="meta-card" style="border-color: rgba(2, 132, 199, 0.35);">
+                <div class="meta-card-label" style="color: #38BDF8;">🏨 Hotel / Accommodation</div>
+                <div class="meta-card-value" style="color: #BAE6FD;">${b.stay_name || 'Verified Heritage Haveli'}</div>
+                <div class="meta-card-sub">${b.stay_type || 'Boutique Hotel & Spa'} • ${nights} Nights Stay</div>
+              </div>
+
+              <!-- 4. Food & Dining Package -->
+              <div class="meta-card" style="border-color: rgba(16, 185, 129, 0.35);">
+                <div class="meta-card-label" style="color: #34D399;">🍽️ Food & Dining Package</div>
+                <div class="meta-card-value" style="color: #A7F3D0;">${b.meal_name || 'Pure Vegetarian & Satvik Package'}</div>
+                <div class="meta-card-sub">${b.meal_dietary || 'Breakfast, Lunch & Dinner Included'}</div>
               </div>
             </div>
 
+            <!-- Value & Payment Strip -->
+            <div class="booking-value-strip">
+              <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <div>
+                  <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Trip Budget:</span>
+                  <span style="font-size: 1.15rem; font-weight: 800; color: #38BDF8; margin-left: 0.3rem;">₹${total.toLocaleString('en-IN')}</span>
+                </div>
+                <div style="font-size: 0.76rem; color: var(--text-secondary);">
+                  (Approx ₹${perPax.toLocaleString('en-IN')} / person)
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 0.72rem; color: var(--text-muted);">Payment:</span>
+                <span style="font-size: 0.75rem; font-weight: 700; color: #10B981; background: rgba(16,185,129,0.12); padding: 0.2rem 0.5rem; border-radius: 4px;">
+                  ${b.payment_status || 'Pending Callback'}
+                </span>
+              </div>
+            </div>
+
+            <!-- Status & Multi-Channel Alert Action Bar -->
             <div class="booking-status-actions">
-              <div style="display: flex; align-items: center; gap: 0.4rem;">
-                <label style="font-size: 0.72rem; color: var(--text-muted);">Status:</label>
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <label style="font-size: 0.74rem; color: var(--text-muted); font-weight: 700;">Trip Status:</label>
                 <select class="status-dropdown" onchange="changeBookingStatus('${b.id}', this.value)">
                   <option value="Callback Requested" ${b.status === 'Callback Requested' ? 'selected' : ''}>📞 Callback Requested</option>
                   <option value="Confirmed" ${b.status === 'Confirmed' ? 'selected' : ''}>✅ Confirmed</option>
@@ -1669,9 +1904,19 @@
                 </select>
               </div>
 
-              <div style="display: flex; gap: 0.45rem;">
-                <a href="tel:${b.user_phone || ''}" class="btn-contact">📞 Call</a>
-                <a href="https://wa.me/${(b.user_phone || '').replace(/[^0-9]/g, '')}" target="_blank" class="btn-contact" style="color: #25D366; background: rgba(37,211,102,0.12); border-color: rgba(37,211,102,0.3);">💬 WhatsApp</a>
+              <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
+                <a href="tel:${b.user_phone || ''}" class="btn-action-alert" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); color: #FFF;">
+                  📞 Call
+                </a>
+                <a href="${waUrl}" target="_blank" class="btn-action-alert btn-action-wa" title="Open WhatsApp alert with journey requirements">
+                  💬 WhatsApp Alert
+                </a>
+                <a href="${mailtoUrl}" class="btn-action-alert btn-action-email" title="Open Email alert template">
+                  ✉️ Email Alert
+                </a>
+                <button class="btn-action-alert" onclick="openAlertModal('${b.id}')" title="Preview Alert copy & HTML template">
+                  🚨 View Alert
+                </button>
               </div>
             </div>
           </div>
@@ -1691,9 +1936,116 @@
 
         if (res.success) {
           notifyToast(`Booking ${bId} status updated to: ${newStatus}`);
+          loadAllAdminData();
         }
       } catch (err) {
         notifyToast('Failed to update status');
+      }
+    }
+
+    // ==========================================
+    // ALERT PREVIEW & DISPATCH MODAL HANDLERS
+    // ==========================================
+    function openAlertModal(bookingId) {
+      const b = bookingsData.find(item => item.id === bookingId);
+      if (!b) return;
+
+      activeAlertBookingId = bookingId;
+      document.getElementById('alertModalTitle').innerText = `Alert Dispatcher • #${b.id}`;
+
+      const nights = Math.max(1, (b.days || 3) - 1);
+      const pax = b.passengers || 4;
+      const total = b.total_price || 0;
+      const perPax = Math.round(total / pax);
+      const cbWindow = b.preferred_callback_time || 'Immediate (Within 15 Mins)';
+
+      const waText = `🚨 *DEEPTRIP NEW JOURNEY & CALLBACK ALERT* 🚨\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📋 *Reference ID*: #${b.id}\n👤 *Customer*: ${b.user_name || 'DeepTrip Traveler'}\n📞 *Mobile*: ${b.user_phone || '+91-XXXXX'}\n✉️ *Email*: ${b.user_email || 'traveler@deeptrip.in'}\n⏰ *Preferred Callback*: ${cbWindow}\n\n📍 *Route*: ${b.source || 'Delhi (NCR)'} ➔ ${b.destination || 'Jaipur Heritage Circuit'}\n📅 *Schedule*: ${b.days || 3} Days • ${pax} Travelers\n🚘 *Vehicle Fleet*: ${b.car_name || 'Toyota Innova Crysta'}\n🏨 *Stay Choice*: ${b.stay_name || 'Verified Homestay / Hotel'} (${nights} Nights)\n🍽️ *Food Package*: ${b.meal_name || 'Pure Vegetarian & Satvik Package'}\n💰 *Est. Trip Budget*: ₹${total.toLocaleString('en-IN')} (₹${perPax.toLocaleString('en-IN')}/traveler)\n\n👨‍✈️ *Action Required*: Contact customer immediately to lock Captain & finalize stays.`;
+      
+      document.getElementById('alertWaTextarea').value = waText;
+      document.getElementById('btnDirectSendWa').href = `https://wa.me/${(b.user_phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(waText)}`;
+
+      const subject = `[DeepTrip Alert] New Callback Request #${b.id} - ${b.user_name || 'Traveler'} (${b.source || 'Delhi'} -> ${b.destination || 'Jaipur'})`;
+      document.getElementById('alertEmailSubject').value = subject;
+      
+      const emailBody = `Customer: ${b.user_name}\nPhone: ${b.user_phone}\nEmail: ${b.user_email}\nCallback: ${cbWindow}\n\nRoute: ${b.source} -> ${b.destination}\nDuration: ${b.days} Days, ${pax} Pax\nVehicle: ${b.car_name}\nHotel: ${b.stay_name}\nFood: ${b.meal_name}\nTotal: ₹${total.toLocaleString('en-IN')}`;
+      document.getElementById('btnDirectSendEmail').href = `mailto:${b.user_email || 'concierge@deeptrip.in'}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+      const emailHtmlPreview = `
+        <div style="font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #0F172A; font-size: 13px;">
+          <div style="background: linear-gradient(135deg, #0284C7, #0EA5E9); color: #FFF; padding: 14px 18px; border-radius: 8px 8px 0 0;">
+            <strong style="font-size: 15px;">DeepTrip Road Trip Alert #${b.id}</strong><br>
+            <span style="opacity: 0.9; font-size: 12px;">Customer Callback & Itinerary Requirement</span>
+          </div>
+          <div style="padding: 14px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 0 0 8px 8px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+              <tr style="border-bottom: 1px solid #E2E8F0;"><td style="padding: 6px 0; color: #64748B; font-weight: bold; width: 35%;">Customer</td><td style="padding: 6px 0; font-weight: 600;">${b.user_name || 'Traveler'} (${b.user_phone})</td></tr>
+              <tr style="border-bottom: 1px solid #E2E8F0;"><td style="padding: 6px 0; color: #64748B; font-weight: bold;">Preferred Time</td><td style="padding: 6px 0; font-weight: bold; color: #0284C7;">${cbWindow}</td></tr>
+              <tr style="border-bottom: 1px solid #E2E8F0;"><td style="padding: 6px 0; color: #64748B; font-weight: bold;">Circuit</td><td style="padding: 6px 0; font-weight: 600;">${b.source || 'Delhi'} ➔ ${b.destination || 'Jaipur'} (${b.days} Days, ${pax} Pax)</td></tr>
+              <tr style="border-bottom: 1px solid #E2E8F0;"><td style="padding: 6px 0; color: #64748B; font-weight: bold;">Vehicle Fleet</td><td style="padding: 6px 0; font-weight: 600;">${b.car_name || 'Toyota Innova Crysta'}</td></tr>
+              <tr style="border-bottom: 1px solid #E2E8F0;"><td style="padding: 6px 0; color: #64748B; font-weight: bold;">Hotel / Stay</td><td style="padding: 6px 0; font-weight: 600; color: #0284C7;">${b.stay_name || 'Heritage Hotel'} (${nights} Nights)</td></tr>
+              <tr style="border-bottom: 1px solid #E2E8F0;"><td style="padding: 6px 0; color: #64748B; font-weight: bold;">Food Package</td><td style="padding: 6px 0; font-weight: 600; color: #059669;">${b.meal_name || 'Pure Veg Satvik'}</td></tr>
+              <tr><td style="padding: 6px 0; color: #64748B; font-weight: bold;">Total Budget</td><td style="padding: 6px 0; font-weight: bold; color: #0284C7; font-size: 14px;">₹${total.toLocaleString('en-IN')}</td></tr>
+            </table>
+          </div>
+        </div>
+      `;
+      document.getElementById('alertEmailPreviewBox').innerHTML = emailHtmlPreview;
+
+      switchAlertPreviewTab('wa');
+      document.getElementById('alertModalOverlay').classList.add('active');
+    }
+
+    function closeAlertModal() {
+      document.getElementById('alertModalOverlay').classList.remove('active');
+      activeAlertBookingId = null;
+    }
+
+    function switchAlertPreviewTab(tab) {
+      const waView = document.getElementById('alertWaView');
+      const emailView = document.getElementById('alertEmailView');
+      const tabWa = document.getElementById('tabAlertWa');
+      const tabEmail = document.getElementById('tabAlertEmail');
+
+      if (tab === 'wa') {
+        waView.style.display = 'block';
+        emailView.style.display = 'none';
+        tabWa.classList.add('active');
+        tabEmail.classList.remove('active');
+      } else {
+        waView.style.display = 'none';
+        emailView.style.display = 'block';
+        tabEmail.classList.add('active');
+        tabWa.classList.remove('active');
+      }
+    }
+
+    function copyAlertText() {
+      const copyText = document.getElementById('alertWaTextarea');
+      copyText.select();
+      navigator.clipboard.writeText(copyText.value);
+      notifyToast('WhatsApp alert text copied to clipboard!');
+    }
+
+    async function dispatchLiveAlert() {
+      if (!activeAlertBookingId) return;
+      try {
+        const res = await fetch('/api/alerts/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            booking_id: activeAlertBookingId,
+            channel: 'all'
+          })
+        }).then(r => r.json());
+
+        if (res.success) {
+          notifyToast('Alert dispatched via WhatsApp and Email channels!');
+          closeAlertModal();
+        } else {
+          notifyToast(res.error || 'Failed to dispatch alert');
+        }
+      } catch (err) {
+        notifyToast('Error triggering alerts');
       }
     }
 
