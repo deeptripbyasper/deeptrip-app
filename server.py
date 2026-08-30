@@ -9,6 +9,7 @@ import json
 import os
 import sys
 import mimetypes
+import urllib.request
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs, quote
 import uuid
@@ -429,8 +430,11 @@ def save_db(data):
 def send_email_notification(to_email, subject, html_content, text_content=""):
     """
     Dispatches automated email alert to Operations (e.g. deeptrip.indy@gmail.com).
-    Uses configured SMTP if credentials provided, otherwise logs and registers in dispatch queue.
+    Uses configured SMTP if credentials provided, with automatic HTTP transactional mail fallback.
     """
+    dispatch_result = {"recipient": to_email, "status": "queued"}
+
+    # 1. Primary: SMTP dispatch (if configured)
     if SMTP_HOST and SMTP_USER and SMTP_PASS:
         try:
             msg = MIMEMultipart("alternative")
@@ -450,10 +454,36 @@ def send_email_notification(to_email, subject, html_content, text_content=""):
             return {"status": "sent", "method": "smtp", "recipient": to_email}
         except Exception as e:
             print(f"[EMAIL ERROR] SMTP dispatch to {to_email} failed: {e}")
-            return {"status": "queued", "method": "log", "error": str(e), "recipient": to_email}
-    else:
-        print(f"[EMAIL ALERT QUEUED] Direct notification prepared for Operations: {to_email} | Subject: {subject}")
-        return {"status": "queued", "method": "logged", "recipient": to_email}
+            dispatch_result["smtp_error"] = str(e)
+
+    # 2. Secondary: Transactional FormSubmit API dispatch
+    try:
+        req_body = json.dumps({
+            "_subject": subject,
+            "_template": "table",
+            "_captcha": "false",
+            "Notification": "DeepTrip Customer Callback Alert",
+            "Details": text_content
+        }).encode("utf-8")
+        fs_req = urllib.request.Request(
+            f"https://formsubmit.co/ajax/{to_email}",
+            data=req_body,
+            headers={
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+                "Referer": "https://deeptrip-app.onrender.com",
+                "Origin": "https://deeptrip-app.onrender.com"
+            }
+        )
+        with urllib.request.urlopen(fs_req, timeout=8) as fs_resp:
+            resp_data = fs_resp.read().decode("utf-8")
+            print(f"[EMAIL API DISPATCH] FormSubmit Response: {resp_data}")
+            return {"status": "sent", "method": "formsubmit_api", "recipient": to_email}
+    except Exception as ex:
+        print(f"[EMAIL API NOTICE]: {ex}")
+
+    print(f"[EMAIL ALERT QUEUED] Direct notification prepared for Operations: {to_email} | Subject: {subject}")
+    return {"status": "recorded", "method": "db_logged", "recipient": to_email}
 
 
 def generate_trip_alerts(booking):

@@ -1964,11 +1964,29 @@
       <div id="sheetSuccessView" style="display: none; text-align: center; padding: 1rem 0;">
         <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--emerald-soft); border: 2px solid var(--emerald); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem; color: var(--emerald);">✓</div>
         <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Trip Request Confirmed!</h3>
-        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.4;">
+        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
           Reference ID: <strong style="color: var(--primary);" id="refCodeText">DT-9482-AI</strong><br>
-          A dedicated Journey Steward will call your number within 15 minutes to lock your Captain & Stays.
+          Your requirement has been transmitted to DeepTrip Operations.
         </p>
-        <button class="btn-mobile-primary" style="width: 100%;" onclick="closeCallbackSheet()">
+
+        <!-- Live Alert Status Box -->
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.75rem; margin-bottom: 1.15rem; text-align: left; font-size: 0.78rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+            <span>✉️ Operations Email Alert:</span>
+            <span style="color: var(--emerald); font-weight: 800;">✓ deeptrip.indy@gmail.com</span>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span>📱 Operations WhatsApp:</span>
+            <span style="color: #0284C7; font-weight: 800;">+91 7980511971</span>
+          </div>
+        </div>
+
+        <!-- 1-Click WhatsApp Button to Operations -->
+        <a id="btnSendWaToOps" href="https://wa.me/917980511971" target="_blank" class="btn-mobile-primary" style="background: #25D366; color: #FFF; margin-bottom: 0.6rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; font-weight: 800;">
+          <span>💬 Send Details to Operations on WhatsApp</span>
+        </a>
+
+        <button class="btn-mobile-primary" style="width: 100%; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-main);" onclick="closeCallbackSheet()">
           Done
         </button>
       </div>
@@ -2643,7 +2661,7 @@
       const phone = document.getElementById('sheetPhone').value || (appState.currentUser ? appState.currentUser.phone : '+91 98765 43210');
       const email = appState.currentUser ? appState.currentUser.email : 'traveler@deeptrip.in';
       const timeSelect = document.getElementById('sheetTime');
-      const preferredTime = timeSelect ? timeSelect.value : 'Immediate (Within 15 Mins)';
+      const preferredTime = timeSelect ? timeSelect.options[timeSelect.selectedIndex].text : 'Immediate (Within 15 Mins)';
       const waOptin = document.getElementById('sheetWaCheck') ? document.getElementById('sheetWaCheck').checked : true;
       const refId = `DT-${Math.floor(1000 + Math.random() * 9000)}-AI`;
 
@@ -2651,11 +2669,49 @@
       const activeStay = appState.stays.find(s => s.id === appState.selectedStayId) || { name: 'Heritage Haveli & Resort', type: 'Boutique Stay' };
       const activeMeal = appState.meals.find(m => m.id === appState.selectedMealId) || { name: 'Pure Vegetarian & Satvik Package', type: 'Pure Veg Satvik' };
 
+      const nights = Math.max(1, appState.days - 1);
+      const totalBudgetFormatted = (appState.totalBudget || 28450).toLocaleString('en-IN');
+      const perPaxFormatted = Math.round((appState.totalBudget || 28450) / appState.members).toLocaleString('en-IN');
+
+      // WhatsApp message targeted to DeepTrip Operations (+91 7980511971)
+      const waMessage = `🚨 *DEEPTRIP NEW TRIP & CALLBACK REQUEST* 🚨\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📋 *Reference ID*: #${refId}\n👤 *Customer*: ${name}\n📞 *Phone*: ${phone}\n✉️ *Email*: ${email}\n⏰ *Callback Window*: ${preferredTime}\n\n📍 *Route*: ${appState.from || 'Delhi (NCR)'} ➔ ${appState.to || 'Jaipur Heritage Circuit'}\n📅 *Schedule*: ${appState.days} Days • ${appState.members} Travelers\n🚘 *Vehicle Fleet*: ${activeCar.name}\n🏨 *Stay Choice*: ${activeStay.name} (${nights} Nights)\n🍽️ *Food Package*: ${activeMeal.name}\n💰 *Est. Trip Budget*: ₹${totalBudgetFormatted} (₹${perPaxFormatted}/pax)\n\n🚀 *Action*: Please contact customer to lock Captain & finalize stays!`;
+
+      const opsWaUrl = `https://wa.me/917980511971?text=${encodeURIComponent(waMessage)}`;
+
       document.getElementById('refCodeText').innerText = refId;
+      const waBtn = document.getElementById('btnSendWaToOps');
+      if (waBtn) waBtn.href = opsWaUrl;
+
       document.getElementById('sheetFormView').style.display = 'none';
       document.getElementById('sheetSuccessView').style.display = 'block';
 
-      // Save to backend API with full hotel, food, fleet, and callback parameters
+      // 1. Direct Email Alert via FormSubmit API to deeptrip.indy@gmail.com
+      fetch('https://formsubmit.co/ajax/deeptrip.indy@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `[DeepTrip Alert] New Callback Request #${refId} - ${name} (${appState.from || 'Delhi'} -> ${appState.to || 'Jaipur'})`,
+          _template: 'table',
+          _captcha: 'false',
+          'Booking Reference ID': refId,
+          'Customer Name': name,
+          'Customer Phone': phone,
+          'Customer Email': email,
+          'Preferred Callback': preferredTime,
+          'Route / Circuit': `${appState.from || 'Delhi (NCR)'} ➔ ${appState.to || 'Jaipur Heritage Circuit'}`,
+          'Trip Duration': `${appState.days} Days`,
+          'Travelers Count': `${appState.members} Travelers`,
+          'Fleet Vehicle': activeCar.name,
+          'Hotel / Accommodation': `${activeStay.name} (${nights} Nights)`,
+          'Food Package': activeMeal.name,
+          'Estimated Total Budget': `₹${totalBudgetFormatted} (Approx ₹${perPaxFormatted} / traveler)`
+        })
+      }).catch(err => console.log('Email delivery notice:', err));
+
+      // 2. Save to backend API
       fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -2681,6 +2737,13 @@
           payment_status: 'Pending Callback'
         })
       }).catch(e => console.error('Booking save error:', e));
+
+      // 3. Prompt instant WhatsApp forward to +91 7980511971 if opt-in enabled
+      if (waOptin) {
+        setTimeout(() => {
+          window.open(opsWaUrl, '_blank');
+        }, 500);
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
